@@ -1,0 +1,52 @@
+.raw-materials-section {
+  padding: 1rem;
+  max-width: 900px;
+  margin: 0 auto;
+}
+
+.raw-materials-section form {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-bottom: 20px;
+}
+
+.raw-materials-section input,
+.raw-materials-section select,
+.raw-materials-section button {
+  padding: 10px;
+  border-radius: 8px;
+  border: 1px solid #ccc;
+  font-size: 1rem;
+}
+
+.raw-materials-section button {
+  background: #06212c;
+  color: white;
+  cursor: pointer;
+  border: none;
+}
+
+.raw-materials-section button:hover {
+  background: #2d3436;
+}
+
+.raw-materials-section table {
+  width: 100%;
+  border-collapse: collapse;
+  background: white;
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+}
+
+.raw-materials-section th, .raw-materials-section td {
+  padding: 10px;
+  border-bottom: 1px solid #ddd;
+  text-align: center;
+}
+
+.raw-materials-section button.action-btn {
+  padding: 5px 8px;
+  margin: 0 2px;
+}

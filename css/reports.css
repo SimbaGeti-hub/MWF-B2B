@@ -1,0 +1,49 @@
+.reports-section {
+  padding: 1rem;
+  max-width: 1000px;
+  margin: 0 auto;
+}
+
+.filters {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 15px;
+}
+
+.filters input, .filters button {
+  padding: 8px;
+  border-radius: 6px;
+  border: 1px solid #ccc;
+}
+
+.filters button {
+  background: #06212c;
+  color: white;
+  cursor: pointer;
+  border: none;
+}
+
+.filters button:hover {
+  background: #2d3436;
+}
+
+.reports-section table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-bottom: 15px;
+  background: white;
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+}
+
+.reports-section th, .reports-section td {
+  padding: 10px;
+  border-bottom: 1px solid #ddd;
+  text-align: center;
+}
+
+#salesTotal {
+  font-weight: 600;
+  margin-bottom: 20px;
+}

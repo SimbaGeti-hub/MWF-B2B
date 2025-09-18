@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Add Sales - MWF</title>
+<link rel="stylesheet" href="../css/style.css">
+<link rel="stylesheet" href="../css/addSales.css">
+<link rel="stylesheet" href="../css/addSaleErrors.css">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/js/all.min.js" defer></script>
+</head>
+<body>
+<div class="hamburger" id="hamburger"><i class="fas fa-bars"></i></div>
+
+<div class="sidebar" id="sidebar">
+  <div class="logo">MWF</div>
+  <ul class="menu">
+    <li><a href="dashboard.html"><i class="fa-solid fa-gauge-high"></i><span>Dashboard</span></a></li>
+    <!-- <li><a href="products.html"><i class="fas fa-box"></i><span>Products</span></a></li> -->
+    <li><a href="addStock.html"><i class="fas fa-plus-square"></i><span>Add Stock</span></a></li>
+    <li><a href="viewStock.html"><i class="fas fa-list"></i><span>View Stock</span></a></li>
+    <li><a href="addSales.html" class="active"><i class="fa-solid fa-comments-dollar"></i><span>Add Sales</span></a></li>
+    <li><a href="viewSales.html"><i class="fas fa-dollar-sign"></i><span>Sales</span></a></li>
+    <li><a href="rawMaterials.html"><i class="fas fa-cubes"></i><span>Raw Materials</span></a></li>
+    <li><a href="suppliers.html"><i class="fas fa-truck"></i><span>Suppliers</span></a></li>
+    <li><a href="delivery.html"><i class="fas fa-route"></i><span>Delivery</span></a></li>
+    <li><a href="todo.html"><i class="fas fa-list"></i><span>To-Do</span></a></li>
+    <li><a href="reports.html"><i class="fas fa-file-alt"></i><span>Reports</span></a></li>
+    <li><a href="employees.html"><i class="fas fa-user"></i><span>Employees</span></a></li>
+    <li class="logout"><a href="logout.html"><i class="fas fa-sign-out-alt"></i><span>Logout</span></a></li>
+  </ul>
+</div>
+
+<main class="main-content">
+  <div class="content-container">
+    <header class="header-wrapper">
+      <div class="header-title">
+        <span>Mayondo Wood and Furniture</span>
+        <h2>Add Sales</h2>
+      </div>
+    </header>
+
+    <section class="add-sales-section">
+      <h3>Record New Sale</h3>
+
+      <!-- Main error message -->
+      <div id="mainError" class="main-error-message" style="display:none;"></div>
+
+      <form id="addSalesForm" novalidate>
+        <label for="customerName">Customer Name *</label>
+        <input type="text" id="customerName" name="customerName" />
+        <div class="error-message" id="errorCustomerName"></div>
+
+        <label for="productType">Product Type *</label>
+        <select id="productType" name="productType">
+          <option value="" disabled selected>Select product type</option>
+          <option>Timber</option>
+          <option>Poles</option>
+          <option>Hardwood</option>
+          <option>Softwood</option>
+          <option>Furniture</option>
+        </select>
+        <div class="error-message" id="errorProductType"></div>
+
+        <label for="productName">Product Name *</label>
+        <select id="productName" name="productName">
+          <option value="" disabled selected>Select product name</option>
+        </select>
+        <div class="error-message" id="errorProductName"></div>
+
+        <label for="quantity">Quantity *</label>
+        <input type="number" id="quantity" name="quantity" value="1" />
+        <div class="error-message" id="errorQuantity"></div>
+
+        <label for="saleDate">Sale Date *</label>
+        <input type="date" id="saleDate" name="saleDate" />
+        <div class="error-message" id="errorSaleDate"></div>
+
+        <label for="paymentType">Payment Type *</label>
+        <select id="paymentType" name="paymentType">
+          <option value="" disabled selected>Select payment type</option>
+          <option value="cash">Cash</option>
+          <option value="cheque">Cheque</option>
+          <option value="bankOverdraft">Bank Overdraft</option>
+        </select>
+        <div class="error-message" id="errorPaymentType"></div>
+
+        <label for="salesAgent">Sales Agent Name *</label>
+        <input type="text" id="salesAgent" name="salesAgent" />
+        <div class="error-message" id="errorSalesAgent"></div>
+
+        <div style="margin-top:10px;">
+          <input type="checkbox" id="transportProvided" name="transportProvided" />
+          <label for="transportProvided">Transport Provided? (+5%)</label>
+        </div>
+
+        <label for="unitPrice">Unit Price (UGX) *</label>
+        <input type="number" id="unitPrice" name="unitPrice" value="0" step="0.01" />
+        <div class="error-message" id="errorUnitPrice"></div>
+
+        <label for="totalPrice">Total Price (UGX)</label>
+        <input type="text" id="totalPrice" name="totalPrice" readonly />
+
+        <label for="transportCharge">Transport Charge (5%) (UGX)</label>
+        <input type="text" id="transportCharge" name="transportCharge" readonly />
+
+        <label for="overallTotal">Overall Total (UGX)</label>
+        <input type="text" id="overallTotal" name="overallTotal" readonly />
+
+
+        <button type="submit">Record Sale</button>
+      </form>
+
+      <div id="successMessage" class="success-message" style="display:none;"></div>
+    </section>
+  </div>
+</main>
+
+<script src="../js/main.js"></script>
+<script src="../js/storage.js"></script>
+<script src="../js/addSales.js"></script>
+<script src="../js/addSaleStorage.js"></script>
+</body>
+</html>

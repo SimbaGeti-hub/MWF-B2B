@@ -1,0 +1,51 @@
+.delivery-section {
+  padding: 1rem;
+  max-width: 900px;
+  margin: 0 auto;
+}
+
+.delivery-section form {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-bottom: 20px;
+}
+
+.delivery-section input,
+.delivery-section button {
+  padding: 10px;
+  border-radius: 8px;
+  border: 1px solid #ccc;
+  font-size: 1rem;
+}
+
+.delivery-section button {
+  background: #06212c;
+  color: white;
+  cursor: pointer;
+  border: none;
+}
+
+.delivery-section button:hover {
+  background: #2d3436;
+}
+
+.delivery-section table {
+  width: 100%;
+  border-collapse: collapse;
+  background: white;
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+}
+
+.delivery-section th, .delivery-section td {
+  padding: 10px;
+  border-bottom: 1px solid #ddd;
+  text-align: center;
+}
+
+.delivery-section button.action-btn {
+  padding: 5px 8px;
+  margin: 0 2px;
+}

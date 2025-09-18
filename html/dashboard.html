@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Dashboard - MWF</title>
+<link rel="stylesheet" href="../css/style.css">
+<link rel="stylesheet" href="../css/dashboard.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css" integrity="sha512-2SwdPD6INVrV/lHTZbO2nodKhrnDdJK9/kg2XD1r9uGqPo1cUbujc+IYdlYdEErWNu69gVcYgdxlmVmzTWnetw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+<script src="vendors/fontawesome/all.min.js" defer></script>
+<script src="../js/storage.js" defer></script>
+<script src="../js/main.js" defer></script>
+<script src="../js/dashboard.js" defer></script>
+</head>
+<body>
+<div class="hamburger" id="hamburger"><i class="fas fa-bars"></i></div>
+<div class="sidebar" id="sidebar">
+  <div class="logo">MWF</div>
+  <ul class="menu">
+    <li><a href="dashboard.html" class="active"><i class="fa-solid fa-gauge-high"></i><span>Dashboard</span></a></li>
+    <li><a href="products.html"><i class="fas fa-box"></i><span>Products</span></a></li>
+    <li><a href="addStock.html" ><i class="fas fa-plus-square"></i><span>Add Stock</span></a></li>
+    <li><a href="viewStock.html" ><i class="fas fa-list"></i><span>View Stock</span></a></li>
+    <li><a href="addSales.html"><i class="fa-solid fa-comments-dollar"></i><span>Add Sales</span></a></li>
+    <li><a href="viewSales.html"><i class="fas fa-dollar-sign"></i><span>Sales</span></a></li>
+    <li><a href="rawMaterials.html"><i class="fas fa-cubes"></i><span>Raw Materials</span></a></li>
+    <li><a href="suppliers.html"><i class="fas fa-truck"></i><span>Suppliers</span></a></li>
+    <li><a href="delivery.html"><i class="fas fa-route"></i><span>Delivery</span></a></li>
+    <li><a href="todo.html"><i class="fas fa-list"></i><span>To-Do</span></a></li>
+    <li><a href="reports.html"><i class="fas fa-file-alt"></i><span>Reports</span></a></li>
+    <li><a href="employees.html"><i class="fas fa-user"></i><span>Employees</span></a></li>
+    <li class="logout"><a href="logout.html"><i class="fas fa-sign-out-alt"></i><span>Logout</span></a></li>
+  </ul>
+</div>
+
+<main class="main-content">
+<header class="header-wrapper">
+  <div class="header-title">
+    <span>Mayondo Wood and Furniture</span>
+    <h2>Dashboard</h2>
+  </div>
+</header>
+
+<section class="dashboard-cards">
+  <div class="card">
+    <h3>Total Stock</h3>
+    <p id="totalStock">0</p>
+  </div>
+  <div class="card">
+    <h3>Total Sales</h3>
+    <p id="totalSales">0</p>
+  </div>
+  <div class="card">
+    <h3>Pending Deliveries</h3>
+    <p id="pendingDelivery">0</p>
+  </div>
+  <div class="card">
+    <h3>Pending Tasks</h3>
+    <p id="pendingTodo">0</p>
+  </div>
+</section>
+
+<section class="dashboard-tables">
+  <h3>Recent Sales</h3>
+  <table id="recentSalesTable">
+    <thead>
+      <tr>
+        <th>Customer</th>
+        <th>Product</th>
+        <th>Quantity</th>
+        <th>Total Price</th>
+        <th>Date</th>
+      </tr>
+    </thead>
+    <tbody></tbody>
+  </table>
+</section>
+</main>
+</body>
+</html>

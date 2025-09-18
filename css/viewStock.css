@@ -1,0 +1,32 @@
+.view-stock-section {
+  padding: 1rem;
+  max-width: 900px;
+  margin: 0 auto;
+}
+
+.view-stock-section table {
+  width: 100%;
+  border-collapse: collapse;
+  background: white;
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+}
+
+.view-stock-section th, .view-stock-section td {
+  padding: 10px;
+  border-bottom: 1px solid #ddd;
+  text-align: center;
+}
+
+.view-stock-section button {
+  padding: 5px 10px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  background: #06212c;
+  color: white;
+}
+.view-stock-section button:hover {
+  background: #2d3436;
+}
