@@ -1,24 +1,167 @@
+// addStock.js
+
+// Form elements
 const addStockForm = document.getElementById("addStockForm");
 const successMessage = document.getElementById("successMessage");
+const mainError = document.getElementById("mainError");
 
-addStockForm.addEventListener("submit", function(e){
+// Required inputs
+const productNameInput = document.getElementById("productName");
+const productTypeSelect = document.getElementById("productType");
+const costPriceInput = document.getElementById("costPrice");
+const quantityInput = document.getElementById("quantity");
+const productPriceInput = document.getElementById("productPrice");
+const supplierNameInput = document.getElementById("supplierName");
+const dateInput = document.getElementById("date");
+const qualitySelect = document.getElementById("quality");
+
+// Optional inputs
+const colorInput = document.getElementById("color");
+const measurementsInput = document.getElementById("measurements");
+
+// Computed fields
+const totalValueInput = document.getElementById("totalValue");
+const profitValueInput = document.getElementById("profitValue");
+const costTotalInput = document.getElementById("costTotal"); // New field
+
+// Error fields
+const errorFields = {
+  productName: document.getElementById("errorProductName"),
+  productType: document.getElementById("errorProductType"),
+  costPrice: document.getElementById("errorCostPrice"),
+  quantity: document.getElementById("errorQuantity"),
+  productPrice: document.getElementById("errorProductPrice"),
+  supplierName: document.getElementById("errorSupplierName"),
+  date: document.getElementById("errorDate"),
+  quality: document.getElementById("errorQuality"),
+};
+
+// Calculate Total Value, Expected Profit, and Cost Price Total
+function calculateTotals() {
+  let quantity = parseFloat(quantityInput.value) || 0;
+  let costPrice = parseFloat(costPriceInput.value) || 0;
+  let productPrice = parseFloat(productPriceInput.value) || 0;
+
+  if (quantity < 0) quantity = 0;
+  if (costPrice < 0) costPrice = 0;
+  if (productPrice < 0) productPrice = 0;
+
+  const totalValue = quantity * productPrice;
+  const expectedProfit = (productPrice - costPrice) * quantity;
+  const costTotal = quantity * costPrice;
+
+  totalValueInput.value = totalValue.toFixed(2);
+  profitValueInput.value = expectedProfit.toFixed(2);
+  costTotalInput.value = costTotal.toFixed(2);
+}
+
+// Reset all errors
+function resetErrors() {
+  mainError.style.display = "none";
+  Object.values(errorFields).forEach(e => e.textContent = "");
+  const inputs = addStockForm.querySelectorAll("input, select");
+  inputs.forEach(input => input.classList.remove("invalid"));
+}
+
+// Form validation
+function validateForm() {
+  resetErrors();
+  let isValid = true;
+
+  if (!productNameInput.value.trim()) {
+    errorFields.productName.textContent = "Product name is required.";
+    productNameInput.classList.add("invalid");
+    isValid = false;
+  }
+  if (!productTypeSelect.value) {
+    errorFields.productType.textContent = "Select a product type.";
+    productTypeSelect.classList.add("invalid");
+    isValid = false;
+  }
+  if (!costPriceInput.value || parseFloat(costPriceInput.value) <= 0) {
+    errorFields.costPrice.textContent = "Cost price must be greater than 0.";
+    costPriceInput.classList.add("invalid");
+    isValid = false;
+  }
+  if (!quantityInput.value || parseFloat(quantityInput.value) <= 0) {
+    errorFields.quantity.textContent = "Quantity must be greater than 0.";
+    quantityInput.classList.add("invalid");
+    isValid = false;
+  }
+  if (!productPriceInput.value || parseFloat(productPriceInput.value) <= 0) {
+    errorFields.productPrice.textContent = "Product price must be greater than 0.";
+    productPriceInput.classList.add("invalid");
+    isValid = false;
+  }
+  if (!supplierNameInput.value.trim()) {
+    errorFields.supplierName.textContent = "Supplier name is required.";
+    supplierNameInput.classList.add("invalid");
+    isValid = false;
+  }
+  if (!dateInput.value) {
+    errorFields.date.textContent = "Date is required.";
+    dateInput.classList.add("invalid");
+    isValid = false;
+  }
+  if (!qualitySelect.value) {
+    errorFields.quality.textContent = "Select quality.";
+    qualitySelect.classList.add("invalid");
+    isValid = false;
+  }
+
+  if (!isValid) {
+    mainError.style.display = "block";
+    mainError.textContent = "Please fill in the form correctly.";
+  }
+
+  return isValid;
+}
+
+// Form submission
+addStockForm.addEventListener("submit", function(e) {
   e.preventDefault();
+  if (!validateForm()) return;
 
   const newStock = {
-    name: document.getElementById("productName").value.trim(),
-    type: document.getElementById("productType").value.trim(),
-    costPrice: parseFloat(document.getElementById("costPrice").value),
-    productPrice: parseFloat(document.getElementById("productPrice").value),
-    quantity: parseInt(document.getElementById("quantity").value),
-    supplier: document.getElementById("supplier").value.trim(),
-    date: new Date().toISOString()
+    productName: productNameInput.value.trim(),
+    productType: productTypeSelect.value,
+    costPrice: parseFloat(costPriceInput.value),
+    quantity: parseFloat(quantityInput.value),
+    productPrice: parseFloat(productPriceInput.value),
+    supplierName: supplierNameInput.value.trim(),
+    date: dateInput.value,
+    quality: qualitySelect.value,
+    color: colorInput.value.trim(),
+    measurements: measurementsInput.value.trim(),
+    totalValue: parseFloat(totalValueInput.value),
+    expectedProfit: parseFloat(profitValueInput.value),
+    costTotal: parseFloat(costTotalInput.value)
   };
 
-  stockData.push(newStock);
-  saveStockData();
-  successMessage.textContent = "Stock added successfully!";
-  addStockForm.reset();
-  window.updateDashboard();
+  // Save to modular storage
+  addNewStock(newStock);
 
-  setTimeout(()=>{ successMessage.textContent = ""; }, 3000);
+  // Show success message
+  successMessage.style.display = "block";
+  successMessage.textContent = `Success! Stock for ${newStock.productName} recorded. Total Value: UGX ${newStock.totalValue.toFixed(2)}, Cost Total: UGX ${newStock.costTotal.toFixed(2)}, Expected Profit: UGX ${newStock.expectedProfit.toFixed(2)}`;
+
+  // Reset form
+  addStockForm.reset();
+  totalValueInput.value = "";
+  profitValueInput.value = "";
+  costTotalInput.value = "";
+  dateInput.valueAsDate = new Date();
+
+  setTimeout(() => {
+    successMessage.style.display = "none";
+  }, 3000);
 });
+
+// Realtime calculations
+quantityInput.addEventListener("input", calculateTotals);
+costPriceInput.addEventListener("input", calculateTotals);
+productPriceInput.addEventListener("input", calculateTotals);
+
+// Set default date on load
+dateInput.valueAsDate = new Date();
+calculateTotals();

@@ -1,0 +1,128 @@
+/* ========================================
+   View Employees & Suppliers Table Styles
+======================================== */
+
+/* Sections wrapper */
+.employees-section,
+.suppliers-section {
+  max-width: 1200px;
+  margin: 20px auto; /* center the section */
+  background: #fff;
+  padding: 25px;
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+  overflow-x: auto; /* horizontal scroll on smaller screens */
+}
+
+/* Table styling */
+table {
+  width: 100%;
+  border-collapse: collapse;
+  min-width: 600px;
+}
+
+thead th {
+  background-color: #073142;
+  color: #fff;
+  font-weight: 600;
+  padding: 12px 15px;
+  text-align: left;
+  border-radius: 6px 6px 0 0;
+}
+
+tbody td {
+  padding: 10px 15px;
+  border-bottom: 1px solid #e0e0e0;
+  color: #555;
+}
+
+tbody tr:nth-child(even) {
+  background-color: #f9f9f9;
+}
+
+tbody tr:hover {
+  background-color: #f1f7f4;
+}
+
+/* Action buttons */
+button {
+  padding: 5px 12px;
+  border-radius: 6px;
+  font-size: 0.85rem;
+  cursor: pointer;
+  border: none;
+  transition: all 0.2s ease;
+  margin: 0 3px;
+}
+
+button.edit {
+  background-color: #2196F3;
+  color: #fff;
+}
+
+button.delete {
+  background-color: #f44336;
+  color: #fff;
+}
+
+button:hover {
+  opacity: 0.85;
+}
+
+/* Main Error Message */
+.main-error-message {
+  display: none;
+  color: #f44336;
+  font-weight: 600;
+  margin-bottom: 15px;
+}
+
+/* Success Message */
+.success-message {
+  display: none;
+  color: #4CAF50;
+  font-weight: 600;
+  margin-bottom: 15px;
+}
+
+/* Error messages below inputs */
+.error-message {
+  color: #f44336;
+  font-size: 0.85rem;
+  margin-top: 4px;
+}
+
+/* Mobile Responsiveness */
+@media screen and (max-width: 1024px) {
+  .employees-section,
+  .suppliers-section {
+    padding: 20px;
+  }
+
+  table {
+    font-size: 0.9rem;
+    min-width: 100%;
+  }
+
+  button {
+    padding: 4px 10px;
+    font-size: 0.8rem;
+  }
+}
+
+@media screen and (max-width: 768px) {
+  .employees-section,
+  .suppliers-section {
+    padding: 15px;
+  }
+
+  table {
+    font-size: 0.85rem;
+    min-width: 100%;
+  }
+
+  button {
+    padding: 3px 8px;
+    font-size: 0.75rem;
+  }
+}

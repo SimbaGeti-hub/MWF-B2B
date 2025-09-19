@@ -1,72 +1,116 @@
+// employees.js
+
+// Elements
 const addEmployeeForm = document.getElementById("addEmployeeForm");
-const employeesTableBody = document.getElementById("employeesTable")?.querySelector("tbody");
 const successMessage = document.getElementById("successMessage");
+const mainError = document.getElementById("mainError");
 
-// Initialize employeesData from storage
-if(!window.employeesData) window.employeesData = JSON.parse(localStorage.getItem("employeesData") || "[]");
+// Input fields
+const nameInput = document.getElementById("employeeName");
+const ageInput = document.getElementById("employeeAge");
+const positionInput = document.getElementById("employeePosition");
+const contactInput = document.getElementById("employeeContact");
+const emailInput = document.getElementById("employeeEmail");
+const roleInput = document.getElementById("employeeRole");
 
-addEmployeeForm.addEventListener("submit", function(e){
+// Error fields
+const errorFields = {
+  name: document.getElementById("errorEmployeeName"),
+  age: document.getElementById("errorEmployeeAge"),
+  position: document.getElementById("errorEmployeePosition"),
+  contact: document.getElementById("errorEmployeeContact"),
+  email: document.getElementById("errorEmployeeEmail"),
+  role: document.getElementById("errorEmployeeRole"),
+};
+
+// Reset errors
+function resetErrors() {
+  mainError.style.display = "none";
+  mainError.textContent = "";
+  Object.values(errorFields).forEach(e => (e.textContent = ""));
+  const inputs = addEmployeeForm.querySelectorAll("input");
+  inputs.forEach(input => input.classList.remove("invalid"));
+}
+
+// Validate form
+function validateForm() {
+  resetErrors();
+  let isValid = true;
+
+  if (!nameInput.value.trim()) {
+    errorFields.name.textContent = "Employee name is required.";
+    nameInput.classList.add("invalid");
+    isValid = false;
+  }
+  if (!ageInput.value || parseInt(ageInput.value) < 18) {
+    errorFields.age.textContent = "Employee must be 18 or older.";
+    ageInput.classList.add("invalid");
+    isValid = false;
+  }
+  if (!positionInput.value.trim()) {
+    errorFields.position.textContent = "Position is required.";
+    positionInput.classList.add("invalid");
+    isValid = false;
+  }
+  if (!contactInput.value.trim()) {
+    errorFields.contact.textContent = "Contact is required.";
+    contactInput.classList.add("invalid");
+    isValid = false;
+  }
+  if (!emailInput.value.trim() || !emailInput.value.includes("@")) {
+    errorFields.email.textContent = "Valid email is required.";
+    emailInput.classList.add("invalid");
+    isValid = false;
+  }
+  if (!roleInput.value.trim()) {
+    errorFields.role.textContent = "Role is required.";
+    roleInput.classList.add("invalid");
+    isValid = false;
+  }
+
+  if (!isValid) {
+    mainError.style.display = "block";
+    mainError.textContent = "Please correct the highlighted fields.";
+  }
+
+  return isValid;
+}
+
+// Form submit
+addEmployeeForm.addEventListener("submit", function (e) {
   e.preventDefault();
+  if (!validateForm()) return;
+
   const newEmployee = {
-    name: document.getElementById("employeeName").value.trim(),
-    position: document.getElementById("employeePosition").value.trim(),
-    contact: document.getElementById("employeeContact").value.trim(),
-    email: document.getElementById("employeeEmail").value.trim(),
-    role: document.getElementById("employeeRole").value.trim(),
-    dateAdded: new Date().toISOString()
+    name: nameInput.value.trim(),
+    age: parseInt(ageInput.value),
+    position: positionInput.value.trim(),
+    contact: contactInput.value.trim(),
+    email: emailInput.value.trim(),
+    role: roleInput.value.trim(),
   };
 
-  window.employeesData.push(newEmployee);
-  localStorage.setItem("employeesData", JSON.stringify(window.employeesData));
-  successMessage.textContent = "Employee added successfully!";
+  // Add employee to storage
+  employeesData.push(newEmployee);
+  saveEmployeesData();
+
+  successMessage.textContent = `Success! Employee ${newEmployee.name} added.`;
+  successMessage.style.display = "block";
+
   addEmployeeForm.reset();
-  renderEmployees();
-  window.updateDashboard();
-  setTimeout(()=>{ successMessage.textContent = ""; },3000);
+
+  setTimeout(() => {
+    successMessage.style.display = "none";
+  }, 3000);
 });
 
-function renderEmployees(){
-  if(!employeesTableBody) return;
-  employeesTableBody.innerHTML = "";
-  window.employeesData.forEach((emp,index)=>{
-    const tr = document.createElement("tr");
-    tr.innerHTML = `
-      <td>${emp.name}</td>
-      <td>${emp.position}</td>
-      <td>${emp.contact}</td>
-      <td>${emp.email}</td>
-      <td>${emp.role}</td>
-      <td>
-        <button class="action-btn" onclick="editEmployee(${index})">Edit</button>
-        <button class="action-btn" onclick="deleteEmployee(${index})">Delete</button>
-      </td>
-    `;
-    employeesTableBody.appendChild(tr);
+// Live error removal while typing
+[nameInput, ageInput, positionInput, contactInput, emailInput, roleInput].forEach(input => {
+  input.addEventListener("input", () => {
+    if (input.classList.contains("invalid")) {
+      input.classList.remove("invalid");
+      const key = input.id.replace("employee", "").toLowerCase();
+      if (errorFields[key]) errorFields[key].textContent = "";
+    }
   });
-}
-
-function editEmployee(index){
-  const emp = window.employeesData[index];
-  const newName = prompt("Employee Name:", emp.name) || emp.name;
-  const newPosition = prompt("Position:", emp.position) || emp.position;
-  const newContact = prompt("Contact:", emp.contact) || emp.contact;
-  const newEmail = prompt("Email:", emp.email) || emp.email;
-  const newRole = prompt("Role:", emp.role) || emp.role;
-
-  window.employeesData[index] = {...emp,name:newName,position:newPosition,contact:newContact,email:newEmail,role:newRole};
-  localStorage.setItem("employeesData", JSON.stringify(window.employeesData));
-  renderEmployees();
-  window.updateDashboard();
-}
-
-function deleteEmployee(index){
-  if(confirm("Delete this employee?")){
-    window.employeesData.splice(index,1);
-    localStorage.setItem("employeesData", JSON.stringify(window.employeesData));
-    renderEmployees();
-    window.updateDashboard();
-  }
-}
-
-// Initial render
-renderEmployees();
+});
