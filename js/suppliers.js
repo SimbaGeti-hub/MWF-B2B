@@ -1,69 +1,106 @@
+// suppliers.js
+
+// Elements
 const addSupplierForm = document.getElementById("addSupplierForm");
-const suppliersTableBody = document.getElementById("suppliersTable")?.querySelector("tbody");
 const successMessage = document.getElementById("successMessage");
 
-// Initialize suppliersData from storage
-if(!window.suppliersData) window.suppliersData = JSON.parse(localStorage.getItem("suppliersData") || "[]");
+// Input fields
+const supplierNameInput = document.getElementById("supplierName");
+const supplierLocationInput = document.getElementById("supplierLocation");
+const supplierPhoneInput = document.getElementById("supplierPhone");
+const supplierEmailInput = document.getElementById("supplierEmail");
+const supplierProductInput = document.getElementById("supplierProduct");
 
-addSupplierForm.addEventListener("submit", function(e){
+// Error fields
+const errorFields = {
+  name: document.getElementById("errorSupplierName"),
+  location: document.getElementById("errorSupplierLocation"),
+  phone: document.getElementById("errorSupplierPhone"),
+  email: document.getElementById("errorSupplierEmail"),
+  product: document.getElementById("errorSupplierProduct"),
+};
+const mainError = document.getElementById("mainError");
+
+// Reset errors
+function resetErrors() {
+  mainError.style.display = "none";
+  Object.values(errorFields).forEach(e => (e.textContent = ""));
+  const inputs = addSupplierForm.querySelectorAll("input");
+  inputs.forEach(input => input.classList.remove("invalid"));
+}
+
+// Validate form
+function validateForm() {
+  resetErrors();
+  let isValid = true;
+
+  if (!supplierNameInput.value.trim()) {
+    errorFields.name.textContent = "Supplier name is required.";
+    supplierNameInput.classList.add("invalid");
+    isValid = false;
+  }
+  if (!supplierLocationInput.value.trim()) {
+    errorFields.location.textContent = "Location is required.";
+    supplierLocationInput.classList.add("invalid");
+    isValid = false;
+  }
+  if (!supplierPhoneInput.value.trim()) {
+    errorFields.phone.textContent = "Phone number is required.";
+    supplierPhoneInput.classList.add("invalid");
+    isValid = false;
+  }
+  if (!supplierEmailInput.value.trim() || !supplierEmailInput.value.includes("@")) {
+    errorFields.email.textContent = "Valid email is required.";
+    supplierEmailInput.classList.add("invalid");
+    isValid = false;
+  }
+  if (!supplierProductInput.value.trim()) {
+    errorFields.product.textContent = "Product of supply is required.";
+    supplierProductInput.classList.add("invalid");
+    isValid = false;
+  }
+
+  if (!isValid) {
+    mainError.style.display = "block";
+    mainError.textContent = "Please fix the errors before submitting.";
+  }
+
+  return isValid;
+}
+
+// Form submit
+addSupplierForm.addEventListener("submit", function (e) {
   e.preventDefault();
+  if (!validateForm()) return;
+
   const newSupplier = {
-    name: document.getElementById("supplierName").value.trim(),
-    contact: document.getElementById("supplierContact").value.trim(),
-    email: document.getElementById("supplierEmail").value.trim(),
-    address: document.getElementById("supplierAddress").value.trim(),
-    dateAdded: new Date().toISOString()
+    name: supplierNameInput.value.trim(),
+    location: supplierLocationInput.value.trim(),
+    phone: supplierPhoneInput.value.trim(),
+    email: supplierEmailInput.value.trim(),
+    product: supplierProductInput.value.trim(),
   };
 
-  window.suppliersData.push(newSupplier);
-  localStorage.setItem("suppliersData", JSON.stringify(window.suppliersData));
-  successMessage.textContent = "Supplier added successfully!";
+  suppliersData.push(newSupplier);   // ✅ uses storage.js
+  saveSuppliersData();               // ✅ uses storage.js
+
+  successMessage.textContent = `Success! Supplier ${newSupplier.name} added.`;
+  successMessage.style.display = "block";
+
   addSupplierForm.reset();
-  renderSuppliers();
-  window.updateDashboard();
-  setTimeout(()=>{ successMessage.textContent = ""; },3000);
+
+  setTimeout(() => {
+    successMessage.style.display = "none";
+  }, 3000);
 });
 
-function renderSuppliers(){
-  if(!suppliersTableBody) return;
-  suppliersTableBody.innerHTML = "";
-  window.suppliersData.forEach((sup,index)=>{
-    const tr = document.createElement("tr");
-    tr.innerHTML = `
-      <td>${sup.name}</td>
-      <td>${sup.contact}</td>
-      <td>${sup.email}</td>
-      <td>${sup.address}</td>
-      <td>
-        <button class="action-btn" onclick="editSupplier(${index})">Edit</button>
-        <button class="action-btn" onclick="deleteSupplier(${index})">Delete</button>
-      </td>
-    `;
-    suppliersTableBody.appendChild(tr);
+// Live error removal
+[supplierNameInput, supplierLocationInput, supplierPhoneInput, supplierEmailInput, supplierProductInput].forEach(input => {
+  input.addEventListener("input", () => {
+    if (input.classList.contains("invalid")) {
+      input.classList.remove("invalid");
+      const field = input.id.replace("supplier", "").toLowerCase();
+      if (errorFields[field]) errorFields[field].textContent = "";
+    }
   });
-}
-
-function editSupplier(index){
-  const sup = window.suppliersData[index];
-  const newName = prompt("Supplier Name:", sup.name) || sup.name;
-  const newContact = prompt("Contact:", sup.contact) || sup.contact;
-  const newEmail = prompt("Email:", sup.email) || sup.email;
-  const newAddress = prompt("Address:", sup.address) || sup.address;
-
-  window.suppliersData[index] = {...sup,name:newName,contact:newContact,email:newEmail,address:newAddress};
-  localStorage.setItem("suppliersData", JSON.stringify(window.suppliersData));
-  renderSuppliers();
-  window.updateDashboard();
-}
-
-function deleteSupplier(index){
-  if(confirm("Delete this supplier?")){
-    window.suppliersData.splice(index,1);
-    localStorage.setItem("suppliersData", JSON.stringify(window.suppliersData));
-    renderSuppliers();
-    window.updateDashboard();
-  }
-}
-
-// Initial render
-renderSuppliers();
+});

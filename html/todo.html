@@ -5,11 +5,12 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>To-Do - MWF</title>
 <link rel="stylesheet" href="../css/style.css">
-<link rel="stylesheet" href="css/todo.css">
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css" integrity="sha512-2SwdPD6INVrV/lHTZbO2nodKhrnDdJK9/kg2XD1r9uGqPo1cUbujc+IYdlYdEErWNu69gVcYgdxlmVmzTWnetw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+<link rel="stylesheet" href="../css/todo.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css"/>
 <script src="vendors/fontawesome/all.min.js" defer></script>
-<script src="js/storage.js" defer></script>
-<script src="js/main.js" defer></script>
+<script src="../js/storage.js" defer></script>
+<script src="../js/main.js" defer></script>
+<script src="../js/todo-validations.js" defer></script>
 <script src="../js/todo.js" defer></script>
 </head>
 <body>
@@ -20,7 +21,7 @@
     <li><a href="dashboard.html"><i class="fa-solid fa-gauge-high"></i><span>Dashboard</span></a></li>
     <li><a href="products.html"><i class="fas fa-box"></i><span>Products</span></a></li>
     <li><a href="addStock.html"><i class="fas fa-plus-square"></i><span>Add Stock</span></a></li>
-    <li><a href="viewStock.html" ><i class="fas fa-list"></i><span>View Stock</span></a></li>
+    <li><a href="viewStock.html"><i class="fas fa-list"></i><span>View Stock</span></a></li>
     <li><a href="addSales.html"><i class="fa-solid fa-comments-dollar"></i><span>Add Sales</span></a></li>
     <li><a href="viewSales.html"><i class="fas fa-dollar-sign"></i><span>Sales</span></a></li>
     <li><a href="rawMaterials.html"><i class="fas fa-cubes"></i><span>Raw Materials</span></a></li>
@@ -37,30 +38,128 @@
 <header class="header-wrapper">
   <div class="header-title">
     <span>Mayondo Wood and Furniture</span>
-    <h2>To-Do List</h2>
+    <h2>To-Do Management</h2>
   </div>
 </header>
 
 <section class="todo-section">
-  <h3>Manage Tasks</h3>
-  <form id="addTaskForm">
-    <input type="text" id="taskName" placeholder="Task Name" required>
-    <input type="datetime-local" id="taskDeadline" required>
-    <button type="submit">Add Task</button>
-  </form>
-  <p id="successMessage" style="color:green;"></p>
+  <!-- Form Selector -->
+  <div class="form-card">
+    <h3>Select Form</h3>
+    <select id="formSelector">
+      <option value="">-- Choose Form --</option>
+      <option value="deliveryForm">Register Delivery</option>
+      <option value="taskForm">Register Task</option>
+    </select>
+  </div>
 
-  <table id="tasksTable">
-    <thead>
-      <tr>
-        <th>Task</th>
-        <th>Deadline</th>
-        <th>Status</th>
-        <th>Actions</th>
-      </tr>
-    </thead>
-    <tbody></tbody>
-  </table>
+  <!-- Delivery Form -->
+  <div class="form-card" id="deliveryForm" style="display:none;">
+    <h3>Register Delivery</h3>
+    <div id="deliveryMainError" class="main-error-message"></div>
+    <form id="addDeliveryForm" novalidate>
+      <div class="form-group">
+        <label for="deliveryCustomerName">Customer Name</label>
+        <input type="text" id="deliveryCustomerName" placeholder="Customer Name">
+        <div class="error-message" id="errorDeliveryCustomerName"></div>
+      </div>
+      <div class="form-group">
+        <label for="deliveryProduct">Product</label>
+        <input type="text" id="deliveryProduct" placeholder="Product to deliver">
+        <div class="error-message" id="errorDeliveryProduct"></div>
+      </div>
+      <div class="form-group">
+        <label for="deliveryLocation">Location</label>
+        <input type="text" id="deliveryLocation" placeholder="Delivery Location">
+        <div class="error-message" id="errorDeliveryLocation"></div>
+      </div>
+      <div class="form-group">
+        <label for="deliveryDate">Date</label>
+        <input type="date" id="deliveryDate">
+        <div class="error-message" id="errorDeliveryDate"></div>
+      </div>
+      <div class="form-group">
+        <label for="deliveryTime">Time</label>
+        <input type="time" id="deliveryTime">
+        <div class="error-message" id="errorDeliveryTime"></div>
+      </div>
+      <div class="form-group">
+        <label for="deliveryAssignedPerson">Assigned Person</label>
+        <input type="text" id="deliveryAssignedPerson" placeholder="Driver / Assigned person">
+        <div class="error-message" id="errorDeliveryAssignedPerson"></div>
+      </div>
+      <div class="form-group">
+        <label for="deliveryCustomerNumber">Customer Number</label>
+        <input type="text" id="deliveryCustomerNumber" placeholder="Customer phone number">
+        <div class="error-message" id="errorDeliveryCustomerNumber"></div>
+      </div>
+      <div class="form-group">
+        <label for="deliveryNumberOfItems">Number of Items</label>
+        <input type="number" id="deliveryNumberOfItems" placeholder="Number of items" min="1">
+        <div class="error-message" id="errorDeliveryNumberOfItems"></div>
+      </div>
+      <button type="submit" class="btn-submit">Add Delivery</button>
+    </form>
+    <p id="deliverySuccessMessage" class="success-message"></p>
+  </div>
+
+  <!-- Task Form -->
+  <div class="form-card" id="taskForm" style="display:none;">
+    <h3>Register Task</h3>
+    <div id="taskMainError" class="main-error-message"></div>
+    <form id="addTaskForm" novalidate>
+      <div class="form-group">
+        <label for="taskName">Task</label>
+        <input type="text" id="taskName" placeholder="Task to be done">
+        <div class="error-message" id="errorTaskName"></div>
+      </div>
+      <div class="form-group">
+        <label for="taskDate">Date</label>
+        <input type="date" id="taskDate">
+        <div class="error-message" id="errorTaskDate"></div>
+      </div>
+      <div class="form-group">
+        <label for="taskTime">Time</label>
+        <input type="time" id="taskTime">
+        <div class="error-message" id="errorTaskTime"></div>
+      </div>
+      <div class="form-group">
+        <label for="taskLocation">Location</label>
+        <input type="text" id="taskLocation" placeholder="Location">
+        <div class="error-message" id="errorTaskLocation"></div>
+      </div>
+      <div class="form-group">
+        <label for="taskAssignedPerson">Assigned Person</label>
+        <input type="text" id="taskAssignedPerson" placeholder="Person responsible">
+        <div class="error-message" id="errorTaskAssignedPerson"></div>
+      </div>
+      <button type="submit" class="btn-submit">Add Task</button>
+    </form>
+    <p id="taskSuccessMessage" class="success-message"></p>
+  </div>
+
+  <!-- Table -->
+  <div class="table-wrapper">
+    <h3>Registered Deliveries & Tasks</h3>
+    <table id="todoTable">
+      <thead>
+        <tr>
+          <th>Type</th>
+          <th>Name / Customer</th>
+          <th>Product / Task</th>
+          <th>Location</th>
+          <th>Date</th>
+          <th>Time</th>
+          <th>Assigned Person</th>
+          <th>Customer Number / N/A</th>
+          <th>Number of Items / N/A</th>
+          <th>Actions</th>
+        </tr>
+      </thead>
+      <tbody></tbody>
+    </table>
+  </div>
+
 </section>
 </main>
 </body>

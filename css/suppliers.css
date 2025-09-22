@@ -1,51 +1,185 @@
-.suppliers-section {
-  padding: 1rem;
-  max-width: 900px;
-  margin: 0 auto;
+/* =========================
+   Supplier Form Styling
+   ========================= */
+.form-card {
+  background: #ffffff;
+  border-radius: 12px;
+  padding: 2rem;
+  max-width: 600px;
+  margin: 2rem auto;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
 }
 
-.suppliers-section form {
+.form-card h3 {
+  font-size: 1.8rem;
+  font-weight: 700;
+  margin-bottom: 1.5rem;
+  color: #06212c;
+}
+
+.form-group {
+  margin-bottom: 1.5rem;
   display: flex;
-  flex-wrap: wrap;
-  gap: 10px;
-  margin-bottom: 20px;
+  flex-direction: column;
 }
 
-.suppliers-section input,
-.suppliers-section button {
-  padding: 10px;
+.form-group label {
+  font-weight: 600;
+  margin-bottom: 0.5rem;
+  color: #2d3436;
+}
+
+.form-group input {
+  padding: 0.75rem 1rem;
+  border: 1px solid #90E0EF;
   border-radius: 8px;
-  border: 1px solid #ccc;
   font-size: 1rem;
+  transition: border 0.3s ease, box-shadow 0.3s ease, background-color 0.3s ease;
 }
 
-.suppliers-section button {
-  background: #06212c;
+.form-group input:focus {
+  outline: none;
+  border-color: #90E0EF;
+  box-shadow: 0 0 5px rgba(108, 92, 231, 0.3);
+}
+
+/* Invalid input styling */
+input.invalid {
+  background-color: #fdecea; /* light red background */
+  border: 1px solid #e74c3c;
+  box-shadow: 0 0 5px rgba(231, 76, 60, 0.3);
+}
+
+/* =========================
+   Error & Success Messages
+   ========================= */
+.error-message {
+  color: #e74c3c;
+  font-size: 0.85rem;
+  margin-top: 0.25rem;
+}
+
+.main-error-message {
+  background-color: #f8d7da; /* red background */
+  color: #721c24;
+  font-weight: 600;
+  font-size: 1rem;
+  padding: 0.75rem 1rem;
+  border-radius: 8px;
+  margin-bottom: 1rem;
+  text-align: center;
+  display: none;
+}
+
+.success-message {
+  background: #dff0d8;
+  color: #3c763d;
+  font-weight: 600;
+  font-size: 1rem;
+  padding: 0.75rem 1rem;
+  border-radius: 8px;
+  margin-top: 1rem;
+  text-align: center;
+  display: none;
+}
+
+/* =========================
+   Buttons
+   ========================= */
+.btn-submit {
+  background-color: #0077B6;
   color: white;
-  cursor: pointer;
+  padding: 0.8rem 1.5rem;
+  font-size: 1rem;
+  font-weight: 600;
   border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
 }
 
-.suppliers-section button:hover {
-  background: #2d3436;
+.btn-submit:hover {
+  background-color: #90E0EF;
+  color: #0077B6;
 }
 
-.suppliers-section table {
+/* =========================
+   Tables for Employees & Suppliers
+   ========================= */
+.table-wrapper {
+  max-width: 1200px;
+  margin: 2rem auto;
+  overflow-x: auto;
+}
+
+table {
   width: 100%;
   border-collapse: collapse;
-  background: white;
+  margin-bottom: 2rem;
+  background: #ffffff;
   border-radius: 12px;
   overflow: hidden;
-  box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+  box-shadow: 0 4px 12px rgba(0,0,0,0.05);
 }
 
-.suppliers-section th, .suppliers-section td {
-  padding: 10px;
-  border-bottom: 1px solid #ddd;
-  text-align: center;
+table thead {
+  background-color: #6c5ce7;
+  color: white;
 }
 
-.suppliers-section button.action-btn {
-  padding: 5px 8px;
-  margin: 0 2px;
+table th, table td {
+  text-align: left;
+  padding: 0.75rem 1rem;
+  font-size: 0.95rem;
+  border-bottom: 1px solid #e0e0e0;
+}
+
+table tr:hover {
+  background-color: #f5f5f5;
+}
+
+table button {
+  padding: 0.4rem 0.8rem;
+  background-color: #e74c3c;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 0.85rem;
+  transition: background-color 0.3s ease;
+}
+
+table button:hover {
+  background-color: #c0392b;
+}
+
+/* Center tables on page */
+table, .table-wrapper {
+  margin-left: auto;
+  margin-right: auto;
+}
+
+/* Responsive adjustments */
+@media (max-width: 1024px) {
+  .form-card, .table-wrapper {
+    margin: 1rem;
+    padding: 1.5rem;
+  }
+
+  table th, table td {
+    padding: 0.5rem 0.75rem;
+    font-size: 0.85rem;
+  }
+}
+
+@media (max-width: 768px) {
+  .form-card, .table-wrapper {
+    margin: 1rem;
+    padding: 1rem;
+  }
+
+  table th, table td {
+    padding: 0.4rem 0.5rem;
+    font-size: 0.8rem;
+  }
 }
