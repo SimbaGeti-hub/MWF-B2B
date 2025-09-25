@@ -1,0 +1,86 @@
+doctype html
+head
+  meta(charset='UTF-8')
+  meta(name='viewport' content='width=device-width, initial-scale=1.0')
+  title View Sales - MWF
+  link(rel='stylesheet' href='../css/style.css')
+  link(rel='stylesheet' href='../css/viewSales.css')
+  link(rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css' integrity='sha512-2SwdPD6INVrV/lHTZbO2nodKhrnDdJK9/kg2XD1r9uGqPo1cUbujc+IYdlYdEErWNu69gVcYgdxlmVmzTWnetw==' crossorigin='anonymous' referrerpolicy='no-referrer')
+  script(src='vendors/fontawesome/all.min.js' defer='')
+  script(src='../js/storage.js' defer='')
+  script(src='../js/main.js' defer='')
+  script(src='../js/viewSales.js' defer='')
+#hamburger.hamburger
+  i.fas.fa-bars
+#sidebar.sidebar
+  .logo MWF
+  ul.menu
+    li
+      a(href='dashboard.html')
+        i.fa-solid.fa-gauge-high
+        span Dashboard
+    // <li><a href="products.html"><i class="fas fa-box"></i><span>Products</span></a></li>
+    li
+      a(href='addStock.html')
+        i.fas.fa-plus-square
+        span Add Stock
+    li
+      a(href='viewStock.html')
+        i.fas.fa-list
+        span View Stock
+    li
+      a(href='addSales.html')
+        i.fa-solid.fa-comments-dollar
+        span Add Sales
+    li
+      a.active(href='viewSales.html')
+        i.fas.fa-dollar-sign
+        span Sales
+    li
+      a(href='rawMaterials.html')
+        i.fas.fa-cubes
+        span Raw Materials
+    li
+      a(href='suppliers.html')
+        i.fas.fa-truck
+        span Suppliers
+    li
+      a(href='delivery.html')
+        i.fas.fa-route
+        span Delivery
+    li
+      a(href='todo.html')
+        i.fas.fa-list
+        span To-Do
+    li
+      a(href='reports.html')
+        i.fas.fa-file-alt
+        span Reports
+    li
+      a(href='employees.html')
+        i.fas.fa-user
+        span Employees
+    li.logout
+      a(href='logout.html')
+        i.fas.fa-sign-out-alt
+        span Logout
+main.main-content
+  header.header-wrapper
+    .header-title
+      span Mayondo Wood and Furniture
+      h2 Sales OverView
+  section.view-sales-section
+    h3 All Sales Records
+    table#salesTable
+      thead
+        tr
+          th Customer Name
+          th Product Name
+          th Quantity
+          th Overrall Total
+          th Payment Type
+          th Sales Agent
+          th Sale Date
+          th Transport
+          th Actions
+      tbody

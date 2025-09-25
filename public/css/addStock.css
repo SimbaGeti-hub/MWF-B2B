@@ -28,9 +28,11 @@
 .add-stock-section select {
   padding: 10px 12px;
   border-radius: 8px;
-  border: 1px solid #ccc;
+  border: 1px solid #90E0EF;
   font-size: 1rem;
   box-sizing: border-box;
+  outline: none;
+  box-shadow: 0 0 5px rgba(108, 92, 231, 0.3);
 }
 
 .add-stock-section input[readonly] {
@@ -44,13 +46,14 @@
   font-weight: 600;
   border-radius: 8px;
   border: none;
-  background-color: #06212c;
+  background-color: #0077B6;
   color: white;
   cursor: pointer;
 }
 
 .add-stock-section button:hover {
-  background-color: #2d3436;
+  background-color: #90E0EF;
+  color: #0077B6;
 }
 
 /* .success-message {
@@ -78,5 +81,19 @@
 @media(max-width:768px){
   .add-stock-section {
     width: 95%;
+  }
+}
+
+/* Default state */
+.add-stock-section {
+  position: relative;
+  left: 0;
+  transition: left 0.3s ease;
+}
+
+/* When sidebar expands (desktop only), shift the form horizontally */
+@media (min-width: 769px) {
+  .sidebar.expanded ~ main .add-stock-section {
+    left: 160px; /* 240 - 80 = extra shift */
   }
 }

@@ -1,0 +1,133 @@
+.products-section {
+  padding: 20px;
+}
+.products-section h3 {
+  margin-bottom: 15px;
+  font-size: 1.4rem;
+  color: #333;
+}
+.products-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  gap: 20px;
+  margin-bottom: 25px;
+}
+.product-card {
+  background: #fff;
+  border-radius: 12px;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  text-align: center;
+}
+.product-card img {
+  width: 100%;
+  height: 160px;
+  object-fit: cover;
+}
+.product-card h4 {
+  margin: 10px 0;
+  font-size: 1rem;
+  color: #444;
+}
+.card-actions {
+  display: flex;
+  justify-content: space-between;
+  padding: 10px;
+}
+.card-actions button {
+  border: none;
+  padding: 6px 10px;
+  font-size: 0.85rem;
+  border-radius: 6px;
+  cursor: pointer;
+}
+.edit-btn { background: #007bff; color: white; }
+.delete-btn { background: #dc3545; color: white; }
+.add-btn {
+  margin-top: 10px;
+  padding: 10px 15px;
+  border: none;
+  background: #28a745;
+  color: white;
+  font-size: 0.9rem;
+  border-radius: 8px;
+  cursor: pointer;
+}
+
+/* Modal */
+.modal {
+  display: none;
+  position: fixed;
+  z-index: 99;
+  left: 0; top: 0;
+  width: 100%; height: 100%;
+  background: rgba(0,0,0,0.6);
+  justify-content: center;
+  align-items: center;
+}
+.modal-content {
+  background: #fff;
+  padding: 20px;
+  border-radius: 12px;
+  width: 400px;
+  max-width: 90%;
+  position: relative;
+}
+.close-btn {
+  position: absolute;
+  right: 15px;
+  top: 10px;
+  font-size: 22px;
+  cursor: pointer;
+}
+.form-group {
+  margin-bottom: 15px;
+}
+.form-group label {
+  display: block;
+  margin-bottom: 6px;
+  font-weight: bold;
+}
+.form-group input {
+  width: 100%;
+  padding: 8px;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+}
+.save-btn {
+  background: #007bff;
+  color: white;
+  border: none;
+  padding: 10px 15px;
+  border-radius: 6px;
+  cursor: pointer;
+}
+
+
+
+
+/* Keep header full width */
+.header-wrapper {
+  width: 100%;
+  box-sizing: border-box;
+}
+
+/* Shift only content sections to avoid sidebar overlap */
+.content-sections-wrapper {
+  margin-left: 250px; /* same width as sidebar */
+  padding: 20px;
+  box-sizing: border-box;
+  min-height: 100vh;
+  background-color: #f9f9f9; /* optional */
+}
+
+/* Responsive: remove left margin on small screens */
+@media (max-width: 768px) {
+  .content-sections-wrapper {
+    margin-left: 0;
+    padding: 15px 10px;
+  }
+}
+

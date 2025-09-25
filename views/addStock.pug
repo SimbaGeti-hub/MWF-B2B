@@ -1,0 +1,129 @@
+doctype html
+head
+  meta(charset='UTF-8')
+  meta(name='viewport' content='width=device-width, initial-scale=1.0')
+  title Add Stock
+  link(rel='stylesheet' href='css/style.css')
+  // sidebar & header
+  link(rel='stylesheet' href='css/addStock.css')
+  // page-specific
+  link(rel='stylesheet' href='css/addSaleErrors.css')
+  // errors & success
+  link(rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css')
+// Sidebar
+#sidebar.sidebar
+  ul.menu
+    li
+      a(href='dashboard.html')
+        i.fa-solid.fa-gauge-high
+        span Dashboard
+    li
+      a(href='products.html')
+        i.fas.fa-box
+        span Products
+    li
+      a.active(href='addStock.html')
+        i.fas.fa-plus-square
+        span Add Stock
+    li
+      a(href='viewStock.html')
+        i.fas.fa-list
+        span View Stock
+    li
+      a(href='addSales.html')
+        i.fa-solid.fa-comments-dollar
+        span Add Sales
+    li
+      a(href='viewSales.html')
+        i.fas.fa-dollar-sign
+        span Sales
+    // <li><a href="rawMaterials.html"><i class="fas fa-cubes"></i><span>Raw Materials</span></a></li>
+    li
+      a(href='suppliers.html')
+        i.fas.fa-truck
+        span Suppliers
+    // <li><a href="delivery.html"><i class="fas fa-route"></i><span>Delivery</span></a></li>
+    li
+      a(href='todo.html')
+        i.fas.fa-list
+        span To-Do
+    li
+      a(href='reports.html')
+        i.fas.fa-file-alt
+        span Reports
+    li
+      a(href='employees.html')
+        i.fas.fa-user
+        span Employees
+    li.logout
+      a(href='logout.html')
+        i.fas.fa-sign-out-alt
+        span Logout
+// Hamburger
+#hamburger.hamburger
+  i.fas.fa-bars
+// Main content
+main
+  .header-wrapper
+    .header-title
+      span MWF System
+      h2 Add Stock
+  section.add-stock-section
+    h3 Record New Stock
+    // Main error message
+    #mainError.main-error-message
+    form#addStockForm
+      label Product Name 
+      input#productName(type='text')
+      #errorProductName.error-message
+      label Product Type 
+      select#productType
+        option(value='') Select Type
+        option Timber
+        option Poles
+        option Hardwood
+        option Softwood
+        option Furniture
+      #errorProductType.error-message
+      label Cost Price (UGX) 
+      input#costPrice(type='number' min='1' placeholder='Enter cost price')
+      #errorCostPrice.error-message
+      label Quantity 
+      input#quantity(type='number' min='1' placeholder='Enter quantity')
+      #errorQuantity.error-message
+      label Product Price (UGX) 
+      input#productPrice(type='number' min='1' placeholder='Enter selling price')
+      #errorProductPrice.error-message
+      label Supplier Name 
+      input#supplierName(type='text')
+      #errorSupplierName.error-message
+      label Date 
+      input#date(type='date')
+      #errorDate.error-message
+      label Quality 
+      select#quality
+        option(value='') Select Quality
+        option High
+        option Medium
+        option Low
+      #errorQuality.error-message
+      label Color (optional)
+      input#color(type='text')
+      label Measurements (optional)
+      input#measurements(type='text')
+      // Cost Price Total
+      label Cost Price Total (UGX)
+      input#costTotal(type='text' readonly='')
+      // Total Stock Value
+      label Total Stock Value (UGX)
+      input#totalValue(type='text' readonly='')
+      // Expected Profit
+      label Expected Profit (UGX)
+      input#profitValue(type='text' readonly='')
+      button(type='submit') Record Stock
+    #successMessage.success-message
+// Scripts
+script(src='js/storage.js')
+script(src='js/addStockStorage.js')
+script(src='js/addStock.js')
+script(src='js/main.js')

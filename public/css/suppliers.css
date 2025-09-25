@@ -1,6 +1,6 @@
-/* =========================
-   Supplier Form Styling
-   ========================= */
+/* =====================================================
+   SUPPLIER FORM STYLING
+   ===================================================== */
 .form-card {
   background: #ffffff;
   border-radius: 12px;
@@ -17,6 +17,9 @@
   color: #06212c;
 }
 
+/* =====================================================
+   FORM GROUPS
+   ===================================================== */
 .form-group {
   margin-bottom: 1.5rem;
   display: flex;
@@ -50,9 +53,9 @@ input.invalid {
   box-shadow: 0 0 5px rgba(231, 76, 60, 0.3);
 }
 
-/* =========================
-   Error & Success Messages
-   ========================= */
+/* =====================================================
+   ERROR & SUCCESS MESSAGES
+   ===================================================== */
 .error-message {
   color: #e74c3c;
   font-size: 0.85rem;
@@ -83,10 +86,10 @@ input.invalid {
   display: none;
 }
 
-/* =========================
-   Buttons
-   ========================= */
-.btn-submit {
+/* =====================================================
+   BUTTONS
+   ===================================================== */
+/* .btn-submit {
   background-color: #0077B6;
   color: white;
   padding: 0.8rem 1.5rem;
@@ -101,11 +104,32 @@ input.invalid {
 .btn-submit:hover {
   background-color: #90E0EF;
   color: #0077B6;
+} */
+
+.btn-submit {
+  background-color: #0077B6;
+  color: white;
+  padding: 12px;               /* match Add Stock button */
+  font-size: 1.1rem;
+  font-weight: 600;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  width: 100%;                 /* ✅ make it stretch across form */
+  display: block;              /* ensures full-width */
+  margin-top: 15px;            /* consistent spacing */
 }
 
-/* =========================
-   Tables for Employees & Suppliers
-   ========================= */
+.btn-submit:hover {
+  background-color: #90E0EF;
+  color: #0077B6;
+}
+
+
+/* =====================================================
+   TABLES FOR SUPPLIERS
+   ===================================================== */
 .table-wrapper {
   max-width: 1200px;
   margin: 2rem auto;
@@ -159,7 +183,9 @@ table, .table-wrapper {
   margin-right: auto;
 }
 
-/* Responsive adjustments */
+/* =====================================================
+   RESPONSIVE ADJUSTMENTS
+   ===================================================== */
 @media (max-width: 1024px) {
   .form-card, .table-wrapper {
     margin: 1rem;
@@ -181,5 +207,32 @@ table, .table-wrapper {
   table th, table td {
     padding: 0.4rem 0.5rem;
     font-size: 0.8rem;
+  }
+}
+
+/* =====================================================
+   SUPPLIERS SECTION WRAPPER (Main Content Positioning)
+   ===================================================== */
+.suppliers-section {
+  padding: 1.5rem;
+  max-width: 650px;
+  margin: 2rem auto;
+  position: relative;
+  left: 0; /* Default position */
+  transition: left 0.3s ease; /* Smooth shift when sidebar expands */
+}
+
+/* Fluid layout on small screens */
+@media (max-width: 768px) {
+  .suppliers-section {
+    width: 95%;
+    margin: 1rem auto;
+  }
+}
+
+/* Shift suppliers section when sidebar expands (desktop only) */
+@media (min-width: 769px) {
+  .sidebar.expanded ~ main .suppliers-section {
+    left: 160px; /* Adjust to sidebar width */
   }
 }
