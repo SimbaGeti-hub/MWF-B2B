@@ -1,49 +1,124 @@
 .reports-section {
-  padding: 1rem;
+  position: relative;
+  left: 60px; /* offset for collapsed sidebar */
   max-width: 1000px;
-  margin: 0 auto;
+  width: 100%;
+  margin: 0 auto; /* centers the section */
+  padding: 1rem;
+  transition: left 0.3s ease;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  color: #333;
+  text-align: center; /* center content inside */
+}
+
+.reports-section h3,
+.reports-section h4,
+.reports-section p {
+  text-align: center; /* headings and totals centered */
 }
 
 .filters {
   display: flex;
+  flex-wrap: wrap;
+  justify-content: center; /* center filter controls */
   gap: 10px;
   margin-bottom: 15px;
 }
 
-.filters input, .filters button {
+.filters label {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
+
+.filters input,
+.filters select,
+.filters button {
   padding: 8px;
   border-radius: 6px;
   border: 1px solid #ccc;
+  font-size: 0.95rem;
+}
+
+.filters select {
+  background: white;
+  cursor: pointer;
 }
 
 .filters button {
-  background: #06212c;
+  background: #0077B6;
   color: white;
   cursor: pointer;
   border: none;
 }
 
 .filters button:hover {
-  background: #2d3436;
+  background-color: #90E0EF;
+  color: #0077B6;
+}
+
+.export-options {
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+  margin-bottom: 20px;
+}
+
+.export-options button {
+  padding: 8px 12px;
+  border: none;
+  border-radius: 6px;
+  background: #5a4e7c;
+  color: white;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.export-options button:hover {
+  background: #816dae;
 }
 
 .reports-section table {
-  width: 100%;
+  margin: 0 auto 20px auto; /* keeps tables centered */
   border-collapse: collapse;
-  margin-bottom: 15px;
   background: white;
   border-radius: 12px;
   overflow: hidden;
   box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+  min-width: 600px;
 }
 
-.reports-section th, .reports-section td {
+.reports-section th,
+.reports-section td {
   padding: 10px;
   border-bottom: 1px solid #ddd;
   text-align: center;
+  white-space: nowrap;
 }
 
 #salesTotal {
   font-weight: 600;
   margin-bottom: 20px;
+  text-align: center;
+}
+
+@media (min-width: 769px) {
+  .sidebar.expanded ~ main .reports-section {
+    left: 160px; /* adjust when sidebar expands */
+    max-width: calc(1000px - 160px);
+  }
+}
+
+@media (max-width: 768px) {
+  .reports-section {
+    left: 0; /* remove sidebar offset */
+    max-width: 100%;
+  }
+
+  .reports-section table {
+    display: block;
+    overflow-x: auto;
+    white-space: nowrap;
+  }
 }

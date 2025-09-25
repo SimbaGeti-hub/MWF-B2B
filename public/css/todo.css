@@ -1,4 +1,4 @@
-/* Copy the entire employees.css here for consistency */
+/* ----------------- Existing form styles (from your employees.css copy) ----------------- */
 .form-card {
   background: #ffffff;
   border-radius: 12px;
@@ -15,11 +15,121 @@
 }
 .form-group { margin-bottom: 1.5rem; display: flex; flex-direction: column; }
 .form-group label { font-weight: 600; margin-bottom: 0.5rem; color: #2d3436; }
-.form-group input { padding: 0.75rem 1rem; border: 1px solid #90E0EF; border-radius: 8px; font-size:1rem; transition: border 0.3s ease, box-shadow 0.3s ease; }
-.form-group input:focus { outline: none; border-color: #90E0EF; box-shadow: 0 0 5px rgba(108,92,231,0.3); }
+.form-group input,
+.form-group select {
+  padding: 0.75rem 1rem;
+  border: 1px solid #90E0EF;
+  border-radius: 8px;
+  font-size:1rem;
+  transition: border 0.3s ease, box-shadow 0.3s ease;
+}
+.form-group input:focus,
+.form-group select:focus {
+  outline: none;
+  border-color: #90E0EF;
+  box-shadow: 0 0 5px rgba(108,92,231,0.3);
+}
 input.invalid { background-color: #fdecea; border: 1px solid #e74c3c; box-shadow: 0 0 5px rgba(231,76,60,0.3); }
 .error-message { color: #e74c3c; font-size: 0.85rem; margin-top: 0.25rem; }
 .main-error-message { background-color: #f8d7da; color: #721c24; font-weight: 600; font-size: 1rem; padding:0.75rem 1rem; border-radius: 8px; margin-bottom: 1rem; text-align:center; display:none; }
 .success-message { background: #dff0d8; color:#3c763d; font-weight:600; font-size:1rem; padding:0.75rem 1rem; border-radius:8px; margin-top:1rem; text-align:center; display:none; }
 .btn-submit { background-color:#0077B6; color:white; padding:0.8rem 1.5rem; font-size:1rem; font-weight:600; border:none; border-radius:8px; cursor:pointer; transition: background-color 0.3s ease; }
 .btn-submit:hover { background-color:#90E0EF; color:#0077B6; }
+
+/* ----------------- TABLE STYLING (same as viewSales/viewStock) ----------------- */
+.todo-section {
+  position: relative;
+  left: 60px; /* space for collapsed sidebar */
+  max-width: calc(1000px - 60px);
+  margin: 0 auto;
+  padding: 1rem;
+  transition: left 0.3s ease, max-width 0.3s ease;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  color: #333;
+}
+
+@media (min-width: 769px) {
+  .sidebar.expanded ~ main .todo-section {
+    left: 160px; /* shift when sidebar expands */
+    max-width: calc(1000px - 160px);
+  }
+}
+
+.todo-section .table-wrapper {
+  margin: 2rem 0;
+}
+
+.todo-section table {
+  width: 100%;
+  border-collapse: separate;
+  border-spacing: 0;
+  background: white;
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 6px 15px rgba(0,0,0,0.1);
+  min-width: 600px;
+}
+
+.todo-section th {
+  background-color: #0077B6;
+  color: #fff;
+  font-weight: 600;
+  padding: 14px 20px;
+  text-align: center;
+  border-radius: 6px 6px 0 0;
+  border-bottom: none;
+  white-space: nowrap;
+}
+
+.todo-section td {
+  padding: 14px 20px;
+  border-bottom: 1px solid #e0e0e0;
+  vertical-align: middle;
+  color: #555;
+  text-align: center;
+  white-space: nowrap;
+}
+
+.todo-section tbody tr:nth-child(even) { background-color: #f9f9f9; }
+.todo-section tbody tr:nth-child(odd) { background-color: #ffffff; }
+.todo-section tbody tr:hover {
+  background-color: #f1f7f4;
+  transition: background-color 0.3s ease;
+}
+
+@media (max-width: 768px) {
+  .todo-section {
+    left: 0;
+    max-width: 100%;
+  }
+
+  .todo-section table {
+    display: block;
+    overflow-x: auto;
+    white-space: nowrap;
+  }
+
+  .todo-section th,
+  .todo-section td {
+    white-space: nowrap;
+  }
+}
+
+.todo-section button {
+  padding: 6px 14px;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  background-color:#0077B6; 
+  color:white;
+  font-weight: 600;
+  transition: background-color 0.3s ease;
+  box-shadow: 0 2px 5px rgba(90, 78, 124, 0.4);
+  margin: 0 3px;
+}
+
+.todo-section button:hover {
+  background-color:#90E0EF; 
+  color:#0077B6;
+  box-shadow: 0 4px 8px rgba(129, 109, 174, 0.6);
+}
