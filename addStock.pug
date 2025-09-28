@@ -12,51 +12,60 @@ head
   link(rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css')
 // Sidebar
 #sidebar.sidebar
+  .logo MWF
   ul.menu
     li
-      a(href='dashboard.html')
+      a(href='/dashboard')
         i.fa-solid.fa-gauge-high
         span Dashboard
     li
-      a(href='products.html')
+      a(href='/products')
         i.fas.fa-box
         span Products
     li
-      a.active(href='addStock.html')
+      a.active(href='/stock')
         i.fas.fa-plus-square
         span Add Stock
     li
-      a(href='viewStock.html')
+      a(href='/viewstock')
         i.fas.fa-list
         span View Stock
     li
-      a(href='addSales.html')
+      a(href='/sales')
         i.fa-solid.fa-comments-dollar
         span Add Sales
     li
-      a(href='viewSales.html')
+      a(href='/viewSales')
         i.fas.fa-dollar-sign
-        span Sales
+        span View Sales
     // <li><a href="rawMaterials.html"><i class="fas fa-cubes"></i><span>Raw Materials</span></a></li>
     li
-      a(href='suppliers.html')
+      a(href='/suppliers')
         i.fas.fa-truck
         span Suppliers
     // <li><a href="delivery.html"><i class="fas fa-route"></i><span>Delivery</span></a></li>
     li
-      a(href='todo.html')
+      a(href='/employees')
+        i.fas.fa-user
+        span Add Employee
+    li
+      a(href='/viewEmployees')
+        i.fas.fa-users
+        span View Employees
+    li
+      a(href='/toDo')
         i.fas.fa-list
         span To-Do
     li
-      a(href='reports.html')
+      a(href='/reports')
         i.fas.fa-file-alt
         span Reports
-    li
-      a(href='employees.html')
-        i.fas.fa-user
-        span Employees
+        li
+      a(href='/settings')
+        i.fa-solid.fa-gear
+        span Settings
     li.logout
-      a(href='logout.html')
+      a(href='/logout')
         i.fas.fa-sign-out-alt
         span Logout
 // Hamburger
@@ -72,12 +81,12 @@ main
     h3 Record New Stock
     // Main error message
     #mainError.main-error-message
-    form#addStockForm
+    form#addStockForm(action='/stock' method='POST')
       label Product Name 
-      input#productName(type='text')
+      input#productName(type='text' name='productName')
       #errorProductName.error-message
       label Product Type 
-      select#productType
+      select#productType(name='productType')
         option(value='') Select Type
         option Timber
         option Poles
@@ -86,44 +95,44 @@ main
         option Furniture
       #errorProductType.error-message
       label Cost Price (UGX) 
-      input#costPrice(type='number' min='1' placeholder='Enter cost price')
+      input#costPrice(type='number' name='costPrice' min='1' placeholder='Enter cost price')
       #errorCostPrice.error-message
       label Quantity 
-      input#quantity(type='number' min='1' placeholder='Enter quantity')
+      input#quantity(type='number' name='quantity' min='1' placeholder='Enter quantity')
       #errorQuantity.error-message
       label Product Price (UGX) 
-      input#productPrice(type='number' min='1' placeholder='Enter selling price')
+      input#productPrice(type='number' name='productPrice' min='1' placeholder='Enter selling price')
       #errorProductPrice.error-message
       label Supplier Name 
-      input#supplierName(type='text')
+      input#supplierName(type='text' name='supplierName')
       #errorSupplierName.error-message
       label Date 
-      input#date(type='date')
+      input#date(type='date' name='date')
       #errorDate.error-message
       label Quality 
-      select#quality
+      select#quality(name='quality')
         option(value='') Select Quality
         option High
         option Medium
         option Low
       #errorQuality.error-message
       label Color (optional)
-      input#color(type='text')
+      input#color(type='text' name='color')
       label Measurements (optional)
-      input#measurements(type='text')
+      input#measurements(type='text' name='measurements')
       // Cost Price Total
       label Cost Price Total (UGX)
-      input#costTotal(type='text' readonly='')
+      input#costTotal(type='text' name='costPriceTotal' readonly='')
       // Total Stock Value
       label Total Stock Value (UGX)
-      input#totalValue(type='text' readonly='')
+      input#totalValue(type='text' name='TotalStockValue' readonly='')
       // Expected Profit
       label Expected Profit (UGX)
-      input#profitValue(type='text' readonly='')
+      input#profitValue(type='text' name='expectedProfit' readonly='')
       button(type='submit') Record Stock
     #successMessage.success-message
 // Scripts
-script(src='js/storage.js')
-script(src='js/addStockStorage.js')
+//- script(src='js/storage.js')
+//- script(src='js/addStockStorage.js')
 script(src='js/addStock.js')
 script(src='js/main.js')

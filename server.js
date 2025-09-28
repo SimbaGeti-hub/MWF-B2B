@@ -18,6 +18,12 @@ require('dotenv').config();
 // const authRoutes = require("./routes/authRoutes")
 const stockRoutes = require("./routes/stockRoutes")
 const salesRoutes = require("./routes/salesRoutes")
+const employeeRoutes = require("./routes/employeeRoutes")
+const authRoutes = require("./routes/authRoutes")
+const productRoutes = require("./routes/pruductRoutes")
+const reportsRoutes = require("./routes/reportsRoutes")
+const suppliersRoutes = require("./routes/suppliersRoutes")
+const todoRoutes = require("./routes/todoRoutes")
 // 2 - Instantiations
 const app = express();
 const port = 3000
@@ -51,6 +57,7 @@ app.use(methodOverride('_method'));
 app.use(express.static(path.join(__dirname, "public")));
 app.use("/public/uploads", express.static(__dirname + "/public/uploads"))
 app.use(express.urlencoded({extended:true}))  // this helps to pass data from forms
+app.use(express.json()); // optional for JSON
 //express session configurations
 app.use(expressSession({
   secret: process.env.SESSION_SECRET,
@@ -93,7 +100,12 @@ app.use('/home', (req, res, next) => {           //this is where we add the file
 // app.use("/",authRoutes)
 app.use("/",stockRoutes)
 app.use("/",salesRoutes)
-
+app.use("/",employeeRoutes)
+app.use("/",authRoutes)
+app.use("/",productRoutes)
+app.use("/",reportsRoutes)
+app.use("/",suppliersRoutes)
+app.use("/",todoRoutes)
 
 
 

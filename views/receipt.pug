@@ -1,0 +1,46 @@
+doctype html
+html
+  head
+    meta(charset="UTF-8")
+    meta(name="viewport" content="width=device-width, initial-scale=1.0")
+    title Receipt - #{sale.customerName}
+    link(rel="stylesheet" href="/css/receipt.css")
+  body
+    .receipt-container
+      .receipt-header
+        h1 Mayondo Wood & Furniture
+        p.receipt-subtitle Official Sales Receipt
+
+      .receipt-info
+        p Receipt ID: #{sale._id}
+        p Date: #{sale.saleDate.toDateString()}
+        p Customer: #{sale.customerName}
+
+      table.receipt-table
+        thead
+          tr
+            th Product
+            th Quantity
+            th Unit Price (UGX)
+            th Total (UGX)
+        tbody
+          tr
+            td #{sale.productName}
+            td #{sale.quantity}
+            td #{sale.unitPrice.toFixed(2)}
+            td #{sale.totalPrice.toFixed(2)}
+        if sale.transportProvided
+          tr
+            td(colspan="3") Transport Charge
+            td #{sale.transportCharge.toFixed(2)}
+        tr.total-row
+          td(colspan="3") Overall Total
+          td UGX #{sale.overallTotal.toFixed(2)}
+
+      .receipt-footer
+        p Payment Method: #{sale.paymentType}
+        p Sales Agent: #{sale.salesAgent}
+
+      .receipt-actions
+        button.print-btn(onclick="window.print()") Print Receipt
+        a.back-btn(href="/viewsales") Back to Sales

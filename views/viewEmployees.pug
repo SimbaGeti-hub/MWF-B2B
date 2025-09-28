@@ -1,0 +1,101 @@
+doctype html
+head
+  meta(charset='UTF-8')
+  meta(name='viewport' content='width=device-width, initial-scale=1.0')
+  title View Employees &amp; Suppliers - MWF
+  link(rel='stylesheet' href='css/style.css')
+  link(rel='stylesheet' href='css/viewEmployees.css')
+  link(rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css' integrity='sha512-2SwdPD6INVrV/lHTZbO2nodKhrnDdJK9/kg2XD1r9uGqPo1cUbujc+IYdlYdEErWNu69gVcYgdxlmVmzTWnetw==' crossorigin='anonymous' referrerpolicy='no-referrer')
+  script(src='vendors/fontawesome/all.min.js' defer='')
+  script(src='js/storage.js' defer='')
+  script(src='js/main.js' defer='')
+  script(src='js/viewEmployees.js' defer='')
+#hamburger.hamburger
+  i.fas.fa-bars
+#sidebar.sidebar
+  .logo MWF
+  ul.menu
+    li
+      a(href='/dashboard')
+        i.fa-solid.fa-gauge-high
+        span Dashboard
+    li
+      a(href='/products')
+        i.fas.fa-box
+        span Products
+    li
+      a(href='/stock')
+        i.fas.fa-plus-square
+        span Add Stock
+    li
+      a(href='/viewstock')
+        i.fas.fa-list
+        span View Stock
+    li
+      a(href='/sales')
+        i.fa-solid.fa-comments-dollar
+        span Add Sales
+    li
+      a(href='/viewsales')
+        i.fas.fa-dollar-sign
+        span View Sales
+    li
+      a(href='/suppliers')
+        i.fas.fa-truck
+        span Add Suppliers
+    li
+      a(href='/employees')
+        i.fas.fa-user
+        span Add Employees
+    li
+      a.active(href='/viewEmployees')
+        i.fas.fa-users
+        span View Employees
+    li
+      a(href='/toDo')
+        i.fas.fa-list
+        span To-Do
+    li
+      a(href='/reports')
+        i.fas.fa-file-alt
+        span Reports
+    li
+      a(href='/settings')
+        i.fa-solid.fa-gear
+        span Settings
+    li.logout
+      a(href='/logout')
+        i.fas.fa-sign-out-alt
+        span Logout
+    // <li><a href="rawMaterials.html"><i class="fas fa-cubes"></i><span>Raw Materials</span></a></li>
+    // <li><a href="delivery.html"><i class="fas fa-route"></i><span>Delivery</span></a></li>
+main.main-content
+  header.header-wrapper
+    .header-title
+      span Mayondo Wood and Furniture
+      h2 Employees &amp; Suppliers
+  section.employees-section
+    h3 Employee List
+    table#employeesTable
+      thead
+        tr
+          th Name
+          th Age
+          th Position
+          th Contact
+          th Email
+          th Role
+          th Actions
+      tbody
+  section.suppliers-section
+    h3 Suppliers List
+    table#suppliersTable
+      thead
+        tr
+          th Name
+          th Product of Supply
+          th Location
+          th Contact
+          th Email
+          th Actions
+      tbody

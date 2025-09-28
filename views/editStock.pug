@@ -1,0 +1,149 @@
+doctype html
+html
+  head
+    meta(charset='UTF-8')
+    meta(name='viewport' content='width=device-width, initial-scale=1.0')
+    title Edit Stock - MWF
+    link(rel='stylesheet' href='/css/style.css')
+    link(rel='stylesheet' href='/css/addStock.css')
+    link(rel='stylesheet' href='/css/addSaleErrors.css')
+    //- link(rel='stylesheet' href='/css/editSales.css')
+    link(rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css')
+
+  body
+    // Sidebar
+    #sidebar.sidebar
+      .logo MWF
+      ul.menu
+        li
+          a(href='/dashboard')
+            i.fa-solid.fa-gauge-high
+            span Dashboard
+        li
+          a(href='/products')
+            i.fas.fa-box
+            span Products
+        li
+          a(href='/stock')
+            i.fas.fa-plus-square
+            span Add Stock
+        li
+          a(href='/viewstock' class='active')
+            i.fas.fa-list
+            span View Stock
+        li
+          a(href='/sales')
+            i.fa-solid.fa-comments-dollar
+            span Add Sales
+        li
+          a(href='/viewsales')
+            i.fas.fa-dollar-sign
+            span View Sales
+        li
+          a(href='/suppliers')
+            i.fas.fa-truck
+            span Suppliers
+        li
+          a(href='/employees')
+            i.fas.fa-user
+            span Add Employee
+        li
+          a(href='/viewEmployees')
+            i.fas.fa-users
+            span View Employees
+        li
+          a(href='/toDo')
+            i.fas.fa-list
+            span To-Do
+        li
+          a(href='/reports')
+            i.fas.fa-file-alt
+            span Reports
+        li
+          a(href='/settings')
+            i.fa-solid.fa-gear
+            span Settings
+        li.logout
+          a(href='/logout')
+            i.fas.fa-sign-out-alt
+            span Logout
+
+    // Hamburger
+    #hamburger.hamburger
+      i.fas.fa-bars
+
+    // Main content
+    main
+      .header-wrapper
+        .header-title
+          span MWF System
+          h2 Edit Stock
+
+      section.add-stock-section
+        h3 Update Stock Item
+        #mainError.main-error-message
+        form#editStockForm(action=`/stock/edit/${stock._id}` method='POST')
+          label Product Name 
+          input#productName(type='text' name='productName' value=stock.productName)
+          #errorProductName.error-message
+
+          label Product Type 
+          select#productType(name='productType')
+            option(value='') Select Type
+            option(value='Timber' selected=stock.productType=='Timber') Timber
+            option(value='Poles' selected=stock.productType=='Poles') Poles
+            option(value='Hardwood' selected=stock.productType=='Hardwood') Hardwood
+            option(value='Softwood' selected=stock.productType=='Softwood') Softwood
+            option(value='Furniture' selected=stock.productType=='Furniture') Furniture
+          #errorProductType.error-message
+
+          label Cost Price (UGX) 
+          input#costPrice(type='number' name='costPrice' min='1' value=stock.costPrice)
+          #errorCostPrice.error-message
+
+          label Quantity 
+          input#quantity(type='number' name='quantity' min='1' value=stock.quantity)
+          #errorQuantity.error-message
+
+          label Product Price (UGX) 
+          input#productPrice(type='number' name='productPrice' min='1' value=stock.productPrice)
+          #errorProductPrice.error-message
+
+          label Supplier Name 
+          input#supplierName(type='text' name='supplierName' value=stock.supplierName)
+          #errorSupplierName.error-message
+
+          label Date 
+          input#date(type='date' name='date' value=stock.date.toISOString().substr(0,10))
+          #errorDate.error-message
+
+          label Quality 
+          select#quality(name='quality')
+            option(value='') Select Quality
+            option(value='High' selected=stock.quality=='High') High
+            option(value='Medium' selected=stock.quality=='Medium') Medium
+            option(value='Low' selected=stock.quality=='Low') Low
+          #errorQuality.error-message
+
+          label Color (optional)
+          input#color(type='text' name='color' value=stock.color)
+
+          label Measurements (optional)
+          input#measurements(type='text' name='measurements' value=stock.measurements)
+
+          label Cost Price Total (UGX)
+          input#costTotal(type='text' name='costPriceTotal' value=stock.costTotal readonly='')
+
+          label Total Stock Value (UGX)
+          input#totalValue(type='text' name='TotalStockValue' value=stock.totalValue readonly='')
+
+          label Expected Profit (UGX)
+          input#profitValue(type='text' name='expectedProfit' value=stock.expectedProfit readonly='')
+
+          .button-group
+            //- button(type='submit') Update Stock
+            button.update-stock-btn(type='submit') Update Stock
+            a.cancel-btn(href='/viewstock') Cancel
+
+    script(src='/js/addStock.js')
+    script(src='/js/main.js')

@@ -1,0 +1,99 @@
+doctype html
+head
+  meta(charset='UTF-8')
+  meta(name='viewport' content='width=device-width, initial-scale=1.0')
+  title Products - MWF
+  link(rel='stylesheet' href='css/style.css')
+  link(rel='stylesheet' href='css/products.css')
+  link(rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css' integrity='sha512-2SwdPD6INVrV/lHTZbO2nodKhrnDdJK9/kg2XD1r9uGqPo1cUbujc+IYdlYdEErWNu69gVcYgdxlmVmzTWnetw==' crossorigin='anonymous' referrerpolicy='no-referrer')
+#hamburger.hamburger
+  i.fas.fa-bars
+#sidebar.sidebar
+  .logo MWF
+  ul.menu
+    li
+      a(href='/dashboard')
+        i.fa-solid.fa-gauge-high
+        span Dashboard
+    li
+      a.active(href='/products')
+        i.fas.fa-box
+        span Products
+    li
+      a(href='/stock')
+        i.fas.fa-plus-square
+        span Add Stock
+    li
+      a(href='/viewstock')
+        i.fas.fa-list
+        span View Stock
+    li
+      a(href='/sales')
+        i.fa-solid.fa-comments-dollar
+        span Add Sales
+    li
+      a(href='/viewsales')
+        i.fas.fa-dollar-sign
+        span View Sales
+    li
+      a(href='/suppliers')
+        i.fas.fa-truck
+        span Add Suppliers
+    li
+      a(href='/employees')
+        i.fas.fa-user
+        span Add Employees
+    li
+      a(href='/viewEmployees')
+        i.fas.fa-users
+        span View Employees
+    li
+      a(href='/toDo')
+        i.fas.fa-list
+        span To-Do
+    li
+      a(href='/reports')
+        i.fas.fa-file-alt
+        span Reports
+    li
+      a(href='/settings')
+        i.fa-solid.fa-gear
+        span Settings
+    li.logout
+      a(href='/logout')
+        i.fas.fa-sign-out-alt
+        span Logout
+    // <li><a href="rawMaterials.html"><i class="fas fa-cubes"></i><span>Raw Materials</span></a></li>
+    // <li><a href="delivery.html"><i class="fas fa-route"></i><span>Delivery</span></a></li>
+main.main-content
+  header.header-wrapper
+    .header-title
+      span Mayondo Wood and Furniture
+      h2 Products
+  .content-sections-wrapper
+    section.products-section
+      h3 Raw Materials
+      #rawMaterialsGrid.products-grid
+      button.add-btn(onclick="openModal('raw')") + Add Raw Material
+    section.products-section
+      h3 Ready Products
+      #readyProductsGrid.products-grid
+      button.add-btn(onclick="openModal('ready')") + Add Ready Product
+// Modal for Add/Edit
+#productModal.modal
+  .modal-content
+    span.close-btn(onclick='closeModal()') &times;
+    h3#modalTitle Add Product
+    form#productForm(action='/products' method='post')
+      input#productId(type='hidden')
+      input#productType(type='hidden')
+      .form-group
+        label(for='productName') Name
+        input#productName(type='text' required='')
+      .form-group
+        label(for='productImage') Image
+        input#productImage(type='file' accept='image/*')
+      button.save-btn(type='submit') Save
+script(src='js/productStorage.js' defer='')
+script(src='js/main.js' defer='')
+script(src='js/products.js' defer='')

@@ -22,7 +22,7 @@ const measurementsInput = document.getElementById("measurements");
 // Computed fields
 const totalValueInput = document.getElementById("totalValue");
 const profitValueInput = document.getElementById("profitValue");
-const costTotalInput = document.getElementById("costTotal"); // New field
+const costTotalInput = document.getElementById("costTotal");
 
 // Error fields
 const errorFields = {
@@ -36,7 +36,7 @@ const errorFields = {
   quality: document.getElementById("errorQuality"),
 };
 
-// Calculate Total Value, Expected Profit, and Cost Price Total
+// Calculate totals
 function calculateTotals() {
   let quantity = parseFloat(quantityInput.value) || 0;
   let costPrice = parseFloat(costPriceInput.value) || 0;
@@ -55,7 +55,7 @@ function calculateTotals() {
   costTotalInput.value = costTotal.toFixed(2);
 }
 
-// Reset all errors
+// Reset errors
 function resetErrors() {
   mainError.style.display = "none";
   Object.values(errorFields).forEach(e => e.textContent = "");
@@ -63,7 +63,7 @@ function resetErrors() {
   inputs.forEach(input => input.classList.remove("invalid"));
 }
 
-// Form validation
+// Validate form
 function validateForm() {
   resetErrors();
   let isValid = true;
@@ -119,39 +119,16 @@ function validateForm() {
 
 // Form submission
 addStockForm.addEventListener("submit", function(e) {
-  e.preventDefault();
-  if (!validateForm()) return;
+  if (!validateForm()) {
+    e.preventDefault(); // ❌ stop only if invalid
+    return;
+  }
 
-  const newStock = {
-    productName: productNameInput.value.trim(),
-    productType: productTypeSelect.value,
-    costPrice: parseFloat(costPriceInput.value),
-    quantity: parseFloat(quantityInput.value),
-    productPrice: parseFloat(productPriceInput.value),
-    supplierName: supplierNameInput.value.trim(),
-    date: dateInput.value,
-    quality: qualitySelect.value,
-    color: colorInput.value.trim(),
-    measurements: measurementsInput.value.trim(),
-    totalValue: parseFloat(totalValueInput.value),
-    expectedProfit: parseFloat(profitValueInput.value),
-    costTotal: parseFloat(costTotalInput.value)
-  };
-
-  // Save to modular storage
-  addNewStock(newStock);
-
-  // Show success message
+  // ✅ If valid, form will submit normally to Express route
   successMessage.style.display = "block";
-  successMessage.textContent = `Success! Stock for ${newStock.productName} recorded. Total Value: UGX ${newStock.totalValue.toFixed(2)}, Cost Total: UGX ${newStock.costTotal.toFixed(2)}, Expected Profit: UGX ${newStock.expectedProfit.toFixed(2)}`;
+  successMessage.textContent = "Submitting stock...";
 
-  // Reset form
-  addStockForm.reset();
-  totalValueInput.value = "";
-  profitValueInput.value = "";
-  costTotalInput.value = "";
-  dateInput.valueAsDate = new Date();
-
+  // Hide after 3s
   setTimeout(() => {
     successMessage.style.display = "none";
   }, 3000);
@@ -162,6 +139,6 @@ quantityInput.addEventListener("input", calculateTotals);
 costPriceInput.addEventListener("input", calculateTotals);
 productPriceInput.addEventListener("input", calculateTotals);
 
-// Set default date on load
+// Default date
 dateInput.valueAsDate = new Date();
 calculateTotals();

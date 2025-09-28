@@ -208,8 +208,90 @@ span{
   .hamburger { display:block; }
 }
 
+.edit-btn{
+  background-color: #0077B6;
+  color: white;
+  list-style-type: none;
+  text-decoration: none;
+  padding: 5px;
+  border-radius: 5px;
+  margin-right: 8px;
+}
 
 
+.edit-btn:hover {
+  background-color: #90E0EF;
+  color: #0077B6;
+}
+
+.delete-btn{
+  background-color: red;
+  color: white;
+  list-style-type: none;
+  text-decoration: none;
+  padding: 5px;
+  border-radius: 5px;
+}
+
+
+.delete-btn:hover {
+  background-color: pink;
+  color: #06212c;
+}
+
+.cancel-btn{
+  background-color: red;
+  color: white;
+  padding: 12px;               /* match Add Stock button */
+  font-size: 1.4rem;
+  font-weight: 600;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  width: 100%;                 /* ✅ make it stretch across form */
+  display: block;              /* ensures full-width */
+  margin-top: 15px;
+  text-align: center; 
+  text-decoration: none;
+}
+
+.cancel-btn:hover {
+  background-color: pink;
+  color: #06212c;
+}
+
+.print-btn{
+  background-color: #0077B6;
+  color: white;
+  list-style-type: none;
+  text-decoration: none;
+  padding: 5px;
+  border-radius: 5px;
+  margin-left: 8px;
+}
+
+.print-btn:hover {
+  background-color: #90E0EF;
+  color: #0077B6;
+}
+
+.update-stock-btn{
+  background-color: #0077B6;
+  color: white;
+  padding: 12px;               /* match Add Stock button */
+  font-size: 1.4rem;
+  font-weight: 600;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  width: 100%;                 /* ✅ make it stretch across form */
+  display: block;              /* ensures full-width */
+  margin-top: 15px;
+  text-align: center; 
+  text-decoration: none;
+}
 
 
 

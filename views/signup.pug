@@ -1,0 +1,24 @@
+doctype html
+head
+  meta(charset='UTF-8')
+  meta(name='viewport' content='width=device-width, initial-scale=1')
+  title Sign Up
+  link(rel='stylesheet' href='../css/signup.css')
+.container
+  h2 Sign Up
+  form#signupForm
+    label(for='fullName') Full Name
+    input#fullName(type='text' name='fullName' placeholder='Full Name' required='')
+    label(for='emailSignup') Email Address
+    input#emailSignup(type='email' name='emailSignup' placeholder='example@mail.com' required='')
+    label(for='passwordSignup') Password
+    input#passwordSignup(type='password' name='passwordSignup' placeholder='Enter password' required='' minlength='6')
+    label(for='roleSelect') Select Role
+    select#roleSelect(name='roleSelect' required='')
+      option(value='' disabled='' selected='') Select your role
+      option(value='manager') Manager
+      option(value='sales') Sales
+    button(type='submit') Create Account
+  .form-footer
+    | Already have an account? 
+    a(href='/logIn') Log In

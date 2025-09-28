@@ -1,0 +1,107 @@
+doctype html
+head
+  meta(charset='UTF-8')
+  meta(name='viewport' content='width=device-width, initial-scale=1.0')
+  title Add Supplier - MWF
+  link(rel='stylesheet' href='css/style.css')
+  link(rel='stylesheet' href='css/suppliers.css')
+  // same style as employees.css
+  link(rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css' integrity='sha512-2SwdPD6INVrV/lHTZbO2nodKhrnDdJK9/kg2XD1r9uGqPo1cUbujc+IYdlYdEErWNu69gVcYgdxlmVmzTWnetw==' crossorigin='anonymous' referrerpolicy='no-referrer')
+  script(src='js/storage.js' defer='')
+  script(src='js/main.js' defer='')
+  script(src='js/suppliers.js' defer='')
+// Sidebar
+#hamburger.hamburger
+  i.fas.fa-bars
+#sidebar.sidebar
+  .logo MWF
+  ul.menu
+    li
+      a(href='/dashboard')
+        i.fa-solid.fa-gauge-high
+        span Dashboard
+    li
+      a(href='/products')
+        i.fas.fa-box
+        span Products
+    li
+      a(href='/stock')
+        i.fas.fa-plus-square
+        span Add Stock
+    li
+      a(href='/viewstock')
+        i.fas.fa-list
+        span View Stock
+    li
+      a(href='/sales')
+        i.fa-solid.fa-comments-dollar
+        span Add Sales
+    li
+      a(href='/viewsales')
+        i.fas.fa-dollar-sign
+        span View Sales
+    li
+      a.active(href='/suppliers')
+        i.fas.fa-truck
+        span Add Suppliers
+    li
+      a(href='/employees')
+        i.fas.fa-user
+        span Add Employees
+    li
+      a(href='/viewEmployees')
+        i.fas.fa-users
+        span View Employees
+    li
+      a(href='/toDo')
+        i.fas.fa-list
+        span To-Do
+    li
+      a(href='/reports')
+        i.fas.fa-file-alt
+        span Reports
+    li
+      a(href='/settings')
+        i.fa-solid.fa-gear
+        span Settings
+    li.logout
+      a(href='/logout')
+        i.fas.fa-sign-out-alt
+        span Logout
+    // <li><a href="viewSuppliers.html"><i class="fas fa-table"></i><span>View Suppliers</span></a></li>
+    // <li><a href="delivery.html"><i class="fas fa-route"></i><span>Delivery</span></a></li>
+    // <li><a href="rawMaterials.html"><i class="fas fa-cubes"></i><span>Raw Materials</span></a></li>
+// Main
+main.main-content
+  header.header-wrapper
+    .header-title
+      span Mayondo Wood and Furniture
+      h2 Add Supplier
+  // Supplier Form
+  section.suppliers-section
+    .form-card
+      h3 Supplier Form
+      #mainError.main-error-message
+      form#addSupplierForm(action='/suppliers' method='post' novalidate='')
+        .form-group
+          label(for='supplierName') Supplier Name
+          input#supplierName(type='text' placeholder='Supplier Name')
+          #errorSupplierName.error-message
+        .form-group
+          label(for='supplierLocation') Location
+          input#supplierLocation(type='text' placeholder='Location')
+          #errorSupplierLocation.error-message
+        .form-group
+          label(for='supplierPhone') Phone
+          input#supplierPhone(type='text' placeholder='Phone Number')
+          #errorSupplierPhone.error-message
+        .form-group
+          label(for='supplierEmail') Email
+          input#supplierEmail(type='email' placeholder='Email')
+          #errorSupplierEmail.error-message
+        .form-group
+          label(for='supplierProduct') Product of Supply
+          input#supplierProduct(type='text' placeholder='Product')
+          #errorSupplierProduct.error-message
+        button.btn-submit(type='submit') Add Supplier
+      p#successMessage.success-message

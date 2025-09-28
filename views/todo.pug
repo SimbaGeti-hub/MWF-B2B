@@ -1,0 +1,179 @@
+doctype html
+head
+  meta(charset='UTF-8')
+  meta(name='viewport' content='width=device-width, initial-scale=1.0')
+  title To-Do - MWF
+  link(rel='stylesheet' href='css/style.css')
+  link(rel='stylesheet' href='css/todo.css')
+  link(rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css')
+  script(src='vendors/fontawesome/all.min.js' defer='')
+  script(src='js/storage.js' defer='')
+  script(src='js/main.js' defer='')
+  script(src='js/todo-validations.js' defer='')
+  script(src='js/todo.js' defer='')
+#hamburger.hamburger
+  i.fas.fa-bars
+#sidebar.sidebar
+  .logo MWF
+  ul.menu
+    li
+      a(href='/dashboard')
+        i.fa-solid.fa-gauge-high
+        span Dashboard
+    li
+      a(href='/products')
+        i.fas.fa-box
+        span Products
+    li
+      a(href='/stock')
+        i.fas.fa-plus-square
+        span Add Stock
+    li
+      a(href='/viewstock')
+        i.fas.fa-list
+        span View Stock
+    li
+      a(href='/sales')
+        i.fa-solid.fa-comments-dollar
+        span Add Sales
+    li
+      a(href='/viewsales')
+        i.fas.fa-dollar-sign
+        span View Sales
+    li
+      a(href='/suppliers')
+        i.fas.fa-truck
+        span Add Suppliers
+    li
+      a(href='/employees')
+        i.fas.fa-user
+        span Add Employees
+    li
+      a(href='/viewEmployees')
+        i.fas.fa-users
+        span View Employees
+    li
+      a.active(href='/toDo')
+        i.fas.fa-list
+        span To-Do
+    li
+      a(href='/reports')
+        i.fas.fa-file-alt
+        span Reports
+    li
+      a(href='/settings')
+        i.fa-solid.fa-gear
+        span Settings
+    li.logout
+      a(href='/logout')
+        i.fas.fa-sign-out-alt
+        span Logout
+    // <li><a href="rawMaterials.html"><i class="fas fa-cubes"></i><span>Raw Materials</span></a></li>
+    // <li><a href="delivery.html"><i class="fas fa-route"></i><span>Delivery</span></a></li>
+main.main-content
+  header.header-wrapper
+    .header-title
+      span Mayondo Wood and Furniture
+      h2 To-Do Management
+  section.todo-section
+    // Form Selector
+    .form-card
+      h3 Select Form
+      select#formSelector
+        option(value='') -- Choose Form --
+        option(value='deliveryForm') Register Delivery
+        option(value='taskForm') Register Task
+    // Delivery Form
+    #deliveryForm.form-card(style='display:none;')
+      h3 Register Delivery
+      #deliveryMainError.main-error-message
+      form#addDeliveryForm(novalidate='')
+        .form-group
+          label(for='deliveryCustomerName') Customer Name
+          input#deliveryCustomerName(type='text' placeholder='Customer Name')
+          #errorDeliveryCustomerName.error-message
+        .form-group
+          label(for='deliveryProduct') Product
+          input#deliveryProduct(type='text' placeholder='Product to deliver')
+          #errorDeliveryProduct.error-message
+        .form-group
+          label(for='deliveryLocation') Location
+          input#deliveryLocation(type='text' placeholder='Delivery Location')
+          #errorDeliveryLocation.error-message
+        .form-group
+          label(for='deliveryDate') Date
+          input#deliveryDate(type='date')
+          #errorDeliveryDate.error-message
+        .form-group
+          label(for='deliveryTime') Time
+          input#deliveryTime(type='time')
+          #errorDeliveryTime.error-message
+        .form-group
+          label(for='deliveryAssignedPerson') Assigned Person
+          input#deliveryAssignedPerson(type='text' placeholder='Driver / Assigned person')
+          #errorDeliveryAssignedPerson.error-message
+        .form-group
+          label(for='deliveryCustomerNumber') Customer Number
+          input#deliveryCustomerNumber(type='text' placeholder='Customer phone number')
+          #errorDeliveryCustomerNumber.error-message
+        .form-group
+          label(for='deliveryNumberOfItems') Number of Items
+          input#deliveryNumberOfItems(type='number' placeholder='Number of items' min='1')
+          #errorDeliveryNumberOfItems.error-message
+        button.btn-submit(type='submit') Add Delivery
+      p#deliverySuccessMessage.success-message
+    // Task Form
+    #taskForm.form-card(style='display:none;')
+      h3 Register Task
+      #taskMainError.main-error-message
+      form#addTaskForm(novalidate='')
+        .form-group
+          label(for='taskName') Task
+          input#taskName(type='text' placeholder='Task to be done')
+          #errorTaskName.error-message
+        .form-group
+          label(for='taskDate') Date
+          input#taskDate(type='date')
+          #errorTaskDate.error-message
+        .form-group
+          label(for='taskTime') Time
+          input#taskTime(type='time')
+          #errorTaskTime.error-message
+        .form-group
+          label(for='taskLocation') Location
+          input#taskLocation(type='text' placeholder='Location')
+          #errorTaskLocation.error-message
+        .form-group
+          label(for='taskAssignedPerson') Assigned Person
+          input#taskAssignedPerson(type='text' placeholder='Person responsible')
+          #errorTaskAssignedPerson.error-message
+        button.btn-submit(type='submit') Add Task
+      p#taskSuccessMessage.success-message
+    // Table
+    .table-wrapper
+      h3 Registered Deliveries 
+      table#todoTable
+        thead
+          tr
+            th Name / Customer
+            th Product 
+            th Location
+            th Date
+            th Time
+            th Assigned Person
+            th Customer Number / N/A
+            th Number of Items / N/A
+            th Actions
+        tbody
+    .table-wrapper
+      h3 Registered Tasks
+      table#todoTable
+        thead
+          tr
+            th Task
+            th Date
+            th Time
+            th Location
+            th Assigned Person
+            th Actions
+        tbody

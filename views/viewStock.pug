@@ -1,16 +1,17 @@
+
 doctype html
 html
   head
     meta(charset='UTF-8')
     meta(name='viewport' content='width=device-width, initial-scale=1.0')
-    title View Sales - MWF
-    link(rel='stylesheet' href='../css/style.css')
-    link(rel='stylesheet' href='../css/viewSales.css')
+    title View Stock - MWF
+    link(rel='stylesheet' href='css/style.css')
+    link(rel='stylesheet' href='css/viewStock.css')
+    link(rel='stylesheet' href='css/viewStockDelete.css')
     link(rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css' integrity='sha512-2SwdPD6INVrV/lHTZbO2nodKhrnDdJK9/kg2XD1r9uGqPo1cUbujc+IYdlYdEErWNu69gVcYgdxlmVmzTWnetw==' crossorigin='anonymous' referrerpolicy='no-referrer')
     script(src='vendors/fontawesome/all.min.js' defer='')
-    script(src='../js/main.js' defer='')
-    script(src='../js/viewSalesDelete.js' defer='')
-    //- script(src='../js/viewSales.js' defer='')
+    script(src='js/main.js' defer='')
+    script(src='js/viewStockDelete.js' defer='')
 
   body
     #hamburger.hamburger
@@ -32,7 +33,7 @@ html
             i.fas.fa-plus-square
             span Add Stock
         li
-          a(href='/viewstock')
+          a.active(href='/viewstock')
             i.fas.fa-list
             span View Stock
         li
@@ -40,7 +41,7 @@ html
             i.fa-solid.fa-comments-dollar
             span Add Sales
         li
-          a.active(href='/viewsales')
+          a(href='/viewsales')
             i.fas.fa-dollar-sign
             span View Sales
         li
@@ -76,47 +77,42 @@ html
       header.header-wrapper
         .header-title
           span Mayondo Wood and Furniture
-          h2 Sales Overview
+          h2 Stock Overview
 
-      section.view-sales-section
-        h3 All Sales Records
-        table#salesTable
+      section.view-stock-section
+        h3 All Stock Items
+        table#stockTable
           thead
             tr
-              th Customer Name
-              th Product Name
+              th Name
+              th Type
+              th Cost Price
+              th Sale Price
               th Quantity
-              th Overall Total
-              th Payment Type
-              th Sales Agent
-              th Sale Date
-              th Transport
+              th Supplier
               th Actions
           tbody
-            if sales.length === 0
+            if stocks.length === 0
               tr
-                td(colspan="9") No sales records found.
+                td(colspan="7") No stock items found.
             else
-              each sale in sales
+              each stock in stocks
                 tr
-                  td #{sale.customerName}
-                  td #{sale.productName}
-                  td #{sale.quantity}
-                  td UGX #{sale.overallTotal.toFixed(2)}
-                  td #{sale.paymentType}
-                  td #{sale.salesAgent}
-                  td #{sale.saleDate.toLocaleDateString()}
-                  td #{sale.transportProvided ? "Yes" : "No"}
+                  td #{stock.productName}
+                  td #{stock.productType}
+                  td UGX #{stock.costPrice.toFixed(2)}
+                  td UGX #{stock.productPrice.toFixed(2)}
+                  td #{stock.quantity}
+                  td #{stock.supplierName}
                   td
-                    a.edit-btn(href=`/sales/edit/${sale._id}`) Edit
-                    a.delete-btn(href="#" data-id=`${sale._id}`) Delete
-                    a.print-btn(href=`/sales/receipt/${sale._id}` target="_blank") Print Receipt
+                    a.edit-btn(href=`/stock/edit/${stock._id}`) Edit
+                    a.delete-btn(href="#" data-id=`${stock._id}`) Delete
 
     //- Delete Confirmation Modal
     div#deleteModal.modal(style='display:none;')
       .modal-content
         h3 Confirm Delete
-        p Are you sure you want to delete this sale?
+        p Are you sure you want to delete this stock item?
         .modal-actions
           button#confirmDeleteBtn.btn-delete Delete
           button#cancelDeleteBtn.btn-cancel Cancel

@@ -1,128 +1,123 @@
-/* ========================================
-   View Employees & Suppliers Table Styles
-======================================== */
-
-/* Sections wrapper */
+/* Base styles for both sections */
 .employees-section,
 .suppliers-section {
-  max-width: 1200px;
-  margin: 20px auto; /* center the section */
-  background: #fff;
-  padding: 25px;
-  border-radius: 12px;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
-  overflow-x: auto; /* horizontal scroll on smaller screens */
+  position: relative;
+  left: 60px; /* space for collapsed sidebar */
+  max-width: calc(1000px - 60px); /* adjust width accordingly */
+  margin: 0 auto;
+  padding: 1rem;
+  transition: left 0.3s ease, max-width 0.3s ease;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  color: #333;
+}
+
+/* Sidebar expansion handling */
+@media (min-width: 769px) {
+  .sidebar.expanded ~ main .employees-section,
+  .sidebar.expanded ~ main .suppliers-section {
+    left: 160px; /* shift right when sidebar expands */
+    max-width: calc(1000px - 160px); /* adjust max width accordingly */
+  }
 }
 
 /* Table styling */
-table {
+.employees-section table,
+.suppliers-section table {
   width: 100%;
-  border-collapse: collapse;
+  border-collapse: separate;
+  border-spacing: 0;
+  background: white;
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 6px 15px rgba(0,0,0,0.1);
   min-width: 600px;
 }
 
-thead th {
-  background-color: #0077B6;
+/* Table headers */
+.employees-section th,
+.suppliers-section th {
+  background-color: #0077B6; /* Dark teal/blue */
   color: #fff;
   font-weight: 600;
-  padding: 12px 15px;
-  text-align: left;
+  padding: 14px 20px;
+  text-align: center;
   border-radius: 6px 6px 0 0;
+  text-transform: none;
+  letter-spacing: normal;
+  border-bottom: none;
+  white-space: nowrap;
 }
 
-tbody td {
-  padding: 10px 15px;
+/* Table cells */
+.employees-section td,
+.suppliers-section td {
+  padding: 14px 20px;
   border-bottom: 1px solid #e0e0e0;
+  vertical-align: middle;
   color: #555;
+  text-align: center;
+  white-space: nowrap;
 }
 
-tbody tr:nth-child(even) {
+/* Zebra striping */
+.employees-section tbody tr:nth-child(even),
+.suppliers-section tbody tr:nth-child(even) {
   background-color: #f9f9f9;
 }
 
-tbody tr:hover {
-  background-color: #f1f7f4;
+.employees-section tbody tr:nth-child(odd),
+.suppliers-section tbody tr:nth-child(odd) {
+  background-color: #ffffff;
 }
 
-/* Action buttons */
-button {
-  padding: 5px 12px;
-  border-radius: 6px;
-  font-size: 0.85rem;
-  cursor: pointer;
+/* Hover effects */
+.employees-section tbody tr:hover,
+.suppliers-section tbody tr:hover {
+  background-color: #f1f7f4;
+  transition: background-color 0.3s ease;
+}
+
+/* Mobile responsiveness */
+@media (max-width: 768px) {
+  .employees-section,
+  .suppliers-section {
+    left: 0; /* remove offset on small screens */
+    max-width: 100%;
+  }
+
+  .employees-section table,
+  .suppliers-section table {
+    display: block;
+    overflow-x: auto;
+    white-space: nowrap;
+  }
+
+  .employees-section th,
+  .employees-section td,
+  .suppliers-section th,
+  .suppliers-section td {
+    white-space: nowrap;
+  }
+}
+
+/* Button styling */
+.employees-section button,
+.suppliers-section button {
+  padding: 6px 14px;
   border: none;
-  transition: all 0.2s ease;
+  border-radius: 6px;
+  cursor: pointer;
+  background-color: #0077B6;
+  color: white;
+  font-weight: 600;
+  transition: background-color 0.3s ease;
+  box-shadow: 0 2px 5px rgba(90, 78, 124, 0.4);
   margin: 0 3px;
 }
 
-button.edit {
-  background-color: #2196F3;
-  color: #fff;
-}
-
-button.delete {
-  background-color: #f44336;
-  color: #fff;
-}
-
-button:hover {
-  opacity: 0.85;
-}
-
-/* Main Error Message */
-.main-error-message {
-  display: none;
-  color: #f44336;
-  font-weight: 600;
-  margin-bottom: 15px;
-}
-
-/* Success Message */
-.success-message {
-  display: none;
-  color: #4CAF50;
-  font-weight: 600;
-  margin-bottom: 15px;
-}
-
-/* Error messages below inputs */
-.error-message {
-  color: #f44336;
-  font-size: 0.85rem;
-  margin-top: 4px;
-}
-
-/* Mobile Responsiveness */
-@media screen and (max-width: 1024px) {
-  .employees-section,
-  .suppliers-section {
-    padding: 20px;
-  }
-
-  table {
-    font-size: 0.9rem;
-    min-width: 100%;
-  }
-
-  button {
-    padding: 4px 10px;
-    font-size: 0.8rem;
-  }
-}
-
-@media screen and (max-width: 768px) {
-  .employees-section,
-  .suppliers-section {
-    padding: 15px;
-  }
-
-  table {
-    font-size: 0.85rem;
-    min-width: 100%;
-  }
-
-  button {
-    padding: 3px 8px;
-    font-size: 0.75rem;
-  }
+.employees-section button:hover,
+.suppliers-section button:hover {
+  background-color: #90E0EF;
+  color: #0077B6;
+  box-shadow: 0 4px 8px rgba(129, 109, 174, 0.6);
 }

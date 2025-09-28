@@ -1,0 +1,17 @@
+doctype html
+head
+  meta(charset='UTF-8')
+  meta(name='viewport' content='width=device-width, initial-scale=1')
+  title Log In
+  link(rel='stylesheet' href='css/signup.css')
+.container
+  h2 Log In
+  form#loginForm
+    label(for='emailLogin') Email Address
+    input#emailLogin(type='email' name='emailLogin' placeholder='example@mail.com' required='')
+    label(for='passwordLogin') Password
+    input#passwordLogin(type='password' name='passwordLogin' placeholder='Enter password' required='' minlength='6')
+    button(type='submit') Log In
+  .form-footer
+    | Don&apos;t have an account? 
+    a(href='/signUp') Sign Up

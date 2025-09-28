@@ -1,0 +1,130 @@
+doctype html
+head
+  meta(charset='UTF-8')
+  meta(name='viewport' content='width=device-width, initial-scale=1.0')
+  title Add Employee - MWF
+  link(rel='stylesheet' href='css/style.css')
+  link(rel='stylesheet' href='css/employees.css')
+  link(rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css' integrity='sha512-2SwdPD6INVrV/lHTZbO2nodKhrnDdJK9/kg2XD1r9uGqPo1cUbujc+IYdlYdEErWNu69gVcYgdxlmVmzTWnetw==' crossorigin='anonymous' referrerpolicy='no-referrer')
+  script(src='vendors/fontawesome/all.min.js' defer='')
+  script(src='../js/storage.js' defer='')
+  script(src='../js/main.js' defer='')
+  script(src='../js/employees.js' defer='')
+#hamburger.hamburger
+  i.fas.fa-bars
+#sidebar.sidebar
+  .logo MWF
+  ul.menu
+    li
+      a(href='/dashboard')
+        i.fa-solid.fa-gauge-high
+        span Dashboard
+    li
+      a(href='/products')
+        i.fas.fa-box
+        span Products
+    li
+      a(href='/stock')
+        i.fas.fa-plus-square
+        span Add Stock
+    li
+      a(href='/viewstock')
+        i.fas.fa-list
+        span View Stock
+    li
+      a(href='/sales')
+        i.fa-solid.fa-comments-dollar
+        span Add Sales
+    li
+      a(href='/sales')
+        i.fas.fa-dollar-sign
+        span View Sales
+    li
+      a(href='/suppliers')
+        i.fas.fa-truck
+        span Add Suppliers
+    li
+      a.active(href='/employees')
+        i.fas.fa-user
+        span Add Employee
+    li
+      a(href='/viewEmployees')
+        i.fas.fa-users
+        span View Employees
+    li
+      a(href='/toDo')
+        i.fas.fa-list
+        span To-Do
+    li
+      a(href='/reports')
+        i.fas.fa-file-alt
+        span Reports
+    li
+      a(href='/settings')
+        i.fa-solid.fa-gear
+        span Settings
+    li.logout
+      a(href='/logout')
+        i.fas.fa-sign-out-alt
+        span Logout
+main.main-content
+  header.header-wrapper
+    .header-title
+      span Mayondo Wood and Furniture
+      h2 Add Employee
+  section.employees-section
+    .form-card
+      h3 Employee Form
+      #mainError.main-error-message
+      form#addEmployeeForm(action='/employee' method='post')
+        // Employee Name
+        .form-group
+          label(for='employeeName') Name
+          input#employeeName(type='text' placeholder='Employee Name')
+          #errorEmployeeName.error-message
+        // Date of Birth
+        .form-group
+          label(for='employeeDob') Date of Birth
+          input#employeeDob(type='date')
+          #errorEmployeeDob.error-message
+        // NIN
+        .form-group
+          label(for='employeeNIN') NIN
+          input#employeeNIN(type='text' placeholder='National ID Number')
+          #errorEmployeeNIN.error-message
+        // Position
+        .form-group
+          label(for='employeePosition') Position
+          input#employeePosition(type='text' placeholder='Position')
+          #errorEmployeePosition.error-message
+        // Contact
+        .form-group
+          label(for='employeeContact') Contact
+          input#employeeContact(type='text' placeholder='Contact')
+          #errorEmployeeContact.error-message
+        // Email
+        .form-group
+          label(for='employeeEmail') Email
+          input#employeeEmail(type='email' placeholder='Email')
+          #errorEmployeeEmail.error-message
+        // Role
+        .form-group
+          label(for='employeeRole') Role
+          input#employeeRole(type='text' placeholder='Role (e.g., Sales, Stock)')
+          #errorEmployeeRole.error-message
+        // Next of Kin Section
+        h4 Next of Kin
+        .form-group
+          label(for='nokName') Name
+          input#nokName(type='text' placeholder='Next of Kin Name')
+          #errorNokName.error-message
+        .form-group
+          label(for='nokContact') Contact
+          input#nokContact(type='text' placeholder='Next of Kin Contact')
+          #errorNokContact.error-message
+        .form-group
+          label(for='nokRelation') Relationship
+          input#nokRelation(type='text' placeholder='Relationship')
+          #errorNokRelation.error-message
+        button.btn-submit(type='submit') Add Employee
+      p#successMessage.success-message
