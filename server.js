@@ -20,7 +20,7 @@ const stockRoutes = require("./routes/stockRoutes")
 const salesRoutes = require("./routes/salesRoutes")
 const employeeRoutes = require("./routes/employeeRoutes")
 const authRoutes = require("./routes/authRoutes")
-const productRoutes = require("./routes/pruductRoutes")
+const productRoutes = require("./routes/productRoutes")
 const reportsRoutes = require("./routes/reportsRoutes")
 const suppliersRoutes = require("./routes/suppliersRoutes")
 const todoRoutes = require("./routes/todoRoutes")
@@ -43,7 +43,20 @@ mongoose.connection
   .on('error', (err) => {
     console.log(`Connection error: ${err.message}`);
   });
+
+
+
+
+
+//   mongoose.connect('mongodb://127.0.0.1:27017/mwf_todo', {
+//   useNewUrlParser: true,
+//   useUnifiedTopology: true
+// }).then(() => console.log('MongoDB Connected'));
   
+
+
+
+
 // setting view engine to pug
 app.set('view engine', 'pug')
 app.set('views', path.join(__dirname, 'views'))
@@ -105,7 +118,8 @@ app.use("/",authRoutes)
 app.use("/",productRoutes)
 app.use("/",reportsRoutes)
 app.use("/",suppliersRoutes)
-app.use("/",todoRoutes)
+app.get('/toDo', (req, res) => res.render('todo'));
+app.use("/todo",todoRoutes)
 
 
 

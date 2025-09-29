@@ -1,98 +1,55 @@
-// viewEmployees.js
+document.addEventListener("DOMContentLoaded", () => {
+  const deleteButtons = document.querySelectorAll(".delete-btn");
+  const deleteModal = document.getElementById("deleteModal");
+  const confirmDeleteBtn = document.getElementById("confirmDelete");
+  const cancelDeleteBtn = document.getElementById("cancelDelete");
 
-const employeesTableBody = document.querySelector("#employeesTable tbody");
-const suppliersTableBody = document.querySelector("#suppliersTable tbody");
+  let employeeIdToDelete = null;
 
-// Render Employees
-function renderEmployees() {
-  employeesTableBody.innerHTML = "";
-
-  if (employeesData.length === 0) {
-    employeesTableBody.innerHTML = `<tr><td colspan="7" style="text-align:center;">No employees found</td></tr>`;
-    return;
-  }
-
-  employeesData.forEach((emp, index) => {
-    const row = document.createElement("tr");
-    row.innerHTML = `
-      <td>${emp.name}</td>
-      <td>${emp.age}</td>
-      <td>${emp.position}</td>
-      <td>${emp.contact}</td>
-      <td>${emp.email}</td>
-      <td>${emp.role}</td>
-      <td>
-        <button class="edit-btn" data-type="employee" data-index="${index}">Edit</button>
-        <button class="delete-btn" data-type="employee" data-index="${index}">Delete</button>
-      </td>
-    `;
-    employeesTableBody.appendChild(row);
+  // Show modal only when Delete is clicked
+  deleteButtons.forEach(btn => {
+    btn.addEventListener("click", (e) => {
+      e.preventDefault(); // Prevent default link action
+      employeeIdToDelete = btn.dataset.id; // Capture employee id
+      deleteModal.style.display = "block"; // Show modal
+    });
   });
-}
 
-// Render Suppliers
-function renderSuppliers() {
-  suppliersTableBody.innerHTML = "";
-
-  if (suppliersData.length === 0) {
-    suppliersTableBody.innerHTML = `<tr><td colspan="6" style="text-align:center;">No suppliers found</td></tr>`;
-    return;
-  }
-
-  suppliersData.forEach((sup, index) => {
-    const row = document.createElement("tr");
-    row.innerHTML = `
-      <td>${sup.name}</td>
-      <td>${sup.product}</td>
-      <td>${sup.location}</td>
-      <td>${sup.contact}</td>
-      <td>${sup.email}</td>
-      <td>
-        <button class="edit-btn" data-type="supplier" data-index="${index}">Edit</button>
-        <button class="delete-btn" data-type="supplier" data-index="${index}">Delete</button>
-      </td>
-    `;
-    suppliersTableBody.appendChild(row);
+  // Cancel button closes the modal
+  cancelDeleteBtn.addEventListener("click", () => {
+    deleteModal.style.display = "none";
+    employeeIdToDelete = null;
   });
-}
 
-// Handle Delete/Edit
-document.addEventListener("click", function (e) {
-  if (e.target.classList.contains("delete-btn")) {
-    const type = e.target.dataset.type;
-    const index = e.target.dataset.index;
+  // Confirm button deletes the employee
+  confirmDeleteBtn.addEventListener("click", async () => {
+    if (!employeeIdToDelete) return;
 
-    if (type === "employee") {
-      employeesData.splice(index, 1);
-      saveEmployeesData();
-      renderEmployees();
-    } else if (type === "supplier") {
-      suppliersData.splice(index, 1);
-      saveSuppliersData();
-      renderSuppliers();
+    try {
+      const response = await fetch(`/employees/delete/${employeeIdToDelete}`, {
+        method: "DELETE"
+      });
+
+      if (response.ok) {
+        // Remove employee row from table without reloading
+        const row = document.querySelector(`.delete-btn[data-id="${employeeIdToDelete}"]`).closest("tr");
+        row.remove();
+        deleteModal.style.display = "none";
+        employeeIdToDelete = null;
+      } else {
+        alert("Error deleting employee");
+      }
+    } catch (error) {
+      console.error(error);
+      alert("Error deleting employee");
     }
-  }
+  });
 
-  if (e.target.classList.contains("edit-btn")) {
-    const type = e.target.dataset.type;
-    const index = e.target.dataset.index;
-
-    if (type === "employee") {
-      const emp = employeesData[index];
-      const newName = prompt("Edit Employee Name:", emp.name);
-      if (newName && newName.trim()) employeesData[index].name = newName.trim();
-      saveEmployeesData();
-      renderEmployees();
-    } else if (type === "supplier") {
-      const sup = suppliersData[index];
-      const newName = prompt("Edit Supplier Name:", sup.name);
-      if (newName && newName.trim()) suppliersData[index].name = newName.trim();
-      saveSuppliersData();
-      renderSuppliers();
+  // Optional: Close modal if clicking outside modal content
+  window.addEventListener("click", (e) => {
+    if (e.target === deleteModal) {
+      deleteModal.style.display = "none";
+      employeeIdToDelete = null;
     }
-  }
+  });
 });
-
-// Initial load
-renderEmployees();
-renderSuppliers();

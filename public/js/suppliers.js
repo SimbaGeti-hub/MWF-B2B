@@ -68,8 +68,8 @@ function validateForm() {
   return isValid;
 }
 
-// Form submit
-addSupplierForm.addEventListener("submit", function (e) {
+// Submit form to backend
+addSupplierForm.addEventListener("submit", async function (e) {
   e.preventDefault();
   if (!validateForm()) return;
 
@@ -81,17 +81,37 @@ addSupplierForm.addEventListener("submit", function (e) {
     product: supplierProductInput.value.trim(),
   };
 
-  suppliersData.push(newSupplier);   // ✅ uses storage.js
-  saveSuppliersData();               // ✅ uses storage.js
+  try {
+    const response = await fetch("/suppliers", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify(newSupplier)
+    });
 
-  successMessage.textContent = `Success! Supplier ${newSupplier.name} added.`;
-  successMessage.style.display = "block";
+    if (response.ok) {
+      const savedSupplier = await response.json();
+      successMessage.textContent = `Success! Supplier ${savedSupplier.name} added.`;
+      successMessage.style.display = "block";
+      addSupplierForm.reset();
 
-  addSupplierForm.reset();
+      setTimeout(() => {
+        successMessage.style.display = "none";
+      }, 3000);
 
-  setTimeout(() => {
-    successMessage.style.display = "none";
-  }, 3000);
+      console.log("Supplier added to DB:", savedSupplier);
+
+    } else {
+      const errorData = await response.json();
+      mainError.textContent = errorData.error || "Error adding supplier.";
+      mainError.style.display = "block";
+    }
+  } catch (err) {
+    console.error(err);
+    mainError.textContent = "Server error. Please try again.";
+    mainError.style.display = "block";
+  }
 });
 
 // Live error removal

@@ -126,6 +126,8 @@ input.invalid { background-color: #fdecea; border: 1px solid #e74c3c; box-shadow
   transition: background-color 0.3s ease;
   box-shadow: 0 2px 5px rgba(90, 78, 124, 0.4);
   margin: 0 3px;
+  width: 100%;
+  padding: 15px;
 }
 
 .todo-section button:hover {

@@ -3,14 +3,13 @@ html
   head
     meta(charset='UTF-8')
     meta(name='viewport' content='width=device-width, initial-scale=1.0')
-    title Add Employee - MWF
-    link(rel='stylesheet' href='css/style.css')
-    link(rel='stylesheet' href='css/employees.css')
+    title Edit Employee - MWF
+    link(rel='stylesheet' href='/css/style.css')
+    link(rel='stylesheet' href='/css/employees.css')
     link(rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css' integrity='sha512-2SwdPD6INVrV/lHTZbO2nodKhrnDdJK9/kg2XD1r9uGqPo1cUbujc+IYdlYdEErWNu69gVcYgdxlmVmzTWnetw==' crossorigin='anonymous' referrerpolicy='no-referrer')
-    script(src='vendors/fontawesome/all.min.js' defer='')
-    //- script(src='../js/storage.js' defer='')
-    script(src='../js/main.js' defer='')
-    script(src='../js/employees.js' defer='')
+    script(src='/vendors/fontawesome/all.min.js' defer)
+    script(src='/js/main.js' defer)
+    script(src='/js/employees.js' defer)
 
   body
     #hamburger.hamburger
@@ -47,7 +46,7 @@ html
             i.fas.fa-truck
             span Add Suppliers
         li
-          a.active(href='/employees')
+          a(href='/employees')
             i.fas.fa-user
             span Add Employee
         li
@@ -75,71 +74,71 @@ html
       header.header-wrapper
         .header-title
           span Mayondo Wood and Furniture
-          h2 Add Employee
+          h2 Edit Employee
 
       section.employees-section
         .form-card
-          h3 Employee Form
+          h3 Edit Employee
           #mainError.main-error-message
-          form#addEmployeeForm(action='/employee' method='post')
+          form#editEmployeeForm(action=`/employees/edit/${employee._id}` method='post')
             // Employee Name
             .form-group
               label(for='employeeName') Name
-              input#employeeName(type='text' name='employeeName' placeholder='Employee Name')
+              input#employeeName(type='text' name='employeeName' placeholder='Employee Name' value=employee.employeeName)
               #errorEmployeeName.error-message
 
             // Date of Birth
             .form-group
               label(for='employeeDob') Date of Birth
-              input#employeeDob(type='date' name='employeeDob')
+              input#employeeDob(type='date' name='employeeDob' value=employee.employeeDob.toISOString().substring(0,10))
               #errorEmployeeDob.error-message
 
             // NIN
             .form-group
               label(for='employeeNIN') NIN
-              input#employeeNIN(type='text' name='employeeNIN' placeholder='National ID Number')
+              input#employeeNIN(type='text' name='employeeNIN' placeholder='National ID Number' value=employee.employeeNIN)
               #errorEmployeeNIN.error-message
 
             // Position
             .form-group
               label(for='employeePosition') Position
-              input#employeePosition(type='text' name='employeePosition' placeholder='Position')
+              input#employeePosition(type='text' name='employeePosition' placeholder='Position' value=employee.employeePosition)
               #errorEmployeePosition.error-message
 
             // Contact
             .form-group
               label(for='employeeContact') Contact
-              input#employeeContact(type='text' name='employeeContact' placeholder='Contact')
+              input#employeeContact(type='text' name='employeeContact' placeholder='Contact' value=employee.employeeContact)
               #errorEmployeeContact.error-message
 
             // Email
             .form-group
               label(for='employeeEmail') Email
-              input#employeeEmail(type='email' name='employeeEmail' placeholder='Email')
+              input#employeeEmail(type='email' name='employeeEmail' placeholder='Email' value=employee.employeeEmail)
               #errorEmployeeEmail.error-message
 
             // Role
             .form-group
               label(for='employeeRole') Role
-              input#employeeRole(type='text' name='employeeRole' placeholder='Role (e.g., Sales, Stock)')
+              input#employeeRole(type='text' name='employeeRole' placeholder='Role (e.g., Sales, Stock)' value=employee.employeeRole)
               #errorEmployeeRole.error-message
 
             // Next of Kin Section
             h4 Next of Kin
             .form-group
               label(for='nokName') Name
-              input#nokName(type='text' name='nokName' placeholder='Next of Kin Name')
+              input#nokName(type='text' name='nokName' placeholder='Next of Kin Name' value=employee.nokName)
               #errorNokName.error-message
 
             .form-group
               label(for='nokContact') Contact
-              input#nokContact(type='text' name='nokContact' placeholder='Next of Kin Contact')
+              input#nokContact(type='text' name='nokContact' placeholder='Next of Kin Contact' value=employee.nokContact)
               #errorNokContact.error-message
 
             .form-group
               label(for='nokRelation') Relationship
-              input#nokRelation(type='text' name='nokRelation' placeholder='Relationship')
+              input#nokRelation(type='text' name='nokRelation' placeholder='Relationship' value=employee.nokRelation)
               #errorNokRelation.error-message
 
-            button.btn-submit(type='submit') Add Employee
-          p#successMessage.success-message
+            button.btn-submit(type='submit') Update Employee
+            button.cancel-btn(type='button' onclick='window.location="/viewEmployees"') Cancel

@@ -3,14 +3,12 @@ html
   head
     meta(charset='UTF-8')
     meta(name='viewport' content='width=device-width, initial-scale=1.0')
-    title Add Supplier - MWF
-    link(rel='stylesheet' href='css/style.css')
-    link(rel='stylesheet' href='css/suppliers.css')
-    // same style as employees.css
+    title Edit Supplier - MWF
+    link(rel='stylesheet' href='/css/style.css')
+    link(rel='stylesheet' href='/css/suppliers.css')
     link(rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css' integrity='sha512-2SwdPD6INVrV/lHTZbO2nodKhrnDdJK9/kg2XD1r9uGqPo1cUbujc+IYdlYdEErWNu69gVcYgdxlmVmzTWnetw==' crossorigin='anonymous' referrerpolicy='no-referrer')
-    //- script(src='js/storage.js' defer='')
-    script(src='js/main.js' defer='')
-    script(src='js/suppliers.js' defer='')
+    script(src='/js/main.js' defer='')
+    script(src='/js/suppliers.js' defer='')
 
   body
     // Sidebar
@@ -77,33 +75,34 @@ html
       header.header-wrapper
         .header-title
           span Mayondo Wood and Furniture
-          h2 Add Supplier
+          h2 Edit Supplier
 
       // Supplier Form
       section.suppliers-section
         .form-card
           h3 Supplier Form
           #mainError.main-error-message
-          form#addSupplierForm(action='/suppliers' method='post' novalidate='')
+          form#editSupplierForm(action=`/suppliers/edit/${supplier._id}` method='post' novalidate='')
             .form-group
               label(for='supplierName') Supplier Name
-              input#supplierName(type='text' name='supplierName' placeholder='Supplier Name')
+              input#supplierName(type='text' name='supplierName' placeholder='Supplier Name' value=`${supplier.name}`)
               #errorSupplierName.error-message
             .form-group
               label(for='supplierLocation') Location
-              input#supplierLocation(type='text' name='supplierLocation' placeholder='Location')
+              input#supplierLocation(type='text' name='supplierLocation' placeholder='Location' value=`${supplier.location}`)
               #errorSupplierLocation.error-message
             .form-group
               label(for='supplierPhone') Phone
-              input#supplierPhone(type='text' name='supplierPhone' placeholder='Phone Number')
+              input#supplierPhone(type='text' name='supplierPhone' placeholder='Phone Number' value=`${supplier.phone}`)
               #errorSupplierPhone.error-message
             .form-group
               label(for='supplierEmail') Email
-              input#supplierEmail(type='email' name='supplierEmail' placeholder='Email')
+              input#supplierEmail(type='email' name='supplierEmail' placeholder='Email' value=`${supplier.email}`)
               #errorSupplierEmail.error-message
             .form-group
               label(for='supplierProduct') Product of Supply
-              input#supplierProduct(type='text' name='supplierProduct' placeholder='Product')
+              input#supplierProduct(type='text' name='supplierProduct' placeholder='Product' value=`${supplier.product}`)
               #errorSupplierProduct.error-message
-            button.btn-submit(type='submit') Add Supplier
+            button.btn-submit(type='submit') Update Supplier
+            a.cancel-btn(href='/viewstock') Cancel
           p#successMessage.success-message
