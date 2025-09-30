@@ -1,3 +1,262 @@
+//- doctype html
+//- html
+//-   head
+//-     meta(charset='UTF-8')
+//-     meta(name='viewport' content='width=device-width, initial-scale=1.0')
+//-     title View Sales - MWF
+//-     link(rel='stylesheet' href='../css/style.css')
+//-     link(rel='stylesheet' href='../css/viewSales.css')
+//-     link(rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css' integrity='sha512-2SwdPD6INVrV/lHTZbO2nodKhrnDdJK9/kg2XD1r9uGqPo1cUbujc+IYdlYdEErWNu69gVcYgdxlmVmzTWnetw==' crossorigin='anonymous' referrerpolicy='no-referrer')
+//-     script(src='vendors/fontawesome/all.min.js' defer='')
+//-     script(src='../js/main.js' defer='')
+//-     script(src='../js/viewSalesDelete.js' defer='')
+//-     //- script(src='../js/viewSales.js' defer='')
+
+//-   body
+//-     #hamburger.hamburger
+//-       i.fas.fa-bars
+
+//-     #sidebar.sidebar
+//-       .logo MWF
+//-       ul.menu
+//-         li
+//-           a(href='/dashboard')
+//-             i.fa-solid.fa-gauge-high
+//-             span Dashboard
+//-         li
+//-           a(href='/products')
+//-             i.fas.fa-box
+//-             span Products
+//-         li
+//-           a(href='/stock')
+//-             i.fas.fa-plus-square
+//-             span Add Stock
+//-         li
+//-           a(href='/viewstock')
+//-             i.fas.fa-list
+//-             span View Stock
+//-         li
+//-           a(href='/sales')
+//-             i.fa-solid.fa-comments-dollar
+//-             span Add Sales
+//-         li
+//-           a.active(href='/viewsales')
+//-             i.fas.fa-dollar-sign
+//-             span View Sales
+//-         li
+//-           a(href='/suppliers')
+//-             i.fas.fa-truck
+//-             span Add Suppliers
+//-         li
+//-           a(href='/employees')
+//-             i.fas.fa-user
+//-             span Add Employees
+//-         li
+//-           a(href='/viewEmployees')
+//-             i.fas.fa-users
+//-             span View Employees
+//-         li
+//-           a(href='/toDo')
+//-             i.fas.fa-list
+//-             span To-Do
+//-         li
+//-           a(href='/reports')
+//-             i.fas.fa-file-alt
+//-             span Reports
+//-         li
+//-           a(href='/settings')
+//-             i.fa-solid.fa-gear
+//-             span Settings
+//-         li.logout
+//-           a(href='/logout')
+//-             i.fas.fa-sign-out-alt
+//-             span Logout
+
+//-     main.main-content
+//-       header.header-wrapper
+//-         .header-title
+//-           span Mayondo Wood and Furniture
+//-           h2 Sales Overview
+
+//-       section.view-sales-section
+//-         h3 All Sales Records
+//-         table#salesTable
+//-           thead
+//-             tr
+//-               th Customer Name
+//-               th Product Name
+//-               th Quantity
+//-               th Overall Total
+//-               th Payment Type
+//-               th Sales Agent
+//-               th Sale Date
+//-               th Transport
+//-               th Actions
+//-           tbody
+//-             if sales.length === 0
+//-               tr
+//-                 td(colspan="9") No sales records found.
+//-             else
+//-               each sale in sales
+//-                 tr
+//-                   td #{sale.customerName}
+//-                   td #{sale.productName}
+//-                   td #{sale.quantity}
+//-                   td UGX #{sale.overallTotal.toFixed(2)}
+//-                   td #{sale.paymentType}
+//-                   td #{sale.salesAgent}
+//-                   td #{sale.saleDate.toLocaleDateString()}
+//-                   td #{sale.transportProvided ? "Yes" : "No"}
+//-                   td
+//-                     a.edit-btn(href=`/sales/edit/${sale._id}`) Edit
+//-                     a.delete-btn(href="#" data-id=`${sale._id}`) Delete
+//-                     a.print-btn(href=`/sales/receipt/${sale._id}` target="_blank") Print Receipt
+
+//-     //- Delete Confirmation Modal
+//-     div#deleteModal.modal(style='display:none;')
+//-       .modal-content
+//-         h3 Confirm Delete
+//-         p Are you sure you want to delete this sale?
+//-         .modal-actions
+//-           button#confirmDeleteBtn.btn-delete Delete
+//-           button#cancelDeleteBtn.btn-cancel Cancel
+
+
+//- doctype html
+//- html
+//-   head
+//-     meta(charset='UTF-8')
+//-     meta(name='viewport' content='width=device-width, initial-scale=1.0')
+//-     title View Sales - MWF
+//-     link(rel='stylesheet' href='../css/style.css')
+//-     link(rel='stylesheet' href='../css/viewSales.css')
+//-     link(rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css' integrity='sha512-2SwdPD6INVrV/lHTZbO2nodKhrnDdJK9/kg2XD1r9uGqPo1cUbujc+IYdlYdEErWNu69gVcYgdxlmVmzTWnetw==' crossorigin='anonymous' referrerpolicy='no-referrer')
+//-     script(src='vendors/fontawesome/all.min.js' defer='')
+//-     script(src='../js/main.js' defer='')
+//-     script(src='../js/viewSalesDelete.js' defer='')
+//-     script(src='../js/viewSalesCards.js' defer='')
+
+//-   body
+//-     #hamburger.hamburger
+//-       i.fas.fa-bars
+
+//-     #sidebar.sidebar
+//-       .logo MWF
+//-       ul.menu
+//-         li
+//-           a(href='/dashboard')
+//-             i.fa-solid.fa-gauge-high
+//-             span Dashboard
+//-         li
+//-           a(href='/products')
+//-             i.fas.fa-box
+//-             span Products
+//-         li
+//-           a(href='/stock')
+//-             i.fas.fa-plus-square
+//-             span Add Stock
+//-         li
+//-           a(href='/viewstock')
+//-             i.fas.fa-list
+//-             span View Stock
+//-         li
+//-           a(href='/sales')
+//-             i.fa-solid.fa-comments-dollar
+//-             span Add Sales
+//-         li
+//-           a.active(href='/viewsales')
+//-             i.fas.fa-dollar-sign
+//-             span View Sales
+//-         li
+//-           a(href='/suppliers')
+//-             i.fas.fa-truck
+//-             span Add Suppliers
+//-         li
+//-           a(href='/employees')
+//-             i.fas.fa-user
+//-             span Add Employees
+//-         li
+//-           a(href='/viewEmployees')
+//-             i.fas.fa-users
+//-             span View Employees
+//-         li
+//-           a(href='/toDo')
+//-             i.fas.fa-list
+//-             span To-Do
+//-         li
+//-           a(href='/reports')
+//-             i.fas.fa-file-alt
+//-             span Reports
+//-         li
+//-           a(href='/settings')
+//-             i.fa-solid.fa-gear
+//-             span Settings
+//-         li.logout
+//-           a(href='/logout')
+//-             i.fas.fa-sign-out-alt
+//-             span Logout
+
+//-     main.main-content
+//-       header.header-wrapper
+//-         .header-title
+//-           span Mayondo Wood and Furniture
+//-           h2 Sales Overview
+
+//-       //- Search Filter
+//-       //- section.search-section
+//-       //-   input#searchInput(type='text' placeholder='Search sales by customer, product, or agent...')
+
+//-       section.view-sales-section
+//-         h3 All Sales Records
+//-         table#salesTable
+//-           thead
+//-             tr
+//-               th Customer Name
+//-               th Product Name
+//-               th Quantity
+//-               th Overall Total
+//-               th Payment Type
+//-               th Sales Agent
+//-               th Sale Date
+//-               th Transport
+//-               th Actions
+//-           tbody
+//-             if sales.length === 0
+//-               tr
+//-                 td(colspan="9") No sales records found.
+//-             else
+//-               each sale in sales
+//-                 tr
+//-                   td #{sale.customerName}
+//-                   td #{sale.productName}
+//-                   td #{sale.quantity}
+//-                   td UGX #{sale.overallTotal.toFixed(2)}
+//-                   td #{sale.paymentType}
+//-                   td #{sale.salesAgent}
+//-                   td #{sale.saleDate.toLocaleDateString()}
+//-                   td #{sale.transportProvided ? "Yes" : "No"}
+//-                   td
+//-                     a.edit-btn(href=`/sales/edit/${sale._id}`) Edit
+//-                     a.delete-btn(href="#" data-id=`${sale._id}`) Delete
+//-                     a.print-btn(href=`/sales/receipt/${sale._id}` target="_blank") Print Receipt
+
+//-       //- Cards Section
+//-       section.cards-section
+//-         h3.sales-cards-title Daily Sales Summary
+//-         .cards-container
+//-           //- Cards will be generated dynamically by JS
+
+//-     //- Delete Confirmation Modal
+//-     div#deleteModal.modal(style='display:none;')
+//-       .modal-content
+//-         h3 Confirm Delete
+//-         p Are you sure you want to delete this sale?
+//-         .modal-actions
+//-           button#confirmDeleteBtn.btn-delete Delete
+//-           button#cancelDeleteBtn.btn-cancel Cancel
+
+
+
 doctype html
 html
   head
@@ -10,7 +269,7 @@ html
     script(src='vendors/fontawesome/all.min.js' defer='')
     script(src='../js/main.js' defer='')
     script(src='../js/viewSalesDelete.js' defer='')
-    //- script(src='../js/viewSales.js' defer='')
+    script(src='../js/viewSalesCards.js' defer='')
 
   body
     #hamburger.hamburger
@@ -78,6 +337,11 @@ html
           span Mayondo Wood and Furniture
           h2 Sales Overview
 
+        //- Professional Search Box
+        .header-search
+          input#searchInput(type='text' placeholder='Search sales by customer, product, or agent...')
+          i.fas.fa-magnifying-glass
+
       section.view-sales-section
         h3 All Sales Records
         table#salesTable
@@ -112,6 +376,17 @@ html
                     a.delete-btn(href="#" data-id=`${sale._id}`) Delete
                     a.print-btn(href=`/sales/receipt/${sale._id}` target="_blank") Print Receipt
 
+      //- Cards Section
+      section.cards-section
+        h3.sales-cards-title Daily Sales Summary
+        .cards-container
+          //- Cards will be dynamically generated by JS
+          //- Example card structure:
+          //- .card
+          //-   h4 Total Sales
+          //-   p 23
+          //-   span.earnings UGX 1,200,000
+
     //- Delete Confirmation Modal
     div#deleteModal.modal(style='display:none;')
       .modal-content
@@ -120,3 +395,4 @@ html
         .modal-actions
           button#confirmDeleteBtn.btn-delete Delete
           button#cancelDeleteBtn.btn-cancel Cancel
+

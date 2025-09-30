@@ -161,3 +161,118 @@
   background-color: darkgrey;
 }
 
+
+
+
+/* Cards and search */
+/* --- Sales Cards Section --- */
+.cards-section {
+  margin: 30px 0;
+}
+
+.sales-cards-title {
+  text-align: center;
+  font-size: 1.8rem;
+  font-weight: bold;
+  margin-bottom: 20px;
+  color: #0077B6;
+}
+
+/* Container for cards */
+.cards-container {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center; /* center horizontally */
+  gap: 20px;
+}
+
+/* Individual card */
+.sales-card {
+  background: #fff;
+  padding: 20px;
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+  min-width: 250px;
+  max-width: 300px;
+  flex: 1 1 250px; /* shrink/expand based on container width */
+  text-align: center;
+  transition: all 0.3s ease;
+}
+
+.sales-card h4 {
+  background: #0077B6;
+  color: #fff;
+  padding: 10px 0;
+  border-radius: 8px;
+  margin-bottom: 15px;
+}
+
+.sales-card p {
+  font-size: 1.4rem;
+  font-weight: 600;
+  color: #06212c;
+}
+
+/* Adjust for sidebar expanded */
+@media (min-width: 769px) {
+  .sidebar.expanded ~ main .cards-section .cards-container {
+    max-width: calc(100% - 240px - 40px); /* leave room for sidebar */
+    margin: 0 auto;
+  }
+}
+
+
+/* search */
+
+.header-wrapper {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 1rem;
+  padding: 1rem 2rem;
+  background: #F5F7FA;
+  border-radius: 12px;
+  box-shadow: 0 4px 10px rgba(108, 92, 231, 0.1);
+  transition: margin-left 0.3s ease;
+}
+
+.header-search {
+  position: relative;
+  display: flex;
+  align-items: center;
+  background: #fff;
+  border-radius: 25px;
+  padding: 5px 15px;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+  transition: box-shadow 0.3s ease;
+  width: 250px;
+}
+
+.header-search input {
+  border: none;
+  outline: none;
+  font-size: 1rem;
+  padding: 8px 10px;
+  border-radius: 25px;
+  width: 100%;
+}
+
+.header-search i {
+  position: absolute;
+  right: 15px;
+  font-size: 1.2rem;
+  color: #0077B6;
+  pointer-events: none;
+}
+
+.header-search input:focus {
+  box-shadow: 0 4px 10px rgba(0,0,0,0.15);
+}
+
+@media(max-width: 768px) {
+  .header-search {
+    width: 100%;
+    margin-top: 10px;
+  }
+}

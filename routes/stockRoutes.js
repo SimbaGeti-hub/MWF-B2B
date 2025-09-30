@@ -9,6 +9,85 @@ router.get("/stock", (req, res) => {
 });
 
 // --- POST: Add New Stock ---
+
+// // --- POST: Add New Stock ---
+// router.post("/stock", async (req, res) => {
+//   try {
+//     const {
+//       productName,
+//       productType,
+//       costPrice,
+//       quantity,
+//       productPrice,
+//       supplierName,
+//       date,
+//       quality,
+//       color,
+//       measurements
+//     } = req.body;
+
+//     // Convert numbers
+//     const cost = parseFloat(costPrice) || 0;
+//     const qty = parseInt(quantity) || 0;
+//     const price = parseFloat(productPrice) || 0;
+
+//     // Calculate totals
+//     const costTotal = cost * qty;
+//     const totalValue = price * qty;
+//     const expectedProfit = totalValue - costTotal;
+
+//     // Check if stock with same name + type exists
+//     const existingStock = await Stock.findOne({
+//       productName: productName,
+//       productType: productType
+//     });
+
+//     if (existingStock) {
+//       // Merge quantities
+//       existingStock.quantity += qty;
+//       existingStock.costPrice = cost; // keep latest price
+//       existingStock.productPrice = price;
+//       existingStock.costTotal = existingStock.costPrice * existingStock.quantity;
+//       existingStock.totalValue = existingStock.productPrice * existingStock.quantity;
+//       existingStock.expectedProfit =
+//         existingStock.totalValue - existingStock.costTotal;
+
+//       await existingStock.save();
+
+//       console.log("🔄 Updated existing stock in DB:", existingStock);
+//       res.redirect("/viewstock");
+//     } else {
+//       // Create new stock entry
+//       const stockData = {
+//         productName,
+//         productType,
+//         costPrice: cost,
+//         quantity: qty,
+//         productPrice: price,
+//         supplierName,
+//         date: new Date(date),
+//         quality,
+//         color,
+//         measurements,
+//         costTotal,
+//         totalValue,
+//         expectedProfit
+//       };
+
+//       const newStock = new Stock(stockData);
+//       const savedStock = await newStock.save();
+
+//       console.log("✅ New stock added to DB:", savedStock);
+//       res.redirect("/viewstock");
+//     }
+//   } catch (error) {
+//     console.error("❌ Error saving stock:", error);
+//     res.status(500).send("Error saving stock");
+//   }
+// });
+
+
+
 router.post("/stock", async (req, res) => {
   try {
     const {
