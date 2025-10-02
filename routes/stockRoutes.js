@@ -8,83 +8,7 @@ router.get("/stock", (req, res) => {
   res.render("addStock");
 });
 
-// --- POST: Add New Stock ---
 
-// // --- POST: Add New Stock ---
-// router.post("/stock", async (req, res) => {
-//   try {
-//     const {
-//       productName,
-//       productType,
-//       costPrice,
-//       quantity,
-//       productPrice,
-//       supplierName,
-//       date,
-//       quality,
-//       color,
-//       measurements
-//     } = req.body;
-
-//     // Convert numbers
-//     const cost = parseFloat(costPrice) || 0;
-//     const qty = parseInt(quantity) || 0;
-//     const price = parseFloat(productPrice) || 0;
-
-//     // Calculate totals
-//     const costTotal = cost * qty;
-//     const totalValue = price * qty;
-//     const expectedProfit = totalValue - costTotal;
-
-//     // Check if stock with same name + type exists
-//     const existingStock = await Stock.findOne({
-//       productName: productName,
-//       productType: productType
-//     });
-
-//     if (existingStock) {
-//       // Merge quantities
-//       existingStock.quantity += qty;
-//       existingStock.costPrice = cost; // keep latest price
-//       existingStock.productPrice = price;
-//       existingStock.costTotal = existingStock.costPrice * existingStock.quantity;
-//       existingStock.totalValue = existingStock.productPrice * existingStock.quantity;
-//       existingStock.expectedProfit =
-//         existingStock.totalValue - existingStock.costTotal;
-
-//       await existingStock.save();
-
-//       console.log("🔄 Updated existing stock in DB:", existingStock);
-//       res.redirect("/viewstock");
-//     } else {
-//       // Create new stock entry
-//       const stockData = {
-//         productName,
-//         productType,
-//         costPrice: cost,
-//         quantity: qty,
-//         productPrice: price,
-//         supplierName,
-//         date: new Date(date),
-//         quality,
-//         color,
-//         measurements,
-//         costTotal,
-//         totalValue,
-//         expectedProfit
-//       };
-
-//       const newStock = new Stock(stockData);
-//       const savedStock = await newStock.save();
-
-//       console.log("✅ New stock added to DB:", savedStock);
-//       res.redirect("/viewstock");
-//     }
-//   } catch (error) {
-//     console.error("❌ Error saving stock:", error);
-//     res.status(500).send("Error saving stock");
-//   }
-// });
 
 
 
@@ -236,10 +160,37 @@ router.delete("/stock/delete/:id", async (req, res) => {
 
 
 
+router.get('/reports/stock', async (req, res) => {
+  const { from, to } = req.query;
+  if (!from || !to) return res.status(400).json({ error: 'Missing dates' });
+
+  try {
+    const fromDate = new Date(from);
+    const toDate = new Date(to);
+    toDate.setHours(23, 59, 59);
+
+    const stocks = await Stock.find({
+      createdAt: { $gte: fromDate, $lte: toDate } // replace with the date field you use
+    }).lean();
+    res.json(stocks);
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ error: 'Server error fetching stock' });
+  }
+});
 
 
 
-
+// GETTING THE STOCK FOR SALE VALIDATION
+// API endpoint for Add Sales live stock
+router.get('/api/stock', async (req, res) => {
+  try {
+    const stocks = await Stock.find();
+    res.json(stocks);
+  } catch (err) {
+    res.status(500).json({ message: 'Error fetching stock data' });
+  }
+});
 
 
 

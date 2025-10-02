@@ -1,0 +1,74 @@
+doctype html
+html
+  head
+    meta(charset="UTF-8")
+    meta(name="viewport" content="width=device-width, initial-scale=1.0")
+    title Edit Task - MWF
+    link(rel="stylesheet" href="/css/style.css")
+    link(rel="stylesheet" href="/css/todo.css")
+    link(rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css")
+    script(src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous")
+    script(src="/js/main.js" defer)
+
+  body
+    // Sidebar (reuse same sidebar from your main file)
+    #sidebar.sidebar
+      .logo MWF
+      ul.menu
+        li
+          a(href="/dashboard") 
+            i.fa-solid.fa-gauge-high
+            span Dashboard
+        li
+          a.active(href="/toDo") 
+            i.fas.fa-list
+            span To-Do
+        li.logout
+          a(href="/logout") 
+            i.fas.fa-sign-out-alt
+            span Logout
+
+    // Main Content
+    main.main-content
+      header.header-wrapper
+        .header-title
+          span Mayondo Wood and Furniture
+          h2 Edit Task
+
+      section.todo-section
+        .form-card
+          h3 Edit Task
+          #mainError.main-error-message
+          form#editTaskForm(action=`/toDo/edit/${todo._id}` method="POST")
+            .form-group
+              label(for="taskName") Task Name
+              input#taskName(type="text" name="taskName" value=todo.taskName)
+              #errorTaskName.error-message
+
+            .form-group
+              label(for="location") Location
+              input#location(type="text" name="location" value=todo.location)
+              #errorLocation.error-message
+
+            .form-group
+              label(for="date") Date
+              input#date(type="date" name="date" value=todo.date.toISOString().split('T')[0])
+              #errorDate.error-message
+
+            .form-group
+              label(for="time") Time
+              input#time(type="time" name="time" value=todo.time)
+              #errorTime.error-message
+
+            .form-group
+              label(for="assignedPerson") Assigned Person
+              input#assignedPerson(type="text" name="assignedPerson" value=todo.assignedPerson)
+              #errorAssignedPerson.error-message
+
+            .form-group
+              label(for="description") Task Description
+              textarea#description(name="description" rows="4")= todo.description
+              #errorDescription.error-message
+
+            button.btn-submit(type="submit") Update Task
+            a.cancel-btn(href="/toDo") Cancel

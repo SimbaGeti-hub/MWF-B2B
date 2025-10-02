@@ -172,6 +172,7 @@
   min-width: 220px;   /* shrink limit */
   max-width: 300px;   /* expand limit */
   transition: width 0.3s ease, transform 0.3s ease, box-shadow 0.3s ease;
+  padding: 20px;
 }
 
 .card h4 {
@@ -183,6 +184,9 @@
   font-weight: 700;
   text-align: center;
   border-bottom: 1px solid rgba(255,255,255,0.3);
+  border-radius: 7px;
+  
+  
 }
 
 .card p {
@@ -243,6 +247,51 @@
 
 
 
+
+
+/* Search */
+/* Header search box */
+.header-search {
+  position: relative;
+  display: flex;
+  align-items: center;
+  background: #fff;
+  border-radius: 25px;
+  padding: 5px 15px;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+  transition: box-shadow 0.3s ease;
+  width: 250px;
+  margin-left: auto; /* push to the right */
+}
+
+.header-search input {
+  border: none;
+  outline: none;
+  font-size: 1rem;
+  padding: 8px 10px;
+  border-radius: 25px;
+  width: 100%;
+}
+
+.header-search i {
+  position: absolute;
+  right: 15px;
+  font-size: 1.2rem;
+  color: #0077B6;
+  pointer-events: none;
+}
+
+.header-search input:focus {
+  box-shadow: 0 4px 10px rgba(0,0,0,0.15);
+}
+
+/* Responsive adjustments */
+@media(max-width: 768px) {
+  .header-search {
+    width: 100%;
+    margin-top: 10px;
+  }
+}
 
 
 

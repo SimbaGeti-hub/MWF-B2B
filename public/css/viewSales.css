@@ -1,19 +1,10 @@
 .view-sales-section {
-  position: relative;
-  left: 60px; /* space for collapsed sidebar */
-  max-width: calc(1000px - 60px); /* adjust width accordingly */
-  margin: 0 auto;
+  position: static; /* changed from relative */
+  max-width: 1000px; /* fixed width, no shrinking */
+  margin: 0 auto; /* center horizontally */
   padding: 1rem;
-  transition: left 0.3s ease, max-width 0.3s ease;
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
   color: #333;
-}
-
-@media (min-width: 769px) {
-  .sidebar.expanded ~ main .view-sales-section {
-    left: 160px; /* shift right when sidebar expands */
-    max-width: calc(1000px - 160px); /* adjust max width accordingly */
-  }
 }
 
 .view-sales-section table {
@@ -25,10 +16,12 @@
   overflow: hidden;
   box-shadow: 0 6px 15px rgba(0,0,0,0.1);
   min-width: 600px;
+  margin: 0 auto; /* center table */
+  margin-left: -90px;
 }
 
 .view-sales-section th {
-  background-color: #0077B6; /* Dark teal/blue */
+  background-color: #0077B6;
   color: #fff;
   font-weight: 600;
   padding: 14px 20px;
@@ -62,181 +55,92 @@
   transition: background-color 0.3s ease;
 }
 
-@media (max-width: 768px) {
-  .view-sales-section {
-    left: 0; /* remove offset on small screens */
-    max-width: 100%;
-  }
-
-  .view-sales-section table {
-    display: block;
-    overflow-x: auto;
-    white-space: nowrap;
-  }
-
-  .view-sales-section th,
-  .view-sales-section td {
-    white-space: nowrap;
-  }
-}
-
-.view-sales-section button {
-  padding: 6px 14px;
-  border: none;
-  border-radius: 6px;
-  cursor: pointer;
-  background-color: #0077B6;
-  color: white;;
-  font-weight: 600;
-  transition: background-color 0.3s ease;
-  box-shadow: 0 2px 5px rgba(90, 78, 124, 0.4);
-  margin: 0 3px;
-}
-
-.view-sales-section button:hover {
-  background-color: #90E0EF;
-  color: #0077B6;
-  box-shadow: 0 4px 8px rgba(129, 109, 174, 0.6);
-}
-
-
-
-
-
-/* Modal overlay */
-.modal {
-  display: none; /* hidden by default */
-  position: fixed;
-  z-index: 1000;
-  left: 0;
-  top: 0;
-  width: 100%;
-  height: 100%;
-  background-color: rgba(0,0,0,0.5);
-  justify-content: center;
-  align-items: center;
-}
-
-/* Modal box */
-.modal-content {
-  background-color: #fff;
-  padding: 25px;
-  border-radius: 8px;
-  width: 400px;
-  max-width: 90%;
-  text-align: center;
-  box-shadow: 0px 5px 15px rgba(0,0,0,0.3);
-}
-
-/* Buttons */
-.modal-actions {
-  display: flex;
-  justify-content: space-around;
-  margin-top: 20px;
-}
-
-.btn-delete {
-  background-color: red;
-  color: white;
-  border: none;
-  padding: 8px 20px;
-  border-radius: 5px;
-  cursor: pointer;
-}
-
-.btn-delete:hover {
-  background-color: darkred;
-}
-
-.btn-cancel {
-  background-color: grey;
-  color: white;
-  border: none;
-  padding: 8px 20px;
-  border-radius: 5px;
-  cursor: pointer;
-}
-
-.btn-cancel:hover {
-  background-color: darkgrey;
-}
-
-
-
-
-/* Cards and search */
-/* --- Sales Cards Section --- */
+/* Cards */
 .cards-section {
-  margin: 30px 0;
+  position: static; /* ensure not offset */
+  margin: 20px auto; /* center section */
+  padding: 10px;
+  max-width: 1200px; /* limit width */
 }
 
-.sales-cards-title {
-  text-align: center;
-  font-size: 1.8rem;
-  font-weight: bold;
-  margin-bottom: 20px;
-  color: #0077B6;
-}
-
-/* Container for cards */
 .cards-container {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: center; /* center horizontally */
+  display: grid;
+  grid-template-columns: repeat(4, 1fr); /* 4 cards per row */
+  justify-content: center;               /* center horizontally */
   gap: 20px;
 }
 
-/* Individual card */
 .sales-card {
-  background: #fff;
-  padding: 20px;
+  background-color: #ffffff;
   border-radius: 12px;
-  box-shadow: 0 4px 12px rgba(0,0,0,0.1);
-  min-width: 250px;
-  max-width: 300px;
-  flex: 1 1 250px; /* shrink/expand based on container width */
+  box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
   text-align: center;
-  transition: all 0.3s ease;
+  min-width: 220px;
+  max-width: 250px;
+  transition: transform 0.2s, box-shadow 0.2s;
+  border-left: 5px solid #06212c;
+}
+
+.sales-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 8px 20px rgba(0,0,0,0.15);
 }
 
 .sales-card h4 {
-  background: #0077B6;
-  color: #fff;
-  padding: 10px 0;
-  border-radius: 8px;
-  margin-bottom: 15px;
+  margin: 0 0 10px 0;
+  font-size: 16px;
+  color: #333;
+  background-color: #0077B6;
+  padding: 10px;
+  border-radius: 5px;
 }
 
 .sales-card p {
-  font-size: 1.4rem;
-  font-weight: 600;
-  color: #06212c;
+  margin: 0;
+  font-size: 20px;
+  font-weight: bold;
+  color: #000;
 }
 
-/* Adjust for sidebar expanded */
-@media (min-width: 769px) {
-  .sidebar.expanded ~ main .cards-section .cards-container {
-    max-width: calc(100% - 240px - 40px); /* leave room for sidebar */
-    margin: 0 auto;
+/* Alert cards for products/payment methods */
+.alert-card {
+  border-left: 5px solid #06212c;
+  padding-left: 10px;
+}
+
+.alert-card span {
+  font-weight: bold;
+}
+
+/* Responsive adjustments */
+@media (max-width: 1200px) {
+  .cards-container {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+@media (max-width: 900px) {
+  .cards-container {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 600px) {
+  .cards-container {
+    grid-template-columns: 1fr;
   }
 }
 
 
+
+
 /* search */
-
-.header-wrapper {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  flex-wrap: wrap;
-  gap: 1rem;
-  padding: 1rem 2rem;
-  background: #F5F7FA;
-  border-radius: 12px;
-  box-shadow: 0 4px 10px rgba(108, 92, 231, 0.1);
-  transition: margin-left 0.3s ease;
-}
-
+/* Header search box */
 .header-search {
   position: relative;
   display: flex;
@@ -247,6 +151,7 @@
   box-shadow: 0 2px 6px rgba(0,0,0,0.1);
   transition: box-shadow 0.3s ease;
   width: 250px;
+  margin-left: auto; /* push to the right */
 }
 
 .header-search input {
@@ -270,9 +175,11 @@
   box-shadow: 0 4px 10px rgba(0,0,0,0.15);
 }
 
+/* Responsive adjustments */
 @media(max-width: 768px) {
   .header-search {
     width: 100%;
     margin-top: 10px;
   }
 }
+

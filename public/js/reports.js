@@ -1,134 +1,125 @@
-// DOM elements
-const filterBtn = document.getElementById("filterBtn");
-const reportType = document.getElementById("reportType");
-const salesReportSection = document.getElementById("salesReportSection");
-const stockReportSection = document.getElementById("stockReportSection");
-const exportOptions = document.getElementById("exportOptions");
-const salesTableBody = document.querySelector("#salesReportTable tbody");
-const stockTableBody = document.querySelector("#stockReportTable tbody");
-const salesTotal = document.getElementById("salesTotal");
 
-// Helper function to fetch sales from backend
-async function fetchSales(fromDate, toDate) {
-  try {
-    const response = await fetch(`/api/sales?from=${fromDate}&to=${toDate}`);
-    if (!response.ok) throw new Error("Failed to fetch sales data.");
-    return await response.json(); // expecting array of sales objects
-  } catch (error) {
-    console.error(error);
-    alert("Error fetching sales data.");
-    return [];
-  }
-}
 
-// Helper function to fetch stock from backend
-async function fetchStock() {
-  try {
-    const response = await fetch(`/api/stock`);
-    if (!response.ok) throw new Error("Failed to fetch stock data.");
-    return await response.json(); // expecting array of stock objects
-  } catch (error) {
-    console.error(error);
-    alert("Error fetching stock data.");
-    return [];
-  }
-}
 
-// Filter and generate reports
-filterBtn.addEventListener("click", async () => {
-  const fromDateValue = document.getElementById("fromDate").value;
-  const toDateValue = document.getElementById("toDate").value;
-  const type = reportType.value;
+document.addEventListener('DOMContentLoaded', () => {
+  const filterBtn = document.getElementById('filterBtn');
+  const reportType = document.getElementById('reportType');
+  const fromDate = document.getElementById('fromDate');
+  const toDate = document.getElementById('toDate');
 
-  // Validate inputs
-  if (!type) {
-    alert("Please select a report type.");
-    return;
-  }
-  if (!fromDateValue || !toDateValue) {
-    alert("Please select both From and To dates.");
-    return;
-  }
+  filterBtn.addEventListener('click', async () => {
+    const type = reportType.value;
+    const from = fromDate.value;
+    const to = toDate.value;
 
-  const fromDate = new Date(fromDateValue);
-  const toDate = new Date(toDateValue);
-  if (fromDate > toDate) {
-    alert("'From' date cannot be after 'To' date.");
-    return;
-  }
+    if (!from || !to) {
+      alert('Please select both dates.');
+      return;
+    }
 
-  // Clear previous results
-  salesTableBody.innerHTML = "";
-  stockTableBody.innerHTML = "";
-  salesTotal.textContent = "";
-  salesReportSection.style.display = "none";
-  stockReportSection.style.display = "none";
-  exportOptions.style.display = "none";
+    try {
+      const response = await fetch(`/reports/${type}?from=${from}&to=${to}`);
+      const data = await response.json();
 
-  let hasData = false;
+      if (type === 'sales') {
+        displaySalesReport(data);
+      } else if (type === 'stock') {
+        displayStockReport(data);
+      }
 
-  if (type === "sales") {
-    const salesData = await fetchSales(fromDateValue, toDateValue);
+      document.getElementById('exportOptions').style.display = 'block';
+    } catch (err) {
+      console.error(err);
+      alert('Error fetching report');
+    }
+  });
 
-    let totalSales = 0;
-    salesData.forEach(sale => {
-      const row = `<tr>
-        <td>${sale.customer}</td>
-        <td>${sale.product}</td>
+  function displaySalesReport(sales) {
+    const section = document.getElementById('salesReportSection');
+    const tbody = document.querySelector('#salesReportTable tbody');
+    tbody.innerHTML = '';
+
+    let total = 0;
+
+    sales.forEach(sale => {
+      const tr = document.createElement('tr');
+      tr.innerHTML = `
+        <td>${sale.customerName}</td>
+        <td>${sale.productName}</td>
         <td>${sale.quantity}</td>
-        <td>${sale.totalPrice}</td>
-        <td>${sale.date}</td>
-      </tr>`;
-      salesTableBody.innerHTML += row;
-      totalSales += Number(sale.totalPrice);
-      hasData = true;
+        <td>UGX ${sale.overallTotal.toFixed(2)}</td>
+        <td>${new Date(sale.saleDate).toLocaleDateString()}</td>
+      `;
+      tbody.appendChild(tr);
+      total += sale.overallTotal;
     });
 
-    if (hasData) {
-      salesTotal.textContent = `Total Sales: ${totalSales}`;
-      salesReportSection.style.display = "block";
-      exportOptions.style.display = "flex";
-    } else {
-      alert("No sales data found for the selected range.");
-    }
-
-  } else if (type === "stock") {
-    const stockData = await fetchStock();
-
-    stockData.forEach(stock => {
-      const row = `<tr>
-        <td>${stock.product}</td>
-        <td>${stock.type}</td>
-        <td>${stock.quantity}</td>
-        <td>${stock.costPrice}</td>
-        <td>${stock.supplier}</td>
-      </tr>`;
-      stockTableBody.innerHTML += row;
-      hasData = true;
-    });
-
-    if (hasData) {
-      stockReportSection.style.display = "block";
-      exportOptions.style.display = "flex";
-    } else {
-      alert("No stock data found.");
-    }
+    document.getElementById('salesTotal').textContent = `Total Sales: UGX ${total.toFixed(2)}`;
+    section.style.display = 'block';
+    document.getElementById('stockReportSection').style.display = 'none';
   }
+
+  function displayStockReport(stocks) {
+    const section = document.getElementById('stockReportSection');
+    const tbody = document.querySelector('#stockReportTable tbody');
+    tbody.innerHTML = '';
+
+    stocks.forEach(stock => {
+      const tr = document.createElement('tr');
+      tr.innerHTML = `
+        <td>${stock.productName}</td>
+        <td>${stock.productType}</td>
+        <td>${stock.quantity}</td>
+        <td>UGX ${stock.costPrice.toFixed(2)}</td>
+        <td>${stock.supplierName}</td>
+      `;
+      tbody.appendChild(tr);
+    });
+
+    section.style.display = 'block';
+    document.getElementById('salesReportSection').style.display = 'none';
+  }
+
+  // ===== Export Functions =====
+  window.printReport = () => {
+    const visibleSection = document.querySelector('#salesReportSection[style*="block"], #stockReportSection[style*="block"]');
+    if (!visibleSection) return alert('No report to print');
+    const printContent = visibleSection.innerHTML;
+    const newWin = window.open('', '', 'width=900,height=700');
+    newWin.document.write(`<html><head><title>Print Report</title></head><body>${printContent}</body></html>`);
+    newWin.document.close();
+    newWin.print();
+  };
+
+  window.exportPDF = () => {
+    if (!window.jspdf || !window.jspdf.jsPDF) return alert('jsPDF library not loaded');
+    const { jsPDF } = window.jspdf;
+    const doc = new jsPDF();
+    const visibleTable = document.querySelector('#salesReportSection[style*="block"] table, #stockReportSection[style*="block"] table');
+    if (!visibleTable) return alert('No report to export');
+    doc.text('Report', 10, 10);
+    doc.autoTable({ html: visibleTable, startY: 20 });
+    doc.save('report.pdf');
+  };
+
+  window.exportExcel = () => {
+    if (!window.XLSX) return alert('SheetJS library not loaded');
+    const visibleTable = document.querySelector('#salesReportSection[style*="block"] table, #stockReportSection[style*="block"] table');
+    if (!visibleTable) return alert('No report to export');
+    const wb = XLSX.utils.table_to_book(visibleTable, { sheet: 'Report' });
+    XLSX.writeFile(wb, 'report.xlsx');
+  };
+
+  window.exportWord = () => {
+    const visibleSection = document.querySelector('#salesReportSection[style*="block"], #stockReportSection[style*="block"]');
+    if (!visibleSection) return alert('No report to export');
+    const htmlContent = visibleSection.innerHTML;
+    const blob = new Blob(['\ufeff', htmlContent], { type: 'application/msword' });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = 'report.doc';
+    a.click();
+    URL.revokeObjectURL(url);
+  };
 });
-
-// Export functions
-function printReport() {
-  window.print();
-}
-
-function exportPDF() {
-  alert("PDF export coming soon (use jsPDF library)");
-}
-
-function exportWord() {
-  alert("Word export coming soon (use docx library)");
-}
-
-function exportExcel() {
-  alert("Excel export coming soon (use SheetJS / xlsx library)");
-}

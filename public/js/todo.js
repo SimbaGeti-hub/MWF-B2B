@@ -1,120 +1,148 @@
 document.addEventListener("DOMContentLoaded", () => {
-  // Form toggles
-  const formSelector = document.getElementById("formSelector");
-  const deliveryForm = document.getElementById("deliveryForm");
-  const taskForm = document.getElementById("taskForm");
-
-  formSelector.addEventListener("change", () => {
-    deliveryForm.style.display = formSelector.value === "deliveryForm" ? "block" : "none";
-    taskForm.style.display = formSelector.value === "taskForm" ? "block" : "none";
-  });
-
-  // Elements
-  const addDeliveryForm = document.getElementById("addDeliveryForm");
-  const addTaskForm = document.getElementById("addTaskForm");
-
-  const deliverySuccess = document.getElementById("deliverySuccess");
-  const deliveryError = document.getElementById("deliveryError");
+  const form = document.getElementById("addTaskForm");
+  const mainError = document.getElementById("mainError");
   const taskSuccess = document.getElementById("taskSuccess");
-  const taskError = document.getElementById("taskError");
+  const tableBody = document.querySelector("#taskTable tbody");
 
-  // Helper to clear messages
-  function clearDeliveryMessages() {
-    deliverySuccess.textContent = "";
-    deliveryError.textContent = "";
-    addDeliveryForm.querySelectorAll(".error-message").forEach(e => e.textContent = "");
+  // Input fields
+  const inputs = {
+    taskName: document.getElementById("taskName"),
+    location: document.getElementById("taskLocation"),
+    date: document.getElementById("taskDate"),
+    time: document.getElementById("taskTime"),
+    assignedPerson: document.getElementById("taskAssignedPerson"),
+    description: document.getElementById("taskDescription")
+  };
+
+  // Error elements
+  const errors = {
+    taskName: document.getElementById("errorTaskName"),
+    location: document.getElementById("errorTaskLocation"),
+    date: document.getElementById("errorTaskDate"),
+    time: document.getElementById("errorTaskTime"),
+    assignedPerson: document.getElementById("errorTaskAssignedPerson"),
+    description: document.getElementById("errorTaskDescription")
+  };
+
+  // Helper to clear errors
+  function clearErrors() {
+    Object.values(errors).forEach(err => err.textContent = "");
+    mainError.textContent = "";
   }
 
-  function clearTaskMessages() {
-    taskSuccess.textContent = "";
-    taskError.textContent = "";
-    addTaskForm.querySelectorAll(".error-message").forEach(e => e.textContent = "");
+  // Helper to clear form
+  function clearForm() {
+    Object.values(inputs).forEach(input => input.value = "");
   }
 
-  // --------------------
-  // Submit Delivery
-  // --------------------
-  addDeliveryForm.addEventListener("submit", async (e) => {
+  // Handle form submit
+  form.addEventListener("submit", async (e) => {
     e.preventDefault();
-    clearDeliveryMessages();
+    clearErrors();
+    taskSuccess.textContent = "";
 
-    const deliveryData = {
-      deliveryCustomerName: document.getElementById("deliveryCustomerName").value.trim(),
-      deliveryProduct: document.getElementById("deliveryProduct").value.trim(),
-      deliveryLocation: document.getElementById("deliveryLocation").value.trim(),
-      deliveryDate: document.getElementById("deliveryDate").value,
-      deliveryTime: document.getElementById("deliveryTime").value,
-      deliveryAssignedPerson: document.getElementById("deliveryAssignedPerson").value.trim(),
-      deliveryCustomerNumber: document.getElementById("deliveryCustomerNumber").value,
-      deliveryNumberOfItems: document.getElementById("deliveryNumberOfItems").value
+    let hasError = false;
+
+    // Validate required fields
+    Object.keys(inputs).forEach(key => {
+      if (!inputs[key].value.trim()) {
+        errors[key].textContent = `Please fill in ${key}`;
+        hasError = true;
+      }
+    });
+
+    if (hasError) {
+      mainError.textContent = "Please fix the highlighted errors.";
+      return;
+    }
+
+    // Prepare data
+    const data = {
+      taskName: inputs.taskName.value.trim(),
+      location: inputs.location.value.trim(),
+      date: inputs.date.value,
+      time: inputs.time.value,
+      assignedPerson: inputs.assignedPerson.value.trim(),
+      description: inputs.description.value.trim()
     };
 
     try {
-      const res = await fetch("/delivery", {
+      const res = await fetch("/toDo", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(deliveryData)
+        body: JSON.stringify(data)
       });
+
       const result = await res.json();
 
-      if (result.success) {
-        deliverySuccess.textContent = "Delivery added successfully!";
-        addDeliveryForm.reset();
-      } else if (result.errors) {
-        // Show inline errors
-        for (const key in result.errors) {
-          const el = document.getElementById(`error${key.charAt(0).toUpperCase() + key.slice(1)}`);
-          if (el) el.textContent = result.errors[key];
-        }
-        deliveryError.textContent = "Please fix the errors above.";
-      } else {
-        deliveryError.textContent = result.error || "Error adding delivery.";
+      if (!result.success) {
+        mainError.textContent = result.error || "Something went wrong.";
+        return;
       }
+
+      // Success
+      taskSuccess.textContent = "Task added successfully!";
+      clearForm();
+
+      // Add new row to table
+      const task = result.todo;
+      const newRow = document.createElement("tr");
+      newRow.setAttribute("data-id", task._id);
+      newRow.innerHTML = `
+        <td>${task.taskName}</td>
+        <td>${task.location}</td>
+        <td>${new Date(task.date).toLocaleDateString()}</td>
+        <td>${task.time}</td>
+        <td>${task.assignedPerson}</td>
+        <td>${task.description}</td>
+        <td>
+          <button class="edit-btn">Edit</button>
+          <button class="delete-btn">Delete</button>
+        </td>
+      `;
+      tableBody.prepend(newRow);
+
     } catch (err) {
       console.error(err);
-      deliveryError.textContent = "Server error. Try again later.";
+      mainError.textContent = "Server error. Please try again.";
     }
   });
 
-  // --------------------
-  // Submit Task
-  // --------------------
-  addTaskForm.addEventListener("submit", async (e) => {
-    e.preventDefault();
-    clearTaskMessages();
+  // Handle table actions (edit/delete)
+  tableBody.addEventListener("click", async (e) => {
+    const row = e.target.closest("tr");
+    if (!row) return;
+    const id = row.getAttribute("data-id");
 
-    const taskData = {
-      taskName: document.getElementById("taskName").value.trim(),
-      taskDate: document.getElementById("taskDate").value,
-      taskTime: document.getElementById("taskTime").value,
-      taskLocation: document.getElementById("taskLocation").value.trim(),
-      taskAssignedPerson: document.getElementById("taskAssignedPerson").value.trim()
-    };
-
-    try {
-      const res = await fetch("/task", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(taskData)
-      });
-      const result = await res.json();
-
-      if (result.success) {
-        taskSuccess.textContent = "Task added successfully!";
-        addTaskForm.reset();
-      } else if (result.errors) {
-        // Show inline errors
-        for (const key in result.errors) {
-          const el = document.getElementById(`error${key.charAt(0).toUpperCase() + key.slice(1)}`);
-          if (el) el.textContent = result.errors[key];
+    // Delete action
+    if (e.target.classList.contains("delete-btn")) {
+      if (confirm("Are you sure you want to delete this task?")) {
+        try {
+          const res = await fetch(`/toDo/${id}`, { method: "DELETE" });
+          const result = await res.json();
+          if (result.success) {
+            row.remove();
+          } else {
+            alert("Failed to delete task.");
+          }
+        } catch (err) {
+          console.error(err);
+          alert("Server error while deleting.");
         }
-        taskError.textContent = "Please fix the errors above.";
-      } else {
-        taskError.textContent = result.error || "Error adding task.";
       }
-    } catch (err) {
-      console.error(err);
-      taskError.textContent = "Server error. Try again later.";
+    }
+
+    // Edit action (basic: populate form for editing)
+    if (e.target.classList.contains("edit-btn")) {
+      inputs.taskName.value = row.children[0].textContent;
+      inputs.location.value = row.children[1].textContent;
+      inputs.date.value = new Date(row.children[2].textContent).toISOString().split("T")[0];
+      inputs.time.value = row.children[3].textContent;
+      inputs.assignedPerson.value = row.children[4].textContent;
+      inputs.description.value = row.children[5].textContent;
+
+      // Remove the old row once editing starts
+      row.remove();
     }
   });
 });

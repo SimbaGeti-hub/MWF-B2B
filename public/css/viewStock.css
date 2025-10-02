@@ -9,12 +9,12 @@
   color: #333;
 }
 
-@media (min-width: 769px) {
+/* @media (min-width: 769px) {
   .sidebar.expanded ~ main .view-stock-section {
-    left: 160px; /* shift right when sidebar expands */
-    max-width: calc(1000px - 160px); /* adjust max width accordingly */
+    left: 160px; 
+    max-width: calc(1000px - 160px); 
   }
-}
+} */
 
 .view-stock-section table {
   width: 100%;
@@ -64,7 +64,7 @@
 
 @media (max-width: 768px) {
   .view-stock-section {
-    left: 0; /* remove offset on small screens */
+    left: 0; 
     max-width: 100%;
   }
 

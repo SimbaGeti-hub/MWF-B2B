@@ -1,467 +1,3 @@
-//- doctype html
-//- head
-//-   meta(charset='UTF-8')
-//-   meta(name='viewport' content='width=device-width, initial-scale=1.0')
-//-   title To-Do - MWF
-//-   link(rel='stylesheet' href='css/style.css')
-//-   link(rel='stylesheet' href='css/todo.css')
-//-   link(rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css')
-//-   script(src='vendors/fontawesome/all.min.js' defer='')
-//-   script(src='js/storage.js' defer='')
-//-   script(src='js/main.js' defer='')
-//-   script(src='js/todo-validations.js' defer='')
-//-   script(src='js/todo.js' defer='')
-//- #hamburger.hamburger
-//-   i.fas.fa-bars
-//- #sidebar.sidebar
-//-   .logo MWF
-//-   ul.menu
-//-     li
-//-       a(href='/dashboard')
-//-         i.fa-solid.fa-gauge-high
-//-         span Dashboard
-//-     li
-//-       a(href='/products')
-//-         i.fas.fa-box
-//-         span Products
-//-     li
-//-       a(href='/stock')
-//-         i.fas.fa-plus-square
-//-         span Add Stock
-//-     li
-//-       a(href='/viewstock')
-//-         i.fas.fa-list
-//-         span View Stock
-//-     li
-//-       a(href='/sales')
-//-         i.fa-solid.fa-comments-dollar
-//-         span Add Sales
-//-     li
-//-       a(href='/viewsales')
-//-         i.fas.fa-dollar-sign
-//-         span View Sales
-//-     li
-//-       a(href='/suppliers')
-//-         i.fas.fa-truck
-//-         span Add Suppliers
-//-     li
-//-       a(href='/employees')
-//-         i.fas.fa-user
-//-         span Add Employees
-//-     li
-//-       a(href='/viewEmployees')
-//-         i.fas.fa-users
-//-         span View Employees
-//-     li
-//-       a.active(href='/toDo')
-//-         i.fas.fa-list
-//-         span To-Do
-//-     li
-//-       a(href='/reports')
-//-         i.fas.fa-file-alt
-//-         span Reports
-//-     li
-//-       a(href='/settings')
-//-         i.fa-solid.fa-gear
-//-         span Settings
-//-     li.logout
-//-       a(href='/logout')
-//-         i.fas.fa-sign-out-alt
-//-         span Logout
-//-     // <li><a href="rawMaterials.html"><i class="fas fa-cubes"></i><span>Raw Materials</span></a></li>
-//-     // <li><a href="delivery.html"><i class="fas fa-route"></i><span>Delivery</span></a></li>
-//- main.main-content
-//-   header.header-wrapper
-//-     .header-title
-//-       span Mayondo Wood and Furniture
-//-       h2 To-Do Management
-//-   section.todo-section
-//-     // Form Selector
-//-     .form-card
-//-       h3 Select Form
-//-       select#formSelector
-//-         option(value='') -- Choose Form --
-//-         option(value='deliveryForm') Register Delivery
-//-         option(value='taskForm') Register Task
-//-     // Delivery Form
-//-     #deliveryForm.form-card(style='display:none;')
-//-       h3 Register Delivery
-//-       #deliveryMainError.main-error-message
-//-       form#addDeliveryForm(novalidate='')
-//-         .form-group
-//-           label(for='deliveryCustomerName') Customer Name
-//-           input#deliveryCustomerName(type='text' placeholder='Customer Name')
-//-           #errorDeliveryCustomerName.error-message
-//-         .form-group
-//-           label(for='deliveryProduct') Product
-//-           input#deliveryProduct(type='text' placeholder='Product to deliver')
-//-           #errorDeliveryProduct.error-message
-//-         .form-group
-//-           label(for='deliveryLocation') Location
-//-           input#deliveryLocation(type='text' placeholder='Delivery Location')
-//-           #errorDeliveryLocation.error-message
-//-         .form-group
-//-           label(for='deliveryDate') Date
-//-           input#deliveryDate(type='date')
-//-           #errorDeliveryDate.error-message
-//-         .form-group
-//-           label(for='deliveryTime') Time
-//-           input#deliveryTime(type='time')
-//-           #errorDeliveryTime.error-message
-//-         .form-group
-//-           label(for='deliveryAssignedPerson') Assigned Person
-//-           input#deliveryAssignedPerson(type='text' placeholder='Driver / Assigned person')
-//-           #errorDeliveryAssignedPerson.error-message
-//-         .form-group
-//-           label(for='deliveryCustomerNumber') Customer Number
-//-           input#deliveryCustomerNumber(type='text' placeholder='Customer phone number')
-//-           #errorDeliveryCustomerNumber.error-message
-//-         .form-group
-//-           label(for='deliveryNumberOfItems') Number of Items
-//-           input#deliveryNumberOfItems(type='number' placeholder='Number of items' min='1')
-//-           #errorDeliveryNumberOfItems.error-message
-//-         button.btn-submit(type='submit') Add Delivery
-//-       p#deliverySuccessMessage.success-message
-//-     // Task Form
-//-     #taskForm.form-card(style='display:none;')
-//-       h3 Register Task
-//-       #taskMainError.main-error-message
-//-       form#addTaskForm(novalidate='')
-//-         .form-group
-//-           label(for='taskName') Task
-//-           input#taskName(type='text' placeholder='Task to be done')
-//-           #errorTaskName.error-message
-//-         .form-group
-//-           label(for='taskDate') Date
-//-           input#taskDate(type='date')
-//-           #errorTaskDate.error-message
-//-         .form-group
-//-           label(for='taskTime') Time
-//-           input#taskTime(type='time')
-//-           #errorTaskTime.error-message
-//-         .form-group
-//-           label(for='taskLocation') Location
-//-           input#taskLocation(type='text' placeholder='Location')
-//-           #errorTaskLocation.error-message
-//-         .form-group
-//-           label(for='taskAssignedPerson') Assigned Person
-//-           input#taskAssignedPerson(type='text' placeholder='Person responsible')
-//-           #errorTaskAssignedPerson.error-message
-//-         button.btn-submit(type='submit') Add Task
-//-       p#taskSuccessMessage.success-message
-//-     // Table
-//-     .table-wrapper
-//-       h3 Registered Deliveries 
-//-       table#todoTable
-//-         thead
-//-           tr
-//-             th Name / Customer
-//-             th Product 
-//-             th Location
-//-             th Date
-//-             th Time
-//-             th Assigned Person
-//-             th Customer Number / N/A
-//-             th Number of Items / N/A
-//-             th Actions
-//-         tbody
-//-     .table-wrapper
-//-       h3 Registered Tasks
-//-       table#todoTable
-//-         thead
-//-           tr
-//-             th Task
-//-             th Date
-//-             th Time
-//-             th Location
-//-             th Assigned Person
-//-             th Actions
-//-         tbody
-
-
-
-//- doctype html
-//- html
-//-   head
-//-     meta(charset='UTF-8')
-//-     meta(name='viewport' content='width=device-width, initial-scale=1.0')
-//-     title To-Do - MWF
-//-     link(rel='stylesheet' href='/css/style.css')
-//-     link(rel='stylesheet' href='/css/todo.css')
-//-     link(rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css')
-//-     script(src='https://kit.fontawesome.com/a076d05399.js', crossorigin='anonymous')
-//-     script(src='/js/todo.js', defer)
-//-   body
-//-     main.main-content
-//-       header.header-wrapper
-//-         .header-title
-//-           span Mayondo Wood and Furniture
-//-           h2 To-Do Management
-//-       section.todo-section
-//-         .form-card
-//-           h3 Select Form
-//-           select#formSelector
-//-             option(value='') -- Choose Form --
-//-             option(value='deliveryForm') Register Delivery
-//-             option(value='taskForm') Register Task
-//-         // Delivery Form
-//-         #deliveryForm.form-card(style='display:none;')
-//-           h3 Register Delivery
-//-           form#addDeliveryForm(novalidate='')
-//-             .form-group
-//-               label(for='deliveryCustomerName') Customer Name
-//-               input#deliveryCustomerName(type='text' placeholder='Customer Name')
-//-             .form-group
-//-               label(for='deliveryProduct') Product
-//-               input#deliveryProduct(type='text' placeholder='Product to deliver')
-//-             .form-group
-//-               label(for='deliveryLocation') Location
-//-               input#deliveryLocation(type='text' placeholder='Delivery Location')
-//-             .form-group
-//-               label(for='deliveryDate') Date
-//-               input#deliveryDate(type='date')
-//-             .form-group
-//-               label(for='deliveryTime') Time
-//-               input#deliveryTime(type='time')
-//-             .form-group
-//-               label(for='deliveryAssignedPerson') Assigned Person
-//-               input#deliveryAssignedPerson(type='text' placeholder='Driver / Assigned person')
-//-             .form-group
-//-               label(for='deliveryCustomerNumber') Customer Number
-//-               input#deliveryCustomerNumber(type='text' placeholder='Customer phone number')
-//-             .form-group
-//-               label(for='deliveryNumberOfItems') Number of Items
-//-               input#deliveryNumberOfItems(type='number' placeholder='Number of items' min='1')
-//-             button.btn-submit(type='submit') Add Delivery
-//-         // Task Form
-//-         #taskForm.form-card(style='display:none;')
-//-           h3 Register Task
-//-           form#addTaskForm(novalidate='')
-//-             .form-group
-//-               label(for='taskName') Task
-//-               input#taskName(type='text' placeholder='Task to be done')
-//-             .form-group
-//-               label(for='taskDate') Date
-//-               input#taskDate(type='date')
-//-             .form-group
-//-               label(for='taskTime') Time
-//-               input#taskTime(type='time')
-//-             .form-group
-//-               label(for='taskLocation') Location
-//-               input#taskLocation(type='text' placeholder='Location')
-//-             .form-group
-//-               label(for='taskAssignedPerson') Assigned Person
-//-               input#taskAssignedPerson(type='text' placeholder='Person responsible')
-//-             button.btn-submit(type='submit') Add Task
-//-         .table-wrapper
-//-           h3 Registered Deliveries 
-//-           table#deliveryTable
-//-             thead
-//-               tr
-//-                 th Customer
-//-                 th Product
-//-                 th Location
-//-                 th Date
-//-                 th Time
-//-                 th Assigned Person
-//-                 th Customer Number
-//-                 th Number of Items
-//-                 th Actions
-//-             tbody
-//-         .table-wrapper
-//-           h3 Registered Tasks
-//-           table#taskTable
-//-             thead
-//-               tr
-//-                 th Task
-//-                 th Date
-//-                 th Time
-//-                 th Location
-//-                 th Assigned Person
-//-                 th Actions
-//-             tbody
-
-
-
-
-
-
-//- doctype html
-//- html
-//-   head
-//-     meta(charset="UTF-8")
-//-     meta(name="viewport" content="width=device-width, initial-scale=1.0")
-//-     title To-Do - MWF
-//-     link(rel="stylesheet" href="/css/style.css")
-//-     link(rel="stylesheet" href="/css/todo.css")
-//-     link(rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css")
-//-     script(src="https://kit.fontawesome.com/a076d05399.js", crossorigin="anonymous")
-//-     script(src="/js/main.js", defer)
-//-     script(src="/js/todo.js", defer)
-  
-//-   body
-//-     // Hamburger (mobile toggle)
-//-     #hamburger.hamburger
-//-       i.fas.fa-bars
-
-//-     // Sidebar
-//-     #sidebar.sidebar
-//-       .logo MWF
-//-       ul.menu
-//-         li
-//-           a(href="/dashboard")
-//-             i.fa-solid.fa-gauge-high
-//-             span Dashboard
-//-         li
-//-           a(href="/products")
-//-             i.fas.fa-box
-//-             span Products
-//-         li
-//-           a(href="/stock")
-//-             i.fas.fa-plus-square
-//-             span Add Stock
-//-         li
-//-           a(href="/viewstock")
-//-             i.fas.fa-list
-//-             span View Stock
-//-         li
-//-           a(href="/sales")
-//-             i.fa-solid.fa-comments-dollar
-//-             span Add Sales
-//-         li
-//-           a(href="/viewsales")
-//-             i.fas.fa-dollar-sign
-//-             span View Sales
-//-         li
-//-           a(href="/suppliers")
-//-             i.fas.fa-truck
-//-             span Add Suppliers
-//-         li
-//-           a(href="/employees")
-//-             i.fas.fa-user
-//-             span Add Employees
-//-         li
-//-           a(href="/viewEmployees")
-//-             i.fas.fa-users
-//-             span View Employees
-//-         li
-//-           a.active(href="/toDo")
-//-             i.fas.fa-list
-//-             span To-Do
-//-         li
-//-           a(href="/reports")
-//-             i.fas.fa-file-alt
-//-             span Reports
-//-         li
-//-           a(href="/settings")
-//-             i.fa-solid.fa-gear
-//-             span Settings
-//-         li.logout
-//-           a(href="/logout")
-//-             i.fas.fa-sign-out-alt
-//-             span Logout
-
-//-     // Main Content
-//-     main.main-content
-//-       header.header-wrapper
-//-         .header-title
-//-           span Mayondo Wood and Furniture
-//-           h2 To-Do Management
-
-//-       section.todo-section
-//-         // Form Selector
-//-         .form-card
-//-           h3 Select Form
-//-           select#formSelector
-//-             option(value="") -- Choose Form --
-//-             option(value="deliveryForm") Register Delivery
-//-             option(value="taskForm") Register Task
-
-//-         // Delivery Form
-//-         #deliveryForm.form-card(style="display:none;")
-//-           h3 Register Delivery
-//-           form#addDeliveryForm(action='/delivery' method='POST')
-//-             .form-group
-//-               label(for="deliveryCustomerName") Customer Name
-//-               input#deliveryCustomerName(type="text" name='deliveryCustomerName' placeholder="Customer Name")
-//-             .form-group
-//-               label(for="deliveryProduct") Product
-//-               input#deliveryProduct(type="text" name='deliveryProduct' placeholder="Product to deliver")
-//-             .form-group
-//-               label(for="deliveryLocation") Location
-//-               input#deliveryLocation(type="text" name='deliveryLocation' placeholder="Delivery Location")
-//-             .form-group
-//-               label(for="deliveryDate") Date
-//-               input#deliveryDate(type="date" name='deliveryDate')
-//-             .form-group
-//-               label(for="deliveryTime") Time
-//-               input#deliveryTime(type="time" name='deliveryTime')
-//-             .form-group
-//-               label(for="deliveryAssignedPerson") Assigned Person
-//-               input#deliveryAssignedPerson(type="text" name='deliveryAssignedPerson' placeholder="Driver / Assigned person")
-//-             .form-group
-//-               label(for="deliveryCustomerNumber") Customer Number
-//-               input#deliveryCustomerNumber(type="number" name='deliveryCustomerNumber' placeholder="Customer phone number")
-//-             .form-group
-//-               label(for="deliveryNumberOfItems") Number of Items
-//-               input#deliveryNumberOfItems(type="number" name='deliveryNumberOfItems' placeholder="Number of items" min="1")
-//-             button.btn-submit(type="submit") Add Delivery
-
-//-         // Task Form
-//-         #taskForm.form-card(style="display:none;")
-//-           h3 Register Task
-//-           form#addTaskForm(action='/task' method='POST')
-//-             .form-group
-//-               label(for="taskName") Task
-//-               input#taskName(type="text" name='taskName' placeholder="Task to be done")
-//-             .form-group
-//-               label(for="taskDate") Date
-//-               input#taskDate(type="date" name='taskDate')
-//-             .form-group
-//-               label(for="taskTime") Time
-//-               input#taskTime(type="time" name='taskTime')
-//-             .form-group
-//-               label(for="taskLocation") Location
-//-               input#taskLocation(type="text" name='taskLocation' placeholder="Location")
-//-             .form-group
-//-               label(for="taskAssignedPerson") Assigned Person
-//-               input#taskAssignedPerson(type="text" name='taskAssignedPerson' placeholder="Person responsible")
-//-             button.btn-submit(type="submit") Add Task
-
-//-         // Deliveries Table
-//-         .table-wrapper
-//-           h3 Registered Deliveries
-//-           table#deliveryTable
-//-             thead
-//-               tr
-//-                 th Customer
-//-                 th Product
-//-                 th Location
-//-                 th Date
-//-                 th Time
-//-                 th Assigned Person
-//-                 th Customer Number
-//-                 th Number of Items
-//-                 th Actions
-//-             tbody
-
-//-         // Tasks Table
-//-         .table-wrapper
-//-           h3 Registered Tasks
-//-           table#taskTable
-//-             thead
-//-               tr
-//-                 th Task
-//-                 th Date
-//-                 th Time
-//-                 th Location
-//-                 th Assigned Person
-//-                 th Actions
-//-             tbody
-
-
-
-
 
 doctype html
 html
@@ -472,69 +8,61 @@ html
     link(rel="stylesheet" href="/css/style.css")
     link(rel="stylesheet" href="/css/todo.css")
     link(rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css")
-    script(src="https://kit.fontawesome.com/a076d05399.js", crossorigin="anonymous")
-    script(src="/js/main.js", defer)
-    script(src="/js/todo.js", defer)
+    script(src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous")
+    script(src="/js/main.js" defer)
+    script(src="/js/toDoDelete.js" defer)
 
   body
-    // Hamburger (mobile toggle)
-    #hamburger.hamburger
-      i.fas.fa-bars
-
     // Sidebar
     #sidebar.sidebar
       .logo MWF
       ul.menu
         li
-          a(href="/dashboard")
+          a(href="/dashboard") 
             i.fa-solid.fa-gauge-high
             span Dashboard
         li
-          a(href="/products")
-            i.fas.fa-box
-            span Products
-        li
-          a(href="/stock")
+          a(href="/stock") 
             i.fas.fa-plus-square
             span Add Stock
         li
-          a(href="/viewstock")
+          a(href="/viewstock") 
             i.fas.fa-list
             span View Stock
         li
-          a(href="/sales")
+          a(href="/sales") 
             i.fa-solid.fa-comments-dollar
             span Add Sales
         li
-          a(href="/viewsales")
+          a(href="/viewsales") 
             i.fas.fa-dollar-sign
             span View Sales
         li
-          a(href="/suppliers")
+          a(href="/suppliers") 
             i.fas.fa-truck
             span Add Suppliers
         li
-          a(href="/employees")
+          a(href="/employees") 
             i.fas.fa-user
             span Add Employees
         li
-          a(href="/viewEmployees")
+          a(href="/viewEmployees") 
             i.fas.fa-users
             span View Employees
         li
-          a.active(href="/toDo")
+          a.active(href="/toDo") 
             i.fas.fa-list
             span To-Do
         li
-          a(href="/reports")
+          a(href="/reports") 
             i.fas.fa-file-alt
             span Reports
         li
-          a(href="/settings")
+          a(href="/settings") 
             i.fa-solid.fa-gear
             span Settings
         li.logout
-          a(href="/logout")
+          a(href="/logout") 
             i.fas.fa-sign-out-alt
             span Logout
 
@@ -544,333 +72,88 @@ html
         .header-title
           span Mayondo Wood and Furniture
           h2 To-Do Management
+        form#searchForm
+          input#searchInput(type="text" placeholder="Search tasks...")
+          button(type="submit") 
+            i.fas.fa-search
 
       section.todo-section
-        // Form Selector
+        // Form
         .form-card
-          h3 Select Form
-          select#formSelector
-            option(value="") -- Choose Form --
-            option(value="deliveryForm") Register Delivery
-            option(value="taskForm") Register Task
-
-        // Delivery Form
-        #deliveryForm.form-card(style="display:none;")
-          h3 Register Delivery
-          #deliveryError.main-error-message
-          form#addDeliveryForm(action='/delivery' method='POST')
-            .form-group
-              label(for="deliveryCustomerName") Customer Name
-              input#deliveryCustomerName(type="text" name='deliveryCustomerName' placeholder="Customer Name")
-              #errorDeliveryCustomerName.error-message
-            .form-group
-              label(for="deliveryProduct") Product
-              input#deliveryProduct(type="text" name='deliveryProduct' placeholder="Product to deliver")
-              #errorDeliveryProduct.error-message
-            .form-group
-              label(for="deliveryLocation") Location
-              input#deliveryLocation(type="text" name='deliveryLocation' placeholder="Delivery Location")
-              #errorDeliveryLocation.error-message
-            .form-group
-              label(for="deliveryDate") Date
-              input#deliveryDate(type="date" name='deliveryDate')
-              #errorDeliveryDate.error-message
-            .form-group
-              label(for="deliveryTime") Time
-              input#deliveryTime(type="time" name='deliveryTime')
-              #errorDeliveryTime.error-message
-            .form-group
-              label(for="deliveryAssignedPerson") Assigned Person
-              input#deliveryAssignedPerson(type="text" name='deliveryAssignedPerson' placeholder="Driver / Assigned person")
-              #errorDeliveryAssignedPerson.error-message
-            .form-group
-              label(for="deliveryCustomerNumber") Customer Number
-              input#deliveryCustomerNumber(type="number" name='deliveryCustomerNumber' placeholder="Customer phone number")
-              #errorDeliveryCustomerNumber.error-message
-            .form-group
-              label(for="deliveryNumberOfItems") Number of Items
-              input#deliveryNumberOfItems(type="number" name='deliveryNumberOfItems' placeholder="Number of items" min="1")
-              #errorDeliveryNumberOfItems.error-message
-            button.btn-submit(type="submit") Add Delivery
-          p#deliverySuccess.success-message
-
-        // Task Form
-        #taskForm.form-card(style="display:none;")
           h3 Register Task
-          #taskError.main-error-message
-          form#addTaskForm(action='/task' method='POST')
+          #mainError.main-error-message
+          form#addTaskForm(action='/toDo' method='POST')
             .form-group
-              label(for="taskName") Task
-              input#taskName(type="text" name='taskName' placeholder="Task to be done")
+              label(for="taskName") Task Name
+              input#taskName(type="text" name="taskName" placeholder="Enter task name")
               #errorTaskName.error-message
+
             .form-group
-              label(for="taskDate") Date
-              input#taskDate(type="date" name='taskDate')
-              #errorTaskDate.error-message
+              label(for="location") Location
+              input#location(type="text" name="location" placeholder="Enter location")
+              #errorLocation.error-message
+
             .form-group
-              label(for="taskTime") Time
-              input#taskTime(type="time" name='taskTime')
-              #errorTaskTime.error-message
+              label(for="date") Date
+              input#date(type="date" name="date")
+              #errorDate.error-message
+
             .form-group
-              label(for="taskLocation") Location
-              input#taskLocation(type="text" name='taskLocation' placeholder="Location")
-              #errorTaskLocation.error-message
+              label(for="time") Time
+              input#time(type="time" name="time")
+              #errorTime.error-message
+
             .form-group
-              label(for="taskAssignedPerson") Assigned Person
-              input#taskAssignedPerson(type="text" name='taskAssignedPerson' placeholder="Person responsible")
-              #errorTaskAssignedPerson.error-message
+              label(for="assignedPerson") Assigned Person
+              input#assignedPerson(type="text" name="assignedPerson" placeholder="Enter assigned person")
+              #errorAssignedPerson.error-message
+
+            .form-group
+              label(for="description") Task Description
+              textarea#description(name="description" rows="4" placeholder="Write task details here...")
+              #errorDescription.error-message
+
             button.btn-submit(type="submit") Add Task
           p#taskSuccess.success-message
 
-        // Deliveries Table
-        .table-wrapper
-          h3 Registered Deliveries
-          table#deliveryTable
-            thead
-              tr
-                th Customer
-                th Product
-                th Location
-                th Date
-                th Time
-                th Assigned Person
-                th Customer Number
-                th Number of Items
-                th Actions
-            tbody
-
-        // Tasks Table
+        // Table
         .table-wrapper
           h3 Registered Tasks
           table#taskTable
             thead
               tr
-                th Task
+                th Task Name
+                th Location
                 th Date
                 th Time
-                th Location
                 th Assigned Person
+                th Description
                 th Actions
             tbody
+              if todos.length
+                each todo in todos
+                  tr
+                    td= todo.taskName
+                    td= todo.location
+                    td= todo.date.toDateString()
+                    td= todo.time
+                    td= todo.assignedPerson
+                    td= todo.description
+                    td
+                      a.edit-btn(href=`/toDo/edit/${todo._id}`) Edit
+                      a.delete-btn(href="#" data-id=todo._id data-task=todo.taskName onclick="openDeleteModal(this)") Delete
+              else
+                tr
+                  td(colspan="7") No tasks registered yet.
 
+    // Delete Confirmation Modal
+    #deleteModal.modal
+      .modal-content
+        span.close(onclick="closeDeleteModal()") ×
+        h3 Delete Task
+        p#deleteMessage Are you sure you want to delete this task?
+        form#deleteForm(method="POST")
+          button(type="button" class="btn-cancel" onclick="closeDeleteModal()") Cancel
+          button(type="submit" class="btn-confirm")  Delete
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-//- doctype html
-//- html
-//-   head
-//-     meta(charset="UTF-8")
-//-     meta(name="viewport" content="width=device-width, initial-scale=1.0")
-//-     title To-Do - MWF
-//-     link(rel="stylesheet" href="/css/style.css")
-//-     link(rel="stylesheet" href="/css/todo.css")
-//-     link(rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css")
-//-     script(src="https://kit.fontawesome.com/a076d05399.js", crossorigin="anonymous")
-//-     script(src="/js/main.js", defer)
-//-     script(src="/js/todo.js", defer)
-
-//-   body
-//-     // Hamburger
-//-     #hamburger.hamburger
-//-       i.fas.fa-bars
-
-//-     // Sidebar
-//-     #sidebar.sidebar
-//-       .logo MWF
-//-       ul.menu
-//-         li
-//-           a(href="/dashboard")
-//-             i.fa-solid.fa-gauge-high
-//-             span Dashboard
-//-         li
-//-           a(href="/products")
-//-             i.fas.fa-box
-//-             span Products
-//-         li
-//-           a(href="/stock")
-//-             i.fas.fa-plus-square
-//-             span Add Stock
-//-         li
-//-           a(href="/viewstock")
-//-             i.fas.fa-list
-//-             span View Stock
-//-         li
-//-           a(href="/sales")
-//-             i.fa-solid.fa-comments-dollar
-//-             span Add Sales
-//-         li
-//-           a(href="/viewsales")
-//-             i.fas.fa-dollar-sign
-//-             span View Sales
-//-         li
-//-           a(href="/suppliers")
-//-             i.fas.fa-truck
-//-             span Add Suppliers
-//-         li
-//-           a(href="/employees")
-//-             i.fas.fa-user
-//-             span Add Employees
-//-         li
-//-           a(href="/viewEmployees")
-//-             i.fas.fa-users
-//-             span View Employees
-//-         li
-//-           a.active(href="/toDo")
-//-             i.fas.fa-list
-//-             span To-Do
-//-         li
-//-           a(href="/reports")
-//-             i.fas.fa-file-alt
-//-             span Reports
-//-         li
-//-           a(href="/settings")
-//-             i.fa-solid.fa-gear
-//-             span Settings
-//-         li.logout
-//-           a(href="/logout")
-//-             i.fas.fa-sign-out-alt
-//-             span Logout
-
-//-     main.main-content
-//-       header.header-wrapper
-//-         .header-title
-//-           span Mayondo Wood and Furniture
-//-           h2 To-Do Management
-
-//-       section.todo-section
-//-         // Form Selector
-//-         .form-card
-//-           h3 Select Form
-//-           select#formSelector
-//-             option(value="") -- Choose Form --
-//-             option(value="deliveryForm") Register Delivery
-//-             option(value="taskForm") Register Task
-
-//-         // Delivery Form
-//-         #deliveryForm.form-card(style="display:none;")
-//-           h3 Register Delivery
-//-           form#addDeliveryForm(action='/delivery' method='POST')
-//-             .form-group
-//-               label(for="deliveryCustomerName") Customer Name
-//-               input#deliveryCustomerName(type="text" name='deliveryCustomerName' placeholder="Customer Name")
-//-             .form-group
-//-               label(for="deliveryProduct") Product
-//-               input#deliveryProduct(type="text" name='deliveryProduct' placeholder="Product to deliver")
-//-             .form-group
-//-               label(for="deliveryLocation") Location
-//-               input#deliveryLocation(type="text" name='deliveryLocation' placeholder="Delivery Location")
-//-             .form-group
-//-               label(for="deliveryDate") Date
-//-               input#deliveryDate(type="date" name='deliveryDate')
-//-             .form-group
-//-               label(for="deliveryTime") Time
-//-               input#deliveryTime(type="time" name='deliveryTime')
-//-             .form-group
-//-               label(for="deliveryAssignedPerson") Assigned Person
-//-               input#deliveryAssignedPerson(type="text" name='deliveryAssignedPerson' placeholder="Driver / Assigned person")
-//-             .form-group
-//-               label(for="deliveryCustomerNumber") Customer Number
-//-               input#deliveryCustomerNumber(type="number" name='deliveryCustomerNumber' placeholder="Customer phone number")
-//-             .form-group
-//-               label(for="deliveryNumberOfItems") Number of Items
-//-               input#deliveryNumberOfItems(type="number" name='deliveryNumberOfItems' placeholder="Number of items" min="1")
-//-             button.btn-submit(type="submit") Add Delivery
-
-//-         // Task Form
-//-         #taskForm.form-card(style="display:none;")
-//-           h3 Register Task
-//-           form#addTaskForm(action='/task' method='POST')
-//-             .form-group
-//-               label(for="taskName") Task
-//-               input#taskName(type="text" name='taskName' placeholder="Task to be done")
-//-             .form-group
-//-               label(for="taskDate") Date
-//-               input#taskDate(type="date" name='taskDate')
-//-             .form-group
-//-               label(for="taskTime") Time
-//-               input#taskTime(type="time" name='taskTime')
-//-             .form-group
-//-               label(for="taskLocation") Location
-//-               input#taskLocation(type="text" name='taskLocation' placeholder="Location")
-//-             .form-group
-//-               label(for="taskAssignedPerson") Assigned Person
-//-               input#taskAssignedPerson(type="text" name='taskAssignedPerson' placeholder="Person responsible")
-//-             button.btn-submit(type="submit") Add Task
-
-//-         // Deliveries Table
-//-         .table-wrapper
-//-           h3 Registered Deliveries
-//-           table#deliveryTable
-//-             thead
-//-               tr
-//-                 th Customer
-//-                 th Product
-//-                 th Location
-//-                 th Date
-//-                 th Time
-//-                 th Assigned Person
-//-                 th Customer Number
-//-                 th Number of Items
-//-                 th Actions
-//-             tbody
-//-               if deliveries && deliveries.length
-//-                 each delivery in deliveries
-//-                   tr
-//-                     td= delivery.deliveryCustomerName
-//-                     td= delivery.deliveryProduct
-//-                     td= delivery.deliveryLocation
-//-                     td= delivery.deliveryDate.toDateString()
-//-                     td= delivery.deliveryTime
-//-                     td= delivery.deliveryAssignedPerson
-//-                     td= delivery.deliveryCustomerNumber
-//-                     td= delivery.deliveryNumberOfItems
-//-                     td
-//-                       a.edit-btn(href=`/toDo/delivery/edit/${delivery._id}`) Edit
-                        
-//-                       a.delete-btn(href=`/toDo/delivery/delete/${delivery._id}`) Delete
-//-               else
-//-                 tr
-//-                   td(colspan="9") No deliveries found.
-
-//-         // Tasks Table
-//-         .table-wrapper
-//-           h3 Registered Tasks
-//-           table#taskTable
-//-             thead
-//-               tr
-//-                 th Task
-//-                 th Date
-//-                 th Time
-//-                 th Location
-//-                 th Assigned Person
-//-                 th Actions
-//-             tbody
-//-               if tasks && tasks.length
-//-                 each task in tasks
-//-                   tr
-//-                     td= task.taskName
-//-                     td= task.taskDate.toDateString()
-//-                     td= task.taskTime
-//-                     td= task.taskLocation
-//-                     td= task.taskAssignedPerson
-//-                     td
-//-                       a.edit-btn(href=`/toDo/task/edit/${task._id}`) Edit
-                      
-//-                       a.delete-btn(href=`/toDo/task/delete/${task._id}`) Delete
-//-               else
-//-                 tr
-//-                   td(colspan="6") No tasks found.
-
+    

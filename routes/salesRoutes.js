@@ -146,9 +146,25 @@ router.delete("/sales/delete/:id", async (req, res) => {
   }
 });
 
+// GENERATING REPORT
+router.get('/reports/sales', async (req, res) => {
+  const { from, to } = req.query;
+  if (!from || !to) return res.status(400).json({ error: 'Missing dates' });
 
+  try {
+    const fromDate = new Date(from);
+    const toDate = new Date(to);
+    toDate.setHours(23, 59, 59);
 
-
+    const sales = await Sale.find({
+      saleDate: { $gte: fromDate, $lte: toDate }
+    }).lean(); // lean() gives plain JS objects
+    res.json(sales);
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ error: 'Server error fetching sales' });
+  }
+});
 
 
 

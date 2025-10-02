@@ -23,7 +23,7 @@ const authRoutes = require("./routes/authRoutes")
 const productRoutes = require("./routes/productRoutes")
 const reportsRoutes = require("./routes/reportsRoutes")
 const suppliersRoutes = require("./routes/suppliersRoutes")
-const todoRoutes = require("./routes/todoRoutes")
+const toDoRoutes = require("./routes/toDoRoutes")
 // 2 - Instantiations
 const app = express();
 const port = 3000
@@ -60,6 +60,7 @@ mongoose.connection
 // setting view engine to pug
 app.set('view engine', 'pug')
 app.set('views', path.join(__dirname, 'views'))
+
 
 
 // 4 - Middleware    
@@ -118,8 +119,8 @@ app.use("/",authRoutes)
 app.use("/",productRoutes)
 app.use("/",reportsRoutes)
 app.use("/",suppliersRoutes)
-app.get('/toDo', (req, res) => res.render('todo'));
-app.use("/todo",todoRoutes)
+app.use("/",toDoRoutes)
+
 
 
 

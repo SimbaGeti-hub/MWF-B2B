@@ -67,3 +67,90 @@ confirmDeleteSupplier.addEventListener('click', async () => {
     alert('Error deleting supplier');
   }
 });
+
+
+
+
+
+document.addEventListener("DOMContentLoaded", () => {
+  const employeesTable = document.querySelector("#employeesTable");
+  const suppliersTable = document.querySelector("#suppliersTable");
+  const cardsContainer = document.querySelector(".cards-container");
+
+  function updateCards() {
+    // Clear old cards
+    cardsContainer.innerHTML = "";
+
+    // --- EMPLOYEES ---
+    const employeeRows = employeesTable.querySelectorAll("tbody tr");
+    let employees = [];
+
+    employeeRows.forEach(row => {
+      const cells = row.querySelectorAll("td");
+      if (cells.length > 1) { // skip "No employees found."
+        const role = cells[5].innerText.trim();
+        employees.push({ role });
+      }
+    });
+
+    // Total employees
+    const totalEmployees = employees.length;
+    const totalEmployeesCard = createCard("Total Employees", totalEmployees);
+    cardsContainer.appendChild(totalEmployeesCard);
+
+    // Employees by role
+    const roleCounts = {};
+    employees.forEach(e => {
+      roleCounts[e.role] = (roleCounts[e.role] || 0) + 1;
+    });
+    Object.entries(roleCounts).forEach(([role, count]) => {
+      const roleCard = createCard(`${role}`, count);
+      cardsContainer.appendChild(roleCard);
+    });
+
+    // --- SUPPLIERS ---
+    const supplierRows = suppliersTable.querySelectorAll("tbody tr");
+    let supplierCount = 0;
+
+    supplierRows.forEach(row => {
+      const cells = row.querySelectorAll("td");
+      if (cells.length > 1) { // skip "No suppliers found."
+        supplierCount++;
+      }
+    });
+
+    const suppliersCard = createCard("Total Suppliers", supplierCount);
+    cardsContainer.appendChild(suppliersCard);
+  }
+
+  function createCard(title, value) {
+    const card = document.createElement("div");
+    card.className = "card";
+    card.innerHTML = `
+      <h4>${title}</h4>
+      <p>${value}</p>
+    `;
+    return card;
+  }
+
+  // Initial load
+  updateCards();
+});
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
